@@ -31,12 +31,12 @@ export default function Home() {
             transition={{ duration: 1.6, ease: "easeOut", delay: 0.6 }}
             viewport={{ once: true, amount: 0.8 }}
           >
-            <p className={`${nunito.className} text-[22px] sm:text-[26px] md:text-[30px] xl:text-[40px] 2xl:text-[48px] font-bold leading-tight text-[#1a1a1a]`}>
+            <p className={`${nunito.className} text-[22px] sm:text-[26px] md:text-[30px] xl:text-[38px] 2xl:text-[45px] font-bold leading-tight text-[#1a1a1a]`}>
               Compare, Choose, Save <br />
               & Get Fast Affordable <br />
               Car Insurance
             </p>
-            <p className="text-[10px] sm:text-base md:text-lg xl:text-xl 2xl:text-[16px] text-[#646464] mt-5 max-w-[640px] 2xl:max-w-[800px] leading-relaxed mx-auto md:mx-0">
+            <p className="text-[10px] sm:text-base md:text-lg xl:text-xl 2xl:text-[17px] text-[#646464] mt-5 max-w-[640px] 2xl:max-w-[800px] leading-relaxed mx-auto md:mx-0">
               Get instant car insurance coverage from the Government of Canada (GOC) to insurers,
               ensuring fast, reliable protection for vehicles with seamless processing.
             </p>
@@ -72,7 +72,7 @@ export default function Home() {
           <div className="w-full xl:w-[75%] bg-[#d8ecf6] rounded-md px-4 py-4">
             <Swiper
               slidesPerView={2}
-              spaceBetween={20}
+              spaceBetween={36}
               breakpoints={{
                 640: { slidesPerView: 3 },
                 768: { slidesPerView: 4 },
@@ -104,9 +104,9 @@ export default function Home() {
                     <Image
                       src={`/asesst/images/${img}.png`}
                       alt={img}
-                      width={80}               
-                      height={20}            
-                      className="object-contain"
+                      width={80}
+                      height={26}
+                      className="object-cover  mt-2 w-auto"
                     />
                   </div>
                 </SwiperSlide>
