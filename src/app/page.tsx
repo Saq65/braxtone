@@ -8,6 +8,7 @@ import Link from "next/link";
 import { FaPhone, FaWhatsapp } from "react-icons/fa";
 
 import 'swiper/css';
+import Image from "next/image";
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -18,9 +19,9 @@ export default function Home() {
   return (
     <div className="overflow-x-hidden bg-[#eaf4fb]">
       <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-8 py-10 min-h-screen flex flex-col justify-center">
-<div>
-  
-</div>
+        <div>
+
+        </div>
         <div className="flex flex-col md:flex-row justify-between items-center gap-10 flex-1">
 
           <motion.div
@@ -54,10 +55,13 @@ export default function Home() {
             transition={{ duration: 1.6, ease: "easeOut", delay: 0.6 }}
             viewport={{ once: true, amount: 0.8 }}
           >
-            <img
+
+            <Image
               src="/asesst/images/boy-girl.png"
               alt="Boy and Girl"
-              className="h-[250px] sm:h-[300px] md:h-[360px] xl:h-[450px] 2xl:h-[520px] w-auto object-contain"
+              width={450}
+              height={520}
+              className="object-contain h-[250px] sm:h-[300px] md:h-[360px] xl:h-[450px] 2xl:h-[520px] w-auto"
             />
           </motion.div>
 
@@ -86,21 +90,23 @@ export default function Home() {
               className="mySwiper w-full"
             >
               {[
-                "firstbrax",
-                "secondbrax",
-                "thirdbrax",
-                "fourbrax",
-                "firstbrax",
-                "secondbrax",
-                "thirdbrax",
-                "fourbrax",
+                'firstbrax',
+                'secondbrax',
+                'thirdbrax',
+                'fourbrax',
+                'firstbrax',
+                'secondbrax',
+                'thirdbrax',
+                'fourbrax',
               ].map((img, index) => (
                 <SwiperSlide key={index}>
-                  <div className="flex justify-center">
-                    <img
+                  <div className="flex justify-center items-center">
+                    <Image
                       src={`/asesst/images/${img}.png`}
                       alt={img}
-                      className="object-contain h-7"
+                      width={80}               
+                      height={20}            
+                      className="object-contain"
                     />
                   </div>
                 </SwiperSlide>
