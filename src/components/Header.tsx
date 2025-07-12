@@ -4,7 +4,9 @@ import { Montserrat } from 'next/font/google'
 import { IoMdArrowDropup } from 'react-icons/io'
 import { HiMenuAlt3 } from 'react-icons/hi'
 import { IoClose } from 'react-icons/io5'
-import Link from 'next/link'
+import Link from 'next/link';
+import { motion, AnimatePresence } from "framer-motion";
+
 
 const montserrat = Montserrat({
     subsets: ['latin'],
@@ -48,20 +50,62 @@ const Header = () => {
                 </div>
             </div>
 
-            {isOpen && (
-                <div
-                    className={`${montserrat.className} lg:hidden fixed top-[80px] left-0 w-full h-[calc(100vh-80px)] bg-white px-6 py-6 flex flex-col justify-start items-center gap-6 text-black text-sm z-40`}
-                >
-                    <span className="hover:underline hover:text-green-600 font-semibold">About Us</span>
-                    <span className="hover:underline font-semibold">Customer Login</span>
-                    <span className="hover:underline font-semibold">Agent Login</span>
-                    <span className="hover:underline font-semibold">Let's Connect</span>
-                    <div className="flex items-center gap-1 font-semibold">
-                        My Account
-                        <IoMdArrowDropup />
-                    </div>
-                </div>
-            )}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "calc(100vh - 80px)" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                        className={`${montserrat.className} lg:hidden fixed top-[80px] left-0 w-full bg-white px-6 py-6 overflow-hidden flex flex-col justify-start items-center gap-6 text-black text-sm z-40`}
+                    >
+                        <motion.span
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="hover:underline hover:text-green-600 font-semibold"
+                        >
+                            About Us
+                        </motion.span>
+                        <motion.span
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                            className="hover:underline font-semibold"
+                        >
+                            Customer Login
+                        </motion.span>
+                        <motion.span
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4 }}
+                            className="hover:underline font-semibold"
+                        >
+                            Agent Login
+                        </motion.span>
+                        <motion.span
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.5 }}
+                            className="hover:underline font-semibold"
+                        >
+                            Let's Connect
+                        </motion.span>
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.6 }}
+                            className="flex items-center gap-1 font-semibold"
+                        >
+                            My Account
+                            <IoMdArrowDropup />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+
+
         </div>
     )
 }
