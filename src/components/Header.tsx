@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { Poppins, Montserrat } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 import { IoMdArrowDropup } from 'react-icons/io'
 import { HiMenuAlt3 } from 'react-icons/hi'
 import { IoClose } from 'react-icons/io5'
@@ -11,16 +11,11 @@ const montserrat = Montserrat({
   weight: ['400', '500', '600'],
 })
 
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-})
-
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="header bg-[#1474aa] px-6 md:px-6 py-6 sticky top-0 z-50 h-[80px]">
+    <div className="header bg-[#1474aa] px-6 md:px-6 py-4 sticky top-0 z-50 h-[80px] sm:h-[800px]">
       <div className="flex justify-between items-center">
         <div>
           <Link href="/">
@@ -30,12 +25,12 @@ const Header = () => {
 
         <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)}>
-          className={`${poppins.className} hidden md:flex gap-10 items-center text-white text-md font-medium`}
+            {isOpen ? <IoClose size={28} color="white" /> : <HiMenuAlt3 size={28} color="white" />}
           </button>
         </div>
 
         <div
-          className={`${poppins.className} hidden md:flex gap-10 items-center text-white text-md font-small`}
+          className={`${montserrat.className} hidden md:flex gap-10 items-center text-white text-sm font-medium`}
         >
           <Link href="/about">
             <span className="cursor-pointer hover:underline">About Us</span>
