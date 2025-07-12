@@ -15,7 +15,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="header bg-[#1474aa] px-6 md:px-6 py-4 sticky top-0 z-50 h-[80px] sm:h-[800px]">
+    <div className="header bg-[#1474aa] px-6 md:px-12 py-6 sticky top-0 z-50 h-[80px] ">
       <div className="flex justify-between items-center">
         <div>
           <Link href="/">
