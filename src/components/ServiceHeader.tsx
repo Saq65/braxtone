@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const ServiceHeader = () => {
   return (
-    <div className="text-center mb-14">
+    <div className="text-center mb-14 mt-8">
       <div className="flex justify-center mb-6">
         <Image
           src="/asesst/images/dania-smile.png"
@@ -14,7 +14,7 @@ const ServiceHeader = () => {
           className="rounded-full object-cover border-2 border-white shadow"
         />
       </div>
-      <h1 className="text-2xl md:text-3xl font-semibold text-[#1a1a1a] mb-3">
+      <h1 className="text-2xl md:text-4xl font-semibold text-[#1a1a1a] mb-3 mt-10">
         Hi, my name is Dania!
       </h1>
       <p className="text-base md:text-lg text-gray-600">

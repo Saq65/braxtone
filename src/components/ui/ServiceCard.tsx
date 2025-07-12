@@ -16,10 +16,9 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
   return (
     <div
       onClick={() => onSelect(item.id)}
-      className={`relative flex flex-col items-center justify-center text-center bg-white rounded-xl shadow-sm border transition-all hover:shadow-md cursor-pointer
-        p-10 sm:p-12 min-h-[280px] md:min-h-[320px] w-full max-w-[340px] mx-auto ${
-          isSelected ? 'border-[#0067a3]' : 'border-gray-200'
-        }`}
+      className={`relative flex flex-col items-center justify-center text-center bg-white rounded-xl cursor-pointer transition-all
+        p-10 sm:p-12 min-h-[290px] w-full md:max-w-[400px] mx-auto
+        shadow-[2px_4px_12px_-1px_rgba(0,0,0,0.08)] hover:shadow-[4px_6px_16px_-1px_rgba(0,0,0,0.12)]`}
     >
       {Icon && <Icon className="text-6xl md:text-7xl text-gray-400 mb-6" />}
 
