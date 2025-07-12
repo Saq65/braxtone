@@ -64,7 +64,7 @@ export default function Home() {
 
             <div
               onClick={() => router.push('/servicePage')}
-              className="w-[220px] mt-12 inline-block py-3 px-6 xl:py-4 xl:px-8 bg-[#0067a1] text-white rounded-md text-sm sm:text-base xl:text-lg hover:bg-[#005584] transition cursor-pointer"
+              className="w-[220px] mt-12 inline-block py-3 px-6 xl:py-4 xl:px-8 bg-[#0067a1] text-white rounded-md text-sm sm:text-base xl:text-lg hover:bg-[#005584] transition cursor-pointer "
             >
               Explore Our Pricing
             </div>
