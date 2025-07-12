@@ -1,21 +1,23 @@
-
 [
   {
-    "id": 1,
-    "title": "Card One",
-    "description": "This is the first card.",
-    "image": "/images/card1.jpg"
+    "id": "1",
+    "Name": "Report an Accident",
+    "icon": "FaClipboard"
   },
   {
-    "id": 2,
-    "title": "Card Two",
-    "description": "This is the second card.",
-    "image": "/images/card2.jpg"
+    "id": "2",
+    "Name": "Insure My Car",
+    "icon": "FaHandHolding",
+    "subIcon": "FaCar" 
   },
   {
-    "id": 3,
-    "title": "Card Three",
-    "description": "This is the third card.",
-    "image": "/images/card3.jpg"
+    "id": "3",
+    "Name": "Quick Renew",
+    "icon": "FaSyncAlt"
+  },
+  {
+    "id": "4",
+    "Name": "Road Assistance",
+    "icon": "FaTruckPickup"
   }
 ]
