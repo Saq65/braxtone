@@ -15,7 +15,7 @@ const Header = () => {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
-        <div className="header bg-[#1474aa] px-6 md:px-12 py-6 sticky top-0 z-50">
+        <div className="header bg-[#1474aa] px-6 lg:px-12 py-6 sticky top-0 z-50">
             <div className="flex justify-between items-center">
                 <div>
                     <Link href="/">
@@ -23,14 +23,14 @@ const Header = () => {
                     </Link>
                 </div>
 
-                <div className="md:hidden">
+                <div className="lg:hidden">
                     <button onClick={() => setIsOpen(!isOpen)}>
                         {isOpen ? <IoClose size={28} color="white" /> : <HiMenuAlt3 size={28} color="white" />}
                     </button>
                 </div>
 
                 <div
-                    className={`${montserrat.className} hidden md:flex gap-10 items-center text-white text-sm font-medium`}
+                    className={`${montserrat.className} hidden lg:flex gap-11 items-center text-white text-md font-medium`}
                 >
                     <Link href="/about">
                         <span className="cursor-pointer hover:underline">About Us</span>
@@ -41,7 +41,7 @@ const Header = () => {
                 </div>
 
                 <div
-                    className={`${montserrat.className} hidden md:flex items-center text-white gap-1 text-sm cursor-pointer`}
+                    className={`${montserrat.className} hidden lg:flex items-center text-white gap-1 text-sm cursor-pointer`}
                 >
                     My Account
                     <IoMdArrowDropup />
@@ -50,13 +50,13 @@ const Header = () => {
 
             {isOpen && (
                 <div
-                    className={`${montserrat.className} md:hidden fixed top-[80px] left-0 w-full h-[calc(100vh-80px)] bg-[#ffffff] px-6 py-6 flex flex-col justify-start items-center gap-6 text-[#000] text-sm z-40`}
+                    className={`${montserrat.className} lg:hidden fixed top-[80px] left-0 w-full h-[calc(100vh-80px)] bg-white px-6 py-6 flex flex-col justify-start items-center gap-6 text-black text-sm z-40`}
                 >
-                    <span className="hover:underline">About Us</span>
-                    <span className="hover:underline">Customer Login</span>
-                    <span className="hover:underline">Agent Login</span>
-                    <span className="hover:underline">Let's Connect</span>
-                    <div className="flex items-center gap-1">
+                    <span className="hover:underline hover:text-green-600 font-semibold">About Us</span>
+                    <span className="hover:underline font-semibold">Customer Login</span>
+                    <span className="hover:underline font-semibold">Agent Login</span>
+                    <span className="hover:underline font-semibold">Let's Connect</span>
+                    <div className="flex items-center gap-1 font-semibold">
                         My Account
                         <IoMdArrowDropup />
                     </div>
