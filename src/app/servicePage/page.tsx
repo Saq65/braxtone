@@ -5,4 +5,4 @@ function ServiceCardPage() {
   )
 }
 
-export default ServiceCardPage;
+export default ServiceCardPage; 
