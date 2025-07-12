@@ -10,8 +10,7 @@ interface ServiceCardProps {
 }
 
 const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
-  const Icon = Icons[item.icon as keyof typeof Icons];
-  const SubIcon = item.subIcon ? Icons[item.subIcon as keyof typeof Icons] : null;
+  // const Icon = Icons[item.icon as keyof typeof Icons];
 
   return (
     <div
@@ -20,7 +19,8 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
         p-10 sm:p-12 min-h-[290px] w-full md:max-w-[400px] mx-auto
         shadow-[2px_4px_12px_-1px_rgba(0,0,0,0.08)] hover:shadow-[4px_6px_16px_-1px_rgba(0,0,0,0.12)]`}
     >
-      {Icon && <Icon className="text-6xl md:text-7xl text-gray-400 mb-6" />}
+      {/* {Icon && <Icon className="text-6xl md:text-7xl text-gray-400 mb-6" />} */}
+      <img src={item.image} alt={item.Name} />
 
       <h3 className="text-lg md:text-xl font-medium text-gray-800">{item.Name}</h3>
 
@@ -35,12 +35,12 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
           </div>
         </div>
       )}
-
+{/* 
       {SubIcon && (
         <div className="mt-3 text-gray-400">
           <SubIcon className="inline-block text-2xl" />
         </div>
-      )}
+      )} */}
     </div>
   );
 };
