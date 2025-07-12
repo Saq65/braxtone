@@ -7,3 +7,5 @@ const buttons = (props: Props) => {
     <div>buttons</div>
   )
 }
+
+export default buttons;
