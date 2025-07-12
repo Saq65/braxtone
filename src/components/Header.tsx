@@ -19,7 +19,7 @@ const Header = () => {
             <div className="flex justify-between items-center">
                 <div>
                     <Link href="/">
-                        <h2 className="text-white font-extrabold text-2xl">BRAXTONE</h2>
+                        <img src="/asesst/images/logo-1.svg" className='object-cover h-5' alt="BRAXTONE" />
                     </Link>
                 </div>
 

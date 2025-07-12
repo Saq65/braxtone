@@ -17,15 +17,17 @@ const nunito = Nunito({
 export default function Home() {
   return (
     <div className="overflow-x-hidden bg-[#eaf4fb]">
-      <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-16 py-10 min-h-screen flex flex-col justify-center">
-
+      <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-8 py-10 min-h-screen flex flex-col justify-center">
+<div>
+  
+</div>
         <div className="flex flex-col md:flex-row justify-between items-center gap-10 flex-1">
 
           <motion.div
             className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left xl:pr-12 2xl:pr-20"
             initial={{ opacity: 0, x: -90 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.6, ease: "easeOut",delay: 0.6}}
+            transition={{ duration: 1.6, ease: "easeOut", delay: 0.6 }}
             viewport={{ once: true, amount: 0.8 }}
           >
             <p className={`${nunito.className} text-[22px] sm:text-[26px] md:text-[30px] xl:text-[40px] 2xl:text-[48px] font-bold leading-tight text-[#1a1a1a]`}>
@@ -33,7 +35,7 @@ export default function Home() {
               & Get Fast Affordable <br />
               Car Insurance
             </p>
-            <p className="text-[14px] sm:text-base md:text-lg xl:text-xl 2xl:text-2xl text-gray-700 mt-5 max-w-[640px] 2xl:max-w-[800px] leading-relaxed mx-auto md:mx-0">
+            <p className="text-[10px] sm:text-base md:text-lg xl:text-xl 2xl:text-[16px] text-[#646464] mt-5 max-w-[640px] 2xl:max-w-[800px] leading-relaxed mx-auto md:mx-0">
               Get instant car insurance coverage from the Government of Canada (GOC) to insurers,
               ensuring fast, reliable protection for vehicles with seamless processing.
             </p>
@@ -49,7 +51,7 @@ export default function Home() {
             className="w-full md:w-1/2 flex justify-center items-center"
             initial={{ opacity: 0, x: 90 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.6, ease: "easeOut",delay: 0.6 }}
+            transition={{ duration: 1.6, ease: "easeOut", delay: 0.6 }}
             viewport={{ once: true, amount: 0.8 }}
           >
             <img
