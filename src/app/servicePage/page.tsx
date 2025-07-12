@@ -1,7 +1,7 @@
 'use client'
 function ServiceCardPage() {
   return (
-    <div>ServiceCardPage</div>
+    <div>ServiceCardPage render</div>
   )
 }
 
