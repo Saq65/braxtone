@@ -1,4 +1,4 @@
-'use clint'
+'use client'
 function ServiceCardPage() {
   return (
     <div>ServiceCardPage</div>

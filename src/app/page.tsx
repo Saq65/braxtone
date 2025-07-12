@@ -9,6 +9,7 @@ import { FaPhone, FaWhatsapp } from "react-icons/fa";
 
 import 'swiper/css';
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -16,6 +17,7 @@ const nunito = Nunito({
 });
 
 export default function Home() {
+  const router = useRouter()
   return (
     <div className="overflow-x-hidden bg-[#eaf4fb]">
       <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-8 py-10 min-h-screen flex flex-col justify-center">
@@ -41,11 +43,17 @@ export default function Home() {
               ensuring fast, reliable protection for vehicles with seamless processing.
             </p>
 
-            <Link href="/cards">
-              <div className="mt-6 inline-block py-3 px-6 xl:py-4 xl:px-8 bg-[#0067a1] text-white rounded-md text-sm sm:text-base xl:text-lg hover:bg-[#005584] transition">
-                Explore Our Pricing
-              </div>
-            </Link>
+
+            <div
+              onClick={() => {
+                router.push('/servicePage');
+              }}
+              className="w-[220px] mt-6 inline-block py-3 px-6 xl:py-4 xl:px-8 bg-[#0067a1] text-white rounded-md text-sm sm:text-base xl:text-lg hover:bg-[#005584] transition"
+            >
+              Explore Our Pricing
+            </div>
+
+
           </motion.div>
 
           <motion.div
@@ -104,8 +112,8 @@ export default function Home() {
                     <Image
                       src={`/asesst/images/${img}.png`}
                       alt={img}
-                      width={80}               
-                      height={20}            
+                      width={80}
+                      height={20}
                       className="object-contain"
                     />
                   </div>
