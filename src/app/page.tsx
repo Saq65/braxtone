@@ -4,7 +4,6 @@ import { Nunito } from "next/font/google";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from "swiper/modules";
-import Link from "next/link";
 import { FaPhone, FaWhatsapp } from "react-icons/fa";
 import 'swiper/css';
 import Image from "next/image";
