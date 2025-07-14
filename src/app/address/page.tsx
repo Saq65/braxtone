@@ -11,7 +11,6 @@ import Buttons from '@/components/ui/buttons';
 import Input from '@/components/ui/Input';
 
 const page = () => {
-    const [selectedCard, setSelectedCard] = useState<string | null>(null);
     const router = useRouter();
     const { image, heading, paragraph } = InsuranceData[2];
     const [inputValue, setInputValue] = useState('');
