@@ -57,7 +57,6 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
         </motion.div>
       )}
 
-      {/* Card content */}
       <Image
         src={item.image}
         alt={item.Name}
