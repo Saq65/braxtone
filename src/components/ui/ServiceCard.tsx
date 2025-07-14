@@ -25,7 +25,6 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
         className="absolute left-[-5px] bottom-[60px] w-[36px] transition-transform duration-300 ease-in-out opacity-0 group-hover:translate-x-[3px] group-hover:opacity-100"
       />
 
-      {/* Selected animated label bar */}
       {isSelected && (
         <motion.div
           initial={{ x: -200, opacity: 0 }}
@@ -40,7 +39,7 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
             className="bg-[#0067a3] flex items-center justify-center text-white font-medium
                  h-[26px] sm:h-[28px] md:h-[32px] 
                  w-36 sm:w-52 md:w-64 
-                 text-[10px] sm:text-xs md:text-sm"
+                 text-[10px] sm:text-xs md:text-sm "
           >
             {item.Name}
           </div>
@@ -55,14 +54,13 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
         </motion.div>
       )}
 
-      {/* Card content */}
       <img
         src={item.image}
         alt={item.Name}
         className="w-[40px] sm:w-[60px] md:w-[70px] lg:w-[80px]"
       />
 
-      <h3 className="text-xs sm:text-sm md:text-base lg:text-lg font-medium text-gray-800 mt-2">
+      <h3 className="text-xs sm:text-sm md:text-base lg:text-lg font-medium text-gray-800 mt-6">
         {item.Name}
       </h3>
 

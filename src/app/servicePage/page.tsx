@@ -13,8 +13,7 @@ const ServiceCardPage = () => {
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
   const router = useRouter();
   const { image, heading, paragraph } = InsuranceData[0];
-  const handleFirst = () => alert('First Button Clicked');
-  const handleSecond = () => alert('Second Button Clicked');
+
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#e6f4fd] to-white px-4 py-8 sm:px-8 lg:px-16 flex flex-col items-center">
