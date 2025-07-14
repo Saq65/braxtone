@@ -26,23 +26,23 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
       />
 
       {/* Selected animated label bar */}
-      {isSelected && (
-        <motion.div
-          initial={{ x: -200, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{
-            x: { duration: 0.6, ease: 'easeOut' },
-            opacity: { delay: 0.4, duration: 0.3 }
-          }}
-          className="absolute bottom-[60px] left-0 w-60 flex items-center"
-          style={{ height: '32px' }}
-        >
-          <div className="bg-[#0067a3] h-full flex-1 flex items-center justify-center text-white text-sm font-medium">
-            {item.Name}
-          </div>
-          <div className="w-0 h-0 border-t-[14px] border-b-[14px] border-l-[11px] border-t-transparent border-b-transparent border-l-[#0067a3]" />
-        </motion.div>
-      )}
+       {isSelected && (
+  <motion.div
+    initial={{ x: -200, opacity: 0 }}
+    animate={{ x: 0, opacity: 1 }}
+    transition={{
+      x: { duration: 0.6, ease: 'easeOut' },
+      opacity: { delay: 0.4, duration: 0.3 }
+    }}
+    className="absolute bottom-[60px] left-0 w-60 flex items-center"
+    style={{ height: '32px' }}
+  >
+    <div className="bg-[#0067a3] h-full flex-1 flex items-center justify-center text-white text-sm font-medium">
+      {item.Name}
+    </div>
+    <div className="w-0 h-0 border-t-[14px] border-b-[14px] border-l-[11px] border-t-transparent border-b-transparent border-l-[#0067a3]" />
+  </motion.div>
+)}
 
       {/* Card content */}
       <img src={item.image} alt={item.Name} />
