@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { Montserrat } from 'next/font/google'
 import { IoMdArrowDropup } from 'react-icons/io'
-import { HiMenuAlt3 } from 'react-icons/hi'
+import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import { IoClose } from 'react-icons/io5'
 import Link from 'next/link';
 import { motion, AnimatePresence } from "framer-motion";
@@ -27,7 +27,7 @@ const Header = () => {
 
                 <div className="lg:hidden">
                     <button onClick={() => setIsOpen(!isOpen)}>
-                        {isOpen ? <IoClose size={28} color="white" /> : <HiMenuAlt3 size={28} color="white" />}
+                        {isOpen ? <IoClose size={28} color="white" /> : <HiOutlineMenuAlt3 size={28} color="white" />}
                     </button>
                 </div>
 
