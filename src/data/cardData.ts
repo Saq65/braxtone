@@ -33,4 +33,21 @@ export const cardData: CardData[] = [
     icon: 'FaTruckPickup',
     image: '/asesst/images/car4.png',
   },
+
+];
+
+export const cardData2: CardData[] = [
+  {
+    id: '1',
+    Name: 'Autofill with OCR',
+    icon: 'FaClipboard',
+    image: '/asesst/images/l1.png',
+  },
+  {
+    id: '2',
+    Name: 'Manually enter my data',
+    icon: 'FaHandHolding',
+    subIcon: 'FaCar',
+    image: '/asesst/images/l2.png',
+  }
 ];

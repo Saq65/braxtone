@@ -1,25 +1,31 @@
-'use client';
+import Image from "next/image";
 
-import Image from 'next/image';
+interface ServiceHeaderProps {
+  image?: string;
+  heading?: string;
+  paragraph: string;
+}
 
-const ServiceHeader = () => {
+const ServiceHeader = ({ image, heading, paragraph }: ServiceHeaderProps) => {
   return (
     <div className="text-center mb-14 mt-8">
-      <div className="flex justify-center mb-6">
-        <Image
-          src="/asesst/images/dania-smile.png"
-          alt="Dania"
-          width={100}
-          height={100}
-          className="rounded-full object-cover border-2 border-white shadow"
-        />
-      </div>
-      <h1 className="text-2xl md:text-4xl font-semibold text-[#1a1a1a] mb-3 mt-10">
-        Hi, my name is Dania!
-      </h1>
-      <p className="text-base md:text-lg text-gray-600">
-        Please Choose Your Service
-      </p>
+      {image && (
+        <div className="flex justify-center mb-6">
+          <Image
+            src={image}
+            alt="Dania"
+            width={100}
+            height={100}
+            className="rounded-full object-cover border-2 border-white shadow"
+          />
+        </div>
+      )}
+      {heading && (
+        <h1 className="text-2xl md:text-4xl font-semibold text-[#1a1a1a] mb-3 mt-10">
+          {heading}
+        </h1>
+      )}
+      <p className="text-base md:text-lg text-gray-600">{paragraph}</p>
     </div>
   );
 };
