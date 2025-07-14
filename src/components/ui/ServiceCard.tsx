@@ -65,7 +65,7 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
         height={80}
       />
 
-      <h3 className="text-xs sm:text-sm md:text-base lg:text-lg font-medium text-gray-800 mt-6">
+      <h3 className="text-xs sm:text-sm md:text-base lg:text-lg font-medium text-gray-800 mt-3">
         {item.Name}
       </h3>
 
