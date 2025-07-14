@@ -6,6 +6,7 @@ import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import { IoClose } from 'react-icons/io5'
 import Link from 'next/link';
 import { motion, AnimatePresence } from "framer-motion";
+import Image from 'next/image'
 
 
 const montserrat = Montserrat({
@@ -21,7 +22,14 @@ const Header = () => {
             <div className="flex justify-between items-center">
                 <div>
                     <Link href="/">
-                        <img src="/asesst/images/logo-1.svg" className='object-cover h-5' alt="BRAXTONE" />
+                        <Image
+                            src="/asesst/images/logo-1.svg"
+                            alt="BRAXTONE"
+                            width={120}
+                            height={32}
+                            className="object-cover h-5 w-auto"
+                            priority
+                        />
                     </Link>
                 </div>
 
@@ -39,7 +47,7 @@ const Header = () => {
                     </Link>
                     <span className="cursor-pointer hover:underline">Customer Login</span>
                     <span className="cursor-pointer hover:underline">Agent Login</span>
-                    <span className="cursor-pointer hover:underline">Let's Connect</span>
+                    <span className="cursor-pointer hover:underline">Let&apos;s Connect</span>
                 </div>
 
                 <div
@@ -89,7 +97,7 @@ const Header = () => {
                             transition={{ delay: 0.5 }}
                             className="hover:underline font-semibold"
                         >
-                            Let's Connect
+                            Let&apos;s Connect
                         </motion.span>
                         <motion.div
                             initial={{ opacity: 0, y: -10 }}

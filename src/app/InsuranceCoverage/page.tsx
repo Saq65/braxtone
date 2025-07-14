@@ -4,12 +4,11 @@ import { useState } from 'react';
 import { cardData2, CardData } from '@/data/cardData';
 import ServiceCard from '@/components/ui/ServiceCard';
 import ServiceHeader from '@/components/ServiceHeader';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { InsuranceData } from '@/data/insurenceData';
 import { useRouter } from 'next/navigation';
 import Buttons from '@/components/ui/buttons';
 
-const page = () => {
+const Page = () => {
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
   const router = useRouter();
   const { image, heading, paragraph } = InsuranceData[1];
@@ -45,4 +44,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

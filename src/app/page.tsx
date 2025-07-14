@@ -4,7 +4,6 @@ import { Nunito } from "next/font/google";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from "swiper/modules";
-import Link from "next/link";
 import { FaPhone, FaWhatsapp } from "react-icons/fa";
 import 'swiper/css';
 import Image from "next/image";
@@ -80,13 +79,20 @@ export default function Home() {
             transition={{ duration: 1.8, ease: "easeOut", delay: 0.6 }}
             viewport={{ once: true, amount: 0.8 }}
           >
-            <Image
-              src="/asesst/images/boy-girl.png"
-              alt="Boy and Girl"
-              width={450}
-              height={600}
-              className="object-contain h-[250px] sm:h-[300px] md:h-[360px] xl:h-[450px] 2xl:h-[500px] w-auto"
-            />
+            <div className="relative w-full max-w-[800px] mx-auto
+              p-4 ">
+              <Image
+                src="/asesst/images/boy-girl (2).png"
+                alt="Boy and Girl"
+                width={900}
+                height={600}
+                className="w-full h-auto object-contain"
+                unoptimized
+              />
+            </div>
+
+
+
           </motion.div>
         </div>
 

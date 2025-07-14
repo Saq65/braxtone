@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { RiMapPin2Line } from 'react-icons/ri'
 
 interface InputProps {
@@ -7,7 +7,6 @@ interface InputProps {
 }
 
 const Input = ({ value, onChange }: InputProps) => {
-    const [inputValue, setInputValue] = useState('');
     return (
         <div className=''>
             <div
