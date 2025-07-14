@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { RiMapPin2Line } from 'react-icons/ri'
 
-type Props = {}
+interface InputProps {
+    value: string;
+    onChange: (val: string) => void;
+}
 
-const Input = (props: Props) => {
+const Input = ({ value, onChange }: InputProps) => {
+    const [inputValue, setInputValue] = useState('');
     return (
         <div className=''>
             <div
@@ -19,11 +23,12 @@ const Input = (props: Props) => {
                     type="text"
                     placeholder="ENTER ADDRESS, CITY, STATE"
                     className="w-sm px-2 py-3  outine-none border-none focus:outline-none sm:w-xl"
-                />
+                    value={value}
+                    onChange={(e) => onChange(e.target.value)} />
             </div>
 
         </div>
     )
 }
 
-export default Input
+export default Input;

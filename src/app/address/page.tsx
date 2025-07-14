@@ -14,6 +14,7 @@ const page = () => {
     const [selectedCard, setSelectedCard] = useState<string | null>(null);
     const router = useRouter();
     const { image, heading, paragraph } = InsuranceData[2];
+    const [inputValue, setInputValue] = useState('');
 
     return (
         <main className="min-h-screen bg-gradient-to-b from-[#e6f4fd] to-white px-4 py-8 sm:px-8 lg:px-16 flex flex-col items-center overflow-x-hidden">
@@ -21,15 +22,14 @@ const page = () => {
 
 
             <div className="input">
-                <Input />
+                <Input value={inputValue} onChange={setInputValue}/>
             </div>
-        
+
             <div className='mt-8'>
                 <Buttons
                     onFirstClick={() => router.push('/InsuranceCoverage')}
                     onSecondClick={() => router.push('/InsuranceCoverage')}
-                    secondDisabled={!selectedCard}
-                />
+                    secondDisabled={!inputValue.trim()} />
             </div>
 
 

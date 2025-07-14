@@ -33,8 +33,8 @@ const Buttons = ({
         onClick={onSecondClick}
         disabled={secondDisabled}
         className={`flex items-center gap-2 px-8 py-3 rounded-md shadow-md cursor-pointer text-white text-sm font-medium transition ${secondDisabled
-            ? 'bg-gray-300 cursor-not-allowed'
-            : 'bg-[#0067a3] hover:bg-[#005684]'
+          ? 'bg-gray-300 cursor-not-allowed'
+          : 'bg-[#0067a3] hover:bg-[#005684]'
           }`}
       >
         {secondLabel} <FaArrowRight />
