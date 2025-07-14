@@ -16,14 +16,12 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
         p-10 sm:p-12 min-h-[260px] w-full md:max-w-[400px] mx-auto
         shadow-[2px_4px_12px_-2px_rgba(0,0,0,0.08)] hover:shadow-[4px_6px_16px_-1px_rgba(71,160,245,0.10)]`}
     >
-      {/* Hover Image – slides in from left near bottom */}
       <img
         src="/asesst/images/Subtract.png"
         alt="Hover Decoration"
         className="absolute left-[-5px] bottom-[60px] w-[36px] transition-transform duration-300 ease-in-out opacity-0 group-hover:translate-x-[3px] group-hover:opacity-100"
       />
 
-      {/* Selected Image – static near bottom */}
       {isSelected && (
         <img
           src="/asesst/images/Subtract-2.png"
@@ -32,7 +30,6 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
         />
       )}
 
-      {/* Card content */}
       <img src={item.image} alt={item.Name} />
 
       <h3 className="text-lg md:text-xl font-medium text-gray-800">{item.Name}</h3>
