@@ -3,6 +3,7 @@
 import { CardData } from '@/data/cardData';
 import { motion } from 'framer-motion';
 import React from 'react';
+import Image from 'next/image';
 
 interface ServiceCardProps {
   item: CardData;
@@ -15,14 +16,16 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
     <div
       onClick={() => onSelect(item.id)}
       className={`relative group flex flex-col items-center justify-center text-center bg-white rounded-xl cursor-pointer transition-all
-        p-4 sm:p-6 md:p-8 h-[160px] sm:h-[220px] md:h-[260px] w-full md:max-w-[400px] mx-auto
+        p-4 sm:p-6 md:p-8 h-[160px] sm:h-[220px] md:h-[260px] w-full md:max-w-[300px] md:gap-3 md:justify-center mx-auto
         shadow-[2px_4px_12px_-2px_rgba(0,0,0,0.08)] hover:shadow-[4px_6px_16px_-1px_rgba(71,160,245,0.10)]
         ${isSelected ? 'border-2 border-[#0067a3]' : 'border border-transparent'}`}
     >
-      <img
+      <Image
         src="/asesst/images/Subtract.png"
         alt="Hover Decoration"
         className="absolute left-[-5px] bottom-[60px] w-[36px] transition-transform duration-300 ease-in-out opacity-0 group-hover:translate-x-[3px] group-hover:opacity-100"
+        width={36}
+        height={36}
       />
 
       {isSelected && (
@@ -54,10 +57,13 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
         </motion.div>
       )}
 
-      <img
+      {/* Card content */}
+      <Image
         src={item.image}
         alt={item.Name}
         className="w-[40px] sm:w-[60px] md:w-[70px] lg:w-[80px]"
+        width={80}
+        height={80}
       />
 
       <h3 className="text-xs sm:text-sm md:text-base lg:text-lg font-medium text-gray-800 mt-6">

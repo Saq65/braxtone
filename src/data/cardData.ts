@@ -3,7 +3,7 @@ export interface CardData {
   id: string;
   Name: string;
   icon: string;
-  image?: string;
+  image: string;
   subIcon?: string;
 }
 
