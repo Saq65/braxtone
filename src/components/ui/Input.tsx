@@ -8,9 +8,9 @@ const Input = (props: Props) => {
         <div className=''>
             <div
                 tabIndex={0}
-                className='w-md sm:w-full flex items-center rounded border border-gray-300 focus:outline-none 
+                className='max-w-[350px] sm:max-w-full flex items-center rounded border border-gray-300 focus:outline-none 
                 focus:ring-0.8 focus:ring-sky-600 focus:border-sky-600 shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)]
-                 hover:shadow-md transition-shadow duration-200 overfow-x-hidden'
+                 hover:shadow-md transition-shadow duration-200 '
             >
                 <span className='px-3'>
                     <RiMapPin2Line size={20} color='#afafaf' />

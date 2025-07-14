@@ -42,7 +42,6 @@ export default function Home() {
         </div>
       </div>
 
-
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-8 sm:py-10 py-0 flex flex-col justify-center mt-20">
         <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-10 flex-1">
 
