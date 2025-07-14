@@ -34,7 +34,7 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
             x: { duration: 0.6, ease: 'easeOut' },
             opacity: { delay: 0.5, duration: 0.3 }
           }}
-          className="absolute bottom-[60px] left-0 w-60 flex items-center"
+          className="absolute bottom-[60px] left-0 w-68 flex items-center"
           style={{ height: '32px' }}
         >
           <div className="bg-[#0067a3] h-full flex-1 flex items-center justify-center text-white text-sm font-medium">
