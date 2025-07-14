@@ -92,22 +92,22 @@ export default function Home() {
         </div>
 
         <div className="mt-20 w-full flex flex-col xl:flex-row items-center justify-between gap-6">
-            <div className="w-full xl:w-[75%] sm:w-[100%] bg-[#dbedf8] rounded-md px-4 py-4">
+          <div className="w-full xl:w-[75%] sm:w-[100%] bg-[#dbedf8] rounded-md px-4 py-4">
             <Swiper
               slidesPerView={2}
               spaceBetween={72}
               breakpoints={{
-              640: { slidesPerView: 3 },
-              768: { slidesPerView: 4 },
-              1024: { slidesPerView: 4 },
-              1440: { slidesPerView: 4 },
+                640: { slidesPerView: 3 },
+                768: { slidesPerView: 4 },
+                1024: { slidesPerView: 4 },
+                1440: { slidesPerView: 4 },
               }}
               loop={true}
               speed={3000}
               autoplay={{
-              delay: 1,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: false,
+                delay: 1,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: false,
               }}
               allowTouchMove={false}
               freeMode={true}
@@ -115,15 +115,15 @@ export default function Home() {
               className="mySwiper w-full px-20"
             >
               {['ex1', 'ex2', 'ex3', 'ex4', 'ex1', 'ex2', 'ex3', 'ex4'].map((img, index) => (
-              <SwiperSlide key={index}>
-                <div className="flex justify-center h-10 p-2 items-center">
-                <Image
-                  src={`/asesst/images/${img}.png`}
-                  alt={img}
-                  width={80}
-                  height={20}
-                  className="object-contain"
-                />
+                <SwiperSlide key={index}>
+                  <div className="flex justify-center h-10 p-2 items-center">
+                    <Image
+                      src={`/asesst/images/${img}.png`}
+                      alt={img}
+                      width={80}
+                      height={20}
+                      className="object-contain"
+                    />
                   </div>
                 </SwiperSlide>
               ))}

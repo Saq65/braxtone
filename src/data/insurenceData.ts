@@ -7,7 +7,7 @@ export interface CardData {
 }
 
 export const InsuranceData: CardData[] = [
-     {
+    {
         id: '1',
         image: '/asesst/images/dania-smile.png',
         heading: 'Hi, my name is Dania!',
@@ -18,6 +18,12 @@ export const InsuranceData: CardData[] = [
         image: '/asesst/images/dania-smile.png',
         heading: '15 Seconds could save you 15% or more',
         paragraph: 'Choose Your Insurance Coverage',
+    },
+    {
+        id: '3',
+        image: '/asesst/images/dania-smile.png',
+        heading: "What's your home address?",
+        paragraph: 'Where you live and usually park',
     }
-    
+
 ];
