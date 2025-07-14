@@ -82,8 +82,7 @@ export default function Home() {
             <Image
               src="/asesst/images/boy-girl.png"
               alt="Boy and Girl"
-              width={450}
-              height={600}
+              priority
               className="object-contain h-[250px] sm:h-[300px] md:h-[360px] xl:h-[450px] 2xl:h-[500px] w-auto"
             />
           </motion.div>

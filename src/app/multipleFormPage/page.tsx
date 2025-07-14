@@ -1,11 +1,10 @@
 import React from 'react'
 
-type Props = {}
 
-function page({}: Props) {
+function Page() {
   return (
     <div>page</div>
   )
 }
 
-export default page
+export default Page
