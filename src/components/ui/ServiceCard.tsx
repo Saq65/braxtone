@@ -32,7 +32,7 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
           animate={{ x: 0, opacity: 1 }}
           transition={{
             x: { duration: 0.6, ease: 'easeOut' },
-            opacity: { delay: 0.5, duration: 0.3 }
+            opacity: { delay: 0.5, duration: 0.5 }
           }}
           className="absolute bottom-[60px] left-0 w-68 flex items-center"
           style={{ height: '32px' }}
