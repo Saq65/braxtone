@@ -5,7 +5,7 @@ type Props = {}
 
 const Input = (props: Props) => {
     return (
-        <div className='overfow-x-hidden'>
+        <div className=''>
             <div
                 tabIndex={0}
                 className='w-md sm:w-full flex items-center rounded border border-gray-300 focus:outline-none 
