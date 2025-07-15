@@ -5,7 +5,7 @@ type Car = {
   year: string
   manufacturer: string
   company: string
-  model:string
+  model: string
 }
 
 export default function CarStepForm({
@@ -21,26 +21,24 @@ export default function CarStepForm({
   const [model, setModel] = useState('')
   const [manufacturer, setManufacturer] = useState('')
 
-  const years = Array.from({ length: 20 }, (_, i) => `${2026 - i}`) 
-  const companies = ["Acura", "BMW", "Audi", "Toyota"] 
+  const years = Array.from({ length: 20 }, (_, i) => `${2026 - i}`)
+  const companies = ["Acura", "BMW", "Audi", "Toyota"]
   const models = ["copper", "sample1", "sample2"]
-  const manufacturers = ['5/40xi 4WD', '4/20i RWD', '3/10xi AWD'] 
+  const manufacturers = ['5/40xi 4WD', '4/20i RWD', '3/10xi AWD']
 
 
   const totalSteps = 4
-  // const getProgress = () => `${(step / totalSteps) * 100}%`
 
   return (
-    <div className="relative mx-auto w-full bg-white px-6 pt-6 pb-4 rounded-xl shadow-md border border-gray-200">
-      {/* Close Button */}
+    <div className="relative mx-3 w-5/6  pt-6 pb-2">
       <button
-        onClick={onCancel}
-        className="absolute top-2 right-3 text-2xl text-gray-400 hover:text-gray-600"
+        onClick={() => {
+          onCancel()
+        }} className="absolute top-2 right-3 text-2xl text-gray-400 hover:text-gray-600"
       >
         ×
       </button>
 
-      {/* Step 1: Year */}
       {step === 1 && (
         <>
           <h2 className="text-sm font-medium mb-3 text-gray-800">Select the production year</h2>
@@ -68,7 +66,6 @@ export default function CarStepForm({
         </>
       )}
 
-      {/* Step 2: Company */}
       {step === 2 && (
         <>
           <h2 className="text-sm font-medium mb-3 text-gray-800">Select the car manufacturing company</h2>
@@ -97,7 +94,6 @@ export default function CarStepForm({
       )}
 
 
-      {/* Step 3: model */}
       {step === 3 && (
         <>
           <h2 className="text-sm font-medium mb-3 text-gray-800">Select the car model</h2>
@@ -125,7 +121,6 @@ export default function CarStepForm({
         </>
       )}
 
-      {/* Step 4: Manufacturer */}
       {step === 4 && (
         <>
           <h2 className="text-sm font-medium mb-3 text-gray-800">Select the car body style</h2>
@@ -153,7 +148,7 @@ export default function CarStepForm({
               Back
             </button>
             <button
-              onClick={() => onComplete({ year, company, manufacturer,model })}
+              onClick={() => onComplete({ year, company, manufacturer, model })}
               disabled={!manufacturer}
               className=" rounded-md w-[180px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100"
             >
@@ -166,12 +161,11 @@ export default function CarStepForm({
   )
 }
 
-// Shared UI Components
 function ProgressBar({ step, totalSteps }: { step: number; totalSteps: number }) {
   return (
-    <div className="h-[8px] w-full  bg-gray-200 rounded my-4">
+    <div className="h-[6px] w-full  bg-gray-200 rounded my-4">
       <div
-        className="h-full bg-pink-500 rounded transition-all duration-300"
+        className="h-full bg-[#0068a2] rounded transition-all duration-300"
         style={{ width: `${(step / totalSteps) * 100}%` }}
       />
     </div>

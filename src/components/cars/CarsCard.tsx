@@ -13,7 +13,6 @@ export default function CarCard({ name, icon, selected, onToggle }: CarCardProps
         <span>{name}</span>
       </div>
 
-      {/* Toggle Switch */}
       <div className="ml-10">
         <label className="relative inline-flex items-center cursor-pointer">
           <input
