@@ -78,6 +78,7 @@ export default function CarsPage() {
             </div>
 
             <div className="flex flex-col items-end gap-4 w-2/4">
+              {/* ✅ Show car cards only when form is hidden */}
               {!showForm &&
                 cars.map((car, idx) => (
                   <CarCard
@@ -89,6 +90,7 @@ export default function CarsPage() {
                   />
                 ))}
 
+              {/* ✅ Show form when triggered */}
               {showForm && (
                 <CarStepForm
                   onCancel={() => setShowForm(false)}
