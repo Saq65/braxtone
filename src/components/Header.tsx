@@ -43,15 +43,15 @@ const Header = () => {
                     className={`${montserrat.className} hidden lg:flex gap-11 items-center text-white text-md font-medium`}
                 >
                     <Link href="/about">
-                        <span className="cursor-pointer hover:underline">About Us</span>
+                        <span className="cursor-pointer hover:underline text-base/8 underline-offset-6">About Us</span>
                     </Link>
-                    <span className="cursor-pointer hover:underline">Customer Login</span>
-                    <span className="cursor-pointer hover:underline">Agent Login</span>
-                    <span className="cursor-pointer hover:underline">Let&apos;s Connect</span>
+                    <span className="cursor-pointer hover:underline text-base/8 underline-offset-6">Customer Login</span>
+                    <span className="cursor-pointer hover:underline text-base/8 underline-offset-6">Agent Login</span>
+                    <span className="cursor-pointer hover:underline text-base/8 underline-offset-6">Let&apos;s Connect</span>
                 </div>
 
                 <div
-                    className={`${montserrat.className} hidden lg:flex items-center text-white text-md font-medium gap-1 hover:underline cursor-pointer`}
+                    className={`${montserrat.className} hidden lg:flex items-center text-white text-md font-medium gap-1 hover:underline cursor-pointer text-base/8 underline-offset-4`}
                 >
                     My Account
                     <IoMdArrowDropup />
@@ -71,10 +71,12 @@ const Header = () => {
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="hover:underline hover:text-green-600 font-semibold"
+                            className="relative group cursor-pointer font-semibold text-base text-black"
                         >
                             About Us
+                            <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-green-500 transition-all duration-300 ease-in-out group-hover:w-full" />
                         </motion.span>
+
                         <motion.span
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}

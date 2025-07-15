@@ -17,7 +17,7 @@ const nunito = Nunito({
 export default function Home() {
   const router = useRouter();
   return (
-    <div className="relative overflow-hidden overflow-x-hidden bg-[linear-gradient(to_bottom,_#91ccef_0%,_white_30%,_white_70%,_#91ccef_100%)] w-full min-h-[92vh] p-[30px] sm:p-unset">
+    <div className="relative overflow-hidden overflow-x-hidden bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)] w-full min-h-[92vh] p-[30px] sm:p-unset">
 
       <div className="flex justify-between items-center">
 
@@ -42,7 +42,7 @@ export default function Home() {
       </div>
 
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-8 sm:py-10 py-0 flex flex-col justify-center mt-20">
-        <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-10 flex-1">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-10 flex-1">
 
           <motion.div
             className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left xl:pr-12 2xl:pr-20"
@@ -102,7 +102,7 @@ export default function Home() {
               slidesPerView={2}
               spaceBetween={72}
               breakpoints={{
-                640: { slidesPerView: 3 },
+                640: { slidesPerView: 5 },
                 768: { slidesPerView: 4 },
                 1024: { slidesPerView: 4 },
                 1440: { slidesPerView: 4 },
@@ -121,15 +121,16 @@ export default function Home() {
             >
               {['ex1', 'ex2', 'ex3', 'ex4', 'ex1', 'ex2', 'ex3', 'ex4'].map((img, index) => (
                 <SwiperSlide key={index}>
-                  <div className="flex justify-center h-10 p-2 items-center">
+                  <div className="flex justify-center items-center h-10 p-2">
                     <Image
                       src={`/asesst/images/${img}.png`}
                       alt={img}
                       width={80}
-                      height={40}
-                      className="object-cover"
+                      height={60}
+                      className="w-full h-11 object-contain"
                     />
                   </div>
+
                 </SwiperSlide>
               ))}
             </Swiper>

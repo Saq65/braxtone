@@ -4,7 +4,7 @@ import AddCarCard from "@/components/cars/AddCar";
 import CarCard from "@/components/cars/CarsCard";
 import SidebarSteps from "@/components/Sidebar";
 import { useState } from "react";
-
+import MultiformHeader from "@/components/MultiformHeader";
 
 export default function CarsPage() {
   const [cars, setCars] = useState([
@@ -17,23 +17,22 @@ export default function CarsPage() {
     updated[index].selected = !updated[index].selected;
     setCars(updated);
   };
-
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-blue-100 p-6">
-      <header className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-blue-700">BRAXTONE</h1>
-        <div>My Account ▼</div>
-      </header>
+    <div className="min-h-screen  bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)] overflow-x-hidden ">
+      <div className="header">
+        <MultiformHeader />
+      </div>
 
-      <div className="flex gap-12">
+      <div className="flex gap-12 mt-6">
         <aside className="w-1/4">
-          <SidebarSteps/>
+          <SidebarSteps />
         </aside>
 
         <main className="w-3/4 space-y-4">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-gray-300" /> {/* Avatar Placeholder */}
+            <div className="w-12 h-12 rounded-full bg-gray-300" />
             <p className="text-lg font-semibold">Alright. These are the cars that I found. Which would you like to insure?</p>
           </div>
 
