@@ -36,7 +36,7 @@ export default function CarsPage() {
             <SidebarSteps />
           </aside>
 
-          <main className="w-3/4 space-y-4">
+          {/* <main className="w-3/4 space-y-4">
             <div>
               <MultiformHeading image={image} heading={heading} />
             </div>
@@ -53,7 +53,9 @@ export default function CarsPage() {
                 ))}
 
               {showForm ? (
-                <CarStepForm onBack={() => setShowForm(false)} />
+                <CarStepForm
+                  onCancel={() => setShowForm(false)}
+                  onBack={() => setShowForm(false)} />
               ) : (
                 <AddCarCard onClick={() => setShowForm(true)} />
               )}
@@ -68,7 +70,52 @@ export default function CarsPage() {
                 Next →
               </button>
             </div>
+          </main> */}
+
+          <main className="w-3/4 space-y-4">
+            <div>
+              <MultiformHeading image={image} heading={heading} />
+            </div>
+
+            <div className="flex flex-col items-end gap-4 w-2/4">
+              {!showForm &&
+                cars.map((car, idx) => (
+                  <CarCard
+                    key={idx}
+                    name={car.name}
+                    icon={<div className="w-6 h-6 bg-black" />}
+                    selected={car.selected}
+                    onToggle={() => toggleCar(idx)}
+                  />
+                ))}
+
+              {showForm && (
+                <CarStepForm
+                  onCancel={() => setShowForm(false)}
+                  onBack={() => setShowForm(false)}
+                  onComplete={(car) => {
+                    setCars([...cars, car]);
+                    setShowForm(false);
+                  }}
+                />
+              )}
+
+              {!showForm && <AddCarCard onClick={() => setShowForm(true)} />}
+            </div>
+
+            {!showForm && (
+              <div className="flex justify-center w-[500px]">
+                <button
+                  className="mt-4 px-6 py-2 bg-gray-300 rounded text-white disabled:opacity-50 mx-auto"
+                  disabled={!cars.some((car) => car.selected)}
+                >
+                  Next →
+                </button>
+              </div>
+            )}
           </main>
+
+
         </div>
       </div>
     </div>

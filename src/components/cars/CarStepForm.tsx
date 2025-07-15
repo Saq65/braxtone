@@ -30,7 +30,7 @@ export default function CarStepForm({
   const totalSteps = 4
 
   return (
-    <div className="relative mx-3 w-5/6  pt-6 pb-2">
+    <div className="relative mx-end w-5/6  pt-6 pb-2 border border-[#d2d0d0] p-4 h-[270px] rounded-md">
       <button
         onClick={() => {
           onCancel()
