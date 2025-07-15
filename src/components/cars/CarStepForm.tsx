@@ -34,7 +34,7 @@ export default function CarStepForm({
       <button
         onClick={() => {
           onCancel()
-        }} className="absolute top-2 right-3 text-2xl text-gray-400 hover:text-gray-600"
+        }} className="absolute top-2 right-3 text-2xl text-gray-400 hover:text-gray-600 cursor-pointer"
       >
         ×
       </button>
