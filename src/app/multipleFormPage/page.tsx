@@ -33,23 +33,36 @@ export default function CarsPage() {
             <SidebarSteps />
           </aside>
 
+
           <main className="w-3/4 space-y-4">
             <div>
               <MultiformHeading image={image} heading={heading} />
             </div>
+            <div className="flex flex-col items-end gap-4 w-2/4">
+              {cars.map((car, idx) => (
+                <CarCard
+                  key={idx}
+                  name={car.name}
+                  icon={<div className="w-6 h-6 bg-black" />}
+                  selected={car.selected}
+                  onToggle={() => toggleCar(idx)}
+                />
+              ))}
 
-            {cars.map((car, idx) => (
-              <CarCard key={idx} name={car.name} icon={<div className="w-6 h-6 bg-black" />} selected={car.selected} onToggle={() => toggleCar(idx)} />
-            ))}
+              <AddCarCard
+                onClick={() => setCars([...cars, { name: "New Car", selected: false }])}
+              />
+            </div>
 
-            <AddCarCard onClick={() => setCars([...cars, { name: "New Car", selected: false }])} />
+            <div className="flex justify-center w-[500px]">
+              <button
+                className="mt-4 px-6 py-2 bg-gray-300 rounded text-white disabled:opacity-50 mx-auto"
+                disabled={!cars.some(car => car.selected)}
+              >
+                Next →
+              </button>
+            </div>
 
-            <button
-              className="mt-4 px-6 py-2 bg-gray-300 rounded text-white disabled:opacity-50"
-              disabled={!cars.some(car => car.selected)}
-            >
-              Next →
-            </button>
           </main>
         </div>
       </div>
