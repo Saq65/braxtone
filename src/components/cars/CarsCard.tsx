@@ -21,15 +21,13 @@ export default function CarCard({ name, icon, selected, onToggle }: CarCardProps
           checked={selected}
           onChange={onToggle}
         />
-        <div className="w-12 h-7 bg-gray-300 rounded-full peer-checked:bg-gray-500 transition-colors duration-300" />
+        <div className="w-12 h-6 bg-gray-300 rounded-full peer-checked:bg-gray-500 transition-colors duration-300" />
         <div
           className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full transition-transform duration-300
           peer-checked:translate-x-6"
         />
       </label>
     </div>
-
-
     </div>
   );
 }
