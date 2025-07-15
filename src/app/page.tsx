@@ -126,8 +126,8 @@ export default function Home() {
                       src={`/asesst/images/${img}.png`}
                       alt={img}
                       width={80}
-                      height={20}
-                      className="object-contain"
+                      height={40}
+                      className="object-cover"
                     />
                   </div>
                 </SwiperSlide>

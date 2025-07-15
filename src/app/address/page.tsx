@@ -24,7 +24,7 @@ const Page = () => {
             <div className='mt-8'>
                 <Buttons
                     onFirstClick={() => router.push('/InsuranceCoverage')}
-                    onSecondClick={() => router.push('/InsuranceCoverage')}
+                    onSecondClick={() => router.push('/multipleFormPage')}
                     secondDisabled={!inputValue.trim()} />
             </div>
 
