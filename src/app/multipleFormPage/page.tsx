@@ -26,19 +26,19 @@ export default function CarsPage() {
       <div className="header">
         <MultiformHeader />
       </div>
-      <div className="w-4/6  mx-auto mt-5">
+      <div className="  mx-auto mt-5">
 
         <div className="flex gap-12">
-          <aside className="w-1/4">
+          <aside className="lg:w-1/4 sm:block hidden">
             <SidebarSteps />
           </aside>
 
 
-          <main className="w-3/4 space-y-4">
+          <main className="mr-5 space-y-4">
             <div>
               <MultiformHeading image={image} heading={heading} />
             </div>
-            <div className="flex flex-col items-end gap-4 w-2/4">
+            <div className="flex flex-col gap-4  sm:ml-20 ">
               {cars.map((car, idx) => (
                 <CarCard
                   key={idx}

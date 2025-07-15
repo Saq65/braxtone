@@ -7,7 +7,7 @@ type CarCardProps = {
 
 export default function CarCard({ name, icon, selected, onToggle }: CarCardProps) {
   return (
-    <div className="flex items-center justify-between border border-gray-300 p-7 rounded-lg shadow-sm w-[380px] hover:shadow-md cursor-pointer">
+    <div className="flex items-center justify-between border border-gray-300 p-7 rounded-lg shadow-sm w-[330px] sm:w-[380px] hover:shadow-md cursor-pointer">
       <div className="flex items-center gap-3">
         <img src="/asesst/images/car-1.png" alt="" />
         <span>{name}</span>
