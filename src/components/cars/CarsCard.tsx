@@ -13,19 +13,19 @@ export default function CarCard({ name, icon, selected, onToggle }: CarCardProps
                 <img src="/asesst/images/car-1.png" alt="" />
                 <span>{name}</span>
             </div>
+            <input type="checkbox" checked={selected} onChange={onToggle} className="toggle toggle-primary" />
             <div className="ml-19 ">
                 <label className="relative inline-flex items-center cursor-pointer">
                     <input type="checkbox" className="sr-only peer" />
-
-                    <div className="w-12 h-6 bg-gray-300 rounded-full peer-checked:bg-[#0068a2] transition-colors duration-300"></div>
-
+                    <div className="w-12 h-6 bg-gray-300 rounded-full peer-checked:bg-gray-500 transition-colors duration-300"></div>
                     <div
                         className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full transition-transform duration-300
-                                   peer-checked:translate-x-6"
+                    peer-checked:translate-x-6"
                     ></div>
                 </label>
 
             </div>
+
 
         </div>
     );
