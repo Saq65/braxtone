@@ -47,7 +47,6 @@ export default function CarsPage() {
                   <CarCard
                     key={idx}
                     name={car.name}
-                    icon={<div className="w-6 h-6 bg-black" />}
                     selected={car.selected}
                     onToggle={() => toggleCar(idx)}
                   />
@@ -56,9 +55,7 @@ export default function CarsPage() {
               {showForm && (
                 <CarStepForm
                   onCancel={() => setShowForm(false)}
-                  onBack={() => setShowForm(false)}
                   onComplete={(car) => {
-                    setCars([...cars, car]);
                     setShowForm(false);
                   }}
                 />
