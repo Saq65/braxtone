@@ -51,7 +51,7 @@ const Header = () => {
                 </div>
 
                 <div
-                    className={`${montserrat.className} hidden lg:flex items-center text-white gap-1 text-sm cursor-pointer`}
+                    className={`${montserrat.className} hidden lg:flex items-center text-white text-md font-medium gap-1 hover:underline cursor-pointer`}
                 >
                     My Account
                     <IoMdArrowDropup />
@@ -103,7 +103,7 @@ const Header = () => {
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.6 }}
-                            className="flex items-center gap-1 font-semibold"
+                            className="flex items-center gap-1 font-semibold hover:underline"
                         >
                             My Account
                             <IoMdArrowDropup />
