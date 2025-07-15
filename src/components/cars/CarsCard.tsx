@@ -1,26 +1,22 @@
-import { Switch } from 'antd'
+import { Switch } from 'antd';
 
 export default function CarCard({
   name,
   selected,
   onToggle,
 }: {
-  name: string
-  selected: boolean
-  onToggle: () => void
+  name: string;
+  selected: boolean;
+  onToggle: () => void;
 }) {
   return (
-<<<<<<< HEAD
     <div
       className={`flex items-center justify-between p-5 rounded-lg shadow-sm w-[380px] hover:shadow-md cursor-pointer
         transition-colors duration-300 border 
         ${selected ? 'border-[#0068a2]' : 'border-gray-300'}`}
     >
-=======
-    <div className="flex items-center justify-between border border-gray-300 p-7 rounded-lg shadow-sm w-[330px] sm:w-[380px] hover:shadow-md cursor-pointer">
->>>>>>> 703679c8c7287dddfe4102f7f8b7c8c4e94533f3
       <div className="flex items-center gap-3">
-        <img src="/asesst/images/car-1.png" alt="" />
+        <img src="/asesst/images/car-1.png" alt="car" />
         <span>{name}</span>
       </div>
 
@@ -28,8 +24,6 @@ export default function CarCard({
         <Switch
           checked={selected}
           onChange={onToggle}
-        //   checkedChildren="✓"
-        //   unCheckedChildren="✗"
           className="bg-gray-300"
           style={{
             backgroundColor: selected ? '#0068a2' : '#d9d9d9',
@@ -37,5 +31,5 @@ export default function CarCard({
         />
       </div>
     </div>
-  )
+  );
 }
