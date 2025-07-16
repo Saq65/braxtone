@@ -21,7 +21,7 @@ export default function CarStepForm({
   const [model, setModel] = useState('')
   const [manufacturer, setManufacturer] = useState('')
 
-  const years = Array.from({ length: 20 }, (_, i) => `${2026 - i}`)
+  const years = Array.from({ length: 8 }, (_, i) => `${2026 - i}`)
   const companies = ["Acura", "BMW", "Audi", "Toyota"]
   const models = ["copper", "sample1", "sample2"]
   const manufacturers = ['5/40xi 4WD', '4/20i RWD', '3/10xi AWD']
@@ -48,16 +48,29 @@ export default function CarStepForm({
           <>
             <h2 className="text-sm font-medium mb-3 text-gray-800">Select the production year</h2>
             <div className="relative mb-4">
+              {/* <select
+                className="w-full border h-13 border-gray-300 px-4 py-2.5 rounded-lg text-[14px] text-gray-800 appearance-none focus:outline-none "
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+              >
+                <option className='' value="">Select</option>
+                {years.map((y) => (
+                  <option className='cursor-pointer' key={y} value={y}>{y}</option>
+                ))}
+              </select> */}
               <select
-                className="w-full border h-13 border-gray-300 px-4 py-2.5 rounded-lg text-[14px] text-gray-800 appearance-none focus:outline-none  "
+                className="w-full border h-13 border-gray-300 px-4 py-2.5 rounded-lg text-[14px] text-gray-800 appearance-none focus:outline-none custom-select"
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
               >
                 <option value="">Select</option>
                 {years.map((y) => (
-                  <option key={y} value={y}>{y}</option>
+                  <option key={y} value={y}>
+                    {y}
+                  </option>
                 ))}
               </select>
+
               <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400 text-sm">▼</div>
             </div>
 

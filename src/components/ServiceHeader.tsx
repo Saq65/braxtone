@@ -25,7 +25,7 @@ const ServiceHeader = ({ image, heading, paragraph }: ServiceHeaderProps) => {
           {heading}
         </h1>
       )}
-      <p className="text-base md:text-lg text-gray-600">{paragraph}</p>
+      <p className="text-base md:text-lg text-gray-600 font-Futura">{paragraph}</p>
     </div>
   );
 };
