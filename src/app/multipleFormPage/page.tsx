@@ -77,21 +77,26 @@ export default function CarsPage() {
               <MultiformHeading image={image} heading={heading} />
             </div>
 
-            <div className="flex flex-col items-end gap-4 w-full sm:w-2/4 md:2/4 lg:2/4">
+            <div className="flex flex-col items-end gap-4 w-2/4">
+              {/* ✅ Show car cards only when form is hidden */}
               {!showForm &&
                 cars.map((car, idx) => (
                   <CarCard
                     key={idx}
                     name={car.name}
+                    icon={<div className="w-6 h-6 bg-black" />}
                     selected={car.selected}
                     onToggle={() => toggleCar(idx)}
                   />
                 ))}
 
+              {/* ✅ Show form when triggered */}
               {showForm && (
                 <CarStepForm
                   onCancel={() => setShowForm(false)}
+                  onBack={() => setShowForm(false)}
                   onComplete={(car) => {
+                    setCars([...cars, car]);
                     setShowForm(false);
                   }}
                 />
@@ -111,6 +116,8 @@ export default function CarsPage() {
               </div>
             )}
           </main>
+
+
         </div>
       </div>
     </div>
