@@ -24,7 +24,7 @@ export default function MultiformHeading({ image, heading }: MultiformHeaderProp
     }, [totalAnimationTime])
 
     return (
-        <div className="flex items-center gap-4">
+        <div className="flex items-start gap-4 flex-col sm:flex-row md:flex-row lg:flex-row sm:items-center md:items-center lg:items-center">
             <div>
                 <Image
                     src={image || "/default-avatar.png"}
@@ -35,39 +35,39 @@ export default function MultiformHeading({ image, heading }: MultiformHeaderProp
                 />
             </div>
 
-            <div className="text-lg font-semibold w-1/2">
+            <div className="text-lg font-semibold w-5/6 sm:w-1/2 md:w-1/2 lg:w-1/2">
                 {animationDone ? (
                     heading
                 ) : (
-                <motion.div
-  className="flex flex-wrap"
-  initial="hidden"
-  animate="visible"
-  variants={{
-    visible: {
-      transition: {
-        staggerChildren: 0.05, // delay between letters
-      },
-    },
-  }}
->
-  {letters.map((char, idx) => (
-    <motion.span
-      key={idx}
-      className="inline-block"
-      variants={{
-        hidden: { opacity: 0, x: -10 },
-        visible: { opacity: 1, x: 0 },
-      }}
-      transition={{
-        duration: 0.3,
-        ease: 'easeOut',
-      }}
-    >
-      {char === ' ' ? '\u00A0' : char}
-    </motion.span>
-  ))}
-</motion.div>
+                    <motion.div
+                        className="flex flex-wrap"
+                        initial="hidden"
+                        animate="visible"
+                        variants={{
+                            visible: {
+                                transition: {
+                                    staggerChildren: 0.03, 
+                                },
+                            },
+                        }}
+                    >
+                        {letters.map((char, idx) => (
+                            <motion.span
+                                key={idx}
+                                className="inline-block"
+                                variants={{
+                                    hidden: { opacity: 0, x: -10 },
+                                    visible: { opacity: 1, x: 0 },
+                                }}
+                                transition={{
+                                    duration: 0.3,
+                                    ease: 'easeOut',
+                                }}
+                            >
+                                {char === ' ' ? '\u00A0' : char}
+                            </motion.span>
+                        ))}
+                    </motion.div>
 
 
                 )}
