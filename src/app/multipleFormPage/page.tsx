@@ -9,7 +9,7 @@ import MultiformHeading from "@/components/cars/MultiformHeading";
 import { MultiFormheader } from "@/data/multiformheading";
 import CarStepForm from "@/components/cars/CarStepForm";
 
-export default function CarsPage() {
+export default function MultipleFormPage() {
   const [cars, setCars] = useState([
     { name: "Toyota", selected: false },
     { name: "Hyundai", selected: false },
