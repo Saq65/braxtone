@@ -30,18 +30,18 @@ export default function CarsPage() {
         <MultiformHeader />
       </div>
 
-      <div className="w-4/6 mx-auto mt-5">
+      <div className="w-[90%] mx-auto mt-5 sm:w-4/6 md:w-4/6 lg:w-4/6">
         <div className="flex gap-12">
-          <aside className="w-1/4">
+          <aside className="w-1/4 hidden sm:block md:block lg:block">
             <SidebarSteps />
           </aside>
 
-          <main className="w-3/4 space-y-4">
+          <main className="w-full space-y-4 sm:w-3/4 md:w-3/4 lg:w-3/4">
             <div>
               <MultiformHeading image={image} heading={heading} />
             </div>
 
-            <div className="flex flex-col items-end gap-4 w-2/4">
+            <div className="flex flex-col items-end gap-4 w-full sm:w-2/4 md:2/4 lg:2/4">
               {!showForm &&
                 cars.map((car, idx) => (
                   <CarCard
