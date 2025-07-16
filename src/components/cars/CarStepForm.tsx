@@ -90,7 +90,7 @@ export default function CarStepForm({
 
         {step === 2 && (
           <>
-            <h2 className="text-sm font-medium mb-3 text-gray-800">Select the car manufacturing company</h2>
+            <h2 className="text-md font-medium mb-3 text-gray-800">Select the car manufacturing company</h2>
             <div className="relative mb-4">
               <Select
                 value={company}
@@ -119,7 +119,7 @@ export default function CarStepForm({
 
         {step === 3 && (
           <>
-            <h2 className="text-sm font-medium mb-3 text-gray-800">Select the car model</h2>
+            <h2 className="text-md font-medium mb-3 text-gray-800">Select the car model</h2>
             <div className="relative mb-4">
               <Select
                 value={model}
@@ -148,7 +148,7 @@ export default function CarStepForm({
 
         {step === 4 && (
           <>
-            <h2 className="text-sm font-medium mb-3 text-gray-800">Select the car body style</h2>
+            <h2 className="text-md font-medium mb-3 text-gray-800">Select the car body style</h2>
             <div className="relative mb-4">
               <Select
                 value={manufacturer}
