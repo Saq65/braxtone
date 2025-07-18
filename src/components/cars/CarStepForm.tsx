@@ -42,7 +42,7 @@ export default function CarStepForm({
         + Add car
       </button>
 
-      <div className="relative mx-end max-w-5/5 pt-6 pb-2 border border-[#d2d0d0] p-4 h-[260px] rounded-md mt-8 ml-4">
+      <div className="relative mx-end w-[390px] pt-6 pb-2 border border-[#d2d0d0] p-4 h-[260px] rounded-md mt-8 ml-4">
         <button
           onClick={onCancel}
           className="absolute top-2 right-3 text-2xl text-gray-400 hover:text-gray-600 cursor-pointer"
