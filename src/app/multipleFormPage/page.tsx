@@ -62,30 +62,9 @@ export default function MultipleFormPage() {
               </div>
             </div>
 
-            {addedCars.length > 0 && (
-              <div className={`ml-10 transition-transform duration-1000 ${carConfirmed ? "-translate-y-32 " : "translate-y-0 "} space-y-2`}>
-                {addedCars.map((entry, index) => (
-                  <div
-                    key={index}
-                    className="transition-all duration-700 transform"
-                  >
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      {Object.values(entry).filter(Boolean).join(" ")}
-                    </h3>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {showDriverForm && (
-              <div className="ml-10 mt-2">
-                <DriverForm />
-              </div>
-            )}
-
-            {!showForm && addedCars.length === 0 && (
-              <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 ml-10">
-                {cars.map((car, idx) => (
+            <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 mx-auto sm:mx-22 md:mx-22 lg:mx-22 xl:mx-22">
+              {!showForm &&
+                cars.map((car, idx) => (
                   <CarCard
                     key={idx}
                     name={car.name}
