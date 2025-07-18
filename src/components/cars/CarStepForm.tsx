@@ -38,11 +38,11 @@ export default function CarStepForm({
 
   return (
     <div className=''>
-      <button className="w-[390px] ml-4 border border-dashed border-gray-400 p-8 rounded-lg text-center text-gray-500 hover:bg-gray-50 cursor-pointer">
+      <button className="w-[390px] ml-10 border border-dashed border-gray-400 p-8 rounded-lg text-center text-gray-500 hover:bg-gray-50 cursor-pointer">
         + Add car
       </button>
 
-      <div className="relative mx-end max-w-5/5 pt-6 pb-2 border border-[#d2d0d0] p-4 h-[260px] rounded-md mt-8 ml-4">
+      <div className="relative mx-end w-[390px] pt-6 pb-2 border border-[#d2d0d0] p-4 h-[260px] rounded-md mt-8 ml-10">
         <button
           onClick={onCancel}
           className="absolute top-2 right-3 text-2xl text-gray-400 hover:text-gray-600 cursor-pointer"
@@ -227,3 +227,4 @@ function StepNavigation({
     </div>
   );
 }
+
