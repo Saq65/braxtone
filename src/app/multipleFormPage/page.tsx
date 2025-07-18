@@ -41,7 +41,7 @@ export default function MultipleFormPage() {
               <MultiformHeading image={image} heading={heading} />
             </div>
 
-            <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 mx-auto sm:mx-22 md:mx-22 lg:mx-22 xl:mx-22">
+            <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 mx-auto sm:mx-22 md:mx-22 lg:mx-22 :mx-22">
               {!showForm &&
                 cars.map((car, idx) => (
                   <CarCard
