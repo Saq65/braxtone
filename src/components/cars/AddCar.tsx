@@ -24,7 +24,7 @@ export default function AddCarCard({ onClick }: { onClick: () => void }) {
       ) : (
         <button
           onClick={handleClick}
-          className="w-[380px] border border-dashed p-6 rounded text-center text-gray-500 hover:bg-gray-50 cursor-pointer"
+          className="w-auto border border-dashed p-6 rounded text-center text-gray-500 hover:bg-gray-50 cursor-pointer sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px]"
         >
           + Add car
         </button>

@@ -30,54 +30,18 @@ export default function MultipleFormPage() {
         <MultiformHeader />
       </div>
 
-      <div className="w-auto mx-auto mt-5 sm:w-4/6 md:w-4/6 lg:w-4/6 xl:w-4/6">
-        <div className="flex gap-12">
-          <aside className="w-1/4 hidden sm:block md:block lg:block xl:block">
+      <div className="w-full max-w-7xl mx-auto mt-5 px-4">
+        <div className="flex flex-col xl:flex-row gap-6">
+           <aside className="w-full xl:w-1/4 hidden md:block">
             <SidebarSteps />
           </aside>
 
-          {/* <main className="w-3/4 space-y-4">
-            <div>
-              <MultiformHeading image={image} heading={heading} />
-            </div>
-            <div className="flex flex-col items-end gap-4 w-2/4">
-              {!showForm &&
-                cars.map((car, idx) => (
-                  <CarCard
-                    key={idx}
-                    name={car.name}
-                    icon={<div className="w-6 h-6 bg-black" />}
-                    selected={car.selected}
-                    onToggle={() => toggleCar(idx)}
-                  />
-                ))}
-
-              {showForm ? (
-                <CarStepForm
-                  onCancel={() => setShowForm(false)}
-                  onBack={() => setShowForm(false)} />
-              ) : (
-                <AddCarCard onClick={() => setShowForm(true)} />
-              )}
-            </div>
-
-
-            <div className="flex justify-center w-[500px]">
-              <button
-                className="mt-4 px-6 py-2 bg-gray-300 rounded text-white disabled:opacity-50 mx-auto"
-                disabled={!cars.some((car) => car.selected)}
-              >
-                Next →
-              </button>
-            </div>
-          </main> */}
-
-          <main className="w-full space-y-4 sm:w-2/3 md:w-2/3 lg:w-2/3 xl:w-2/3">
+          <main className="w-full xl:w-3/4 space-y-6">
             <div>
               <MultiformHeading image={image} heading={heading} />
             </div>
 
-            <div className="flex flex-col gap-4 w-2/4 mx-8 sm:items-end md:items-end lg:items-end xl:items-end">
+            <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 mx-auto sm:mx-22 md:mx-22 lg:mx-22 xl:mx-22">
               {!showForm &&
                 cars.map((car, idx) => (
                   <CarCard
@@ -91,9 +55,7 @@ export default function MultipleFormPage() {
               {showForm && (
                 <CarStepForm
                   onCancel={() => setShowForm(false)}
-                  // onBack={() => setShowForm(false)}
                   onComplete={(car) => {
-                    // setCars([...cars, car]);
                     setShowForm(false);
                   }}
                 />
@@ -103,9 +65,9 @@ export default function MultipleFormPage() {
             </div>
 
             {!showForm && (
-              <div className="flex justify-center w-[500px]">
+              <div className="flex justify-center w-3/5">
                 <button
-                  className="mt-4 px-6 py-2 bg-gray-300 rounded text-white disabled:opacity-50 mx-auto"
+                  className="mt-4 px-8 py-3 bg-gray-300 rounded text-white disabled:opacity-50"
                   disabled={!cars.some((car) => car.selected)}
                 >
                   Next →
@@ -113,8 +75,6 @@ export default function MultipleFormPage() {
               </div>
             )}
           </main>
-
-
         </div>
       </div>
     </div>
