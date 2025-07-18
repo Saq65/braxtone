@@ -1,6 +1,4 @@
 'use client'
-
-import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
@@ -9,7 +7,7 @@ interface MultiformHeaderProps {
     heading?: string
 }
 
-export default function MultiformHeading({ image, heading }: MultiformHeaderProps) {
+export default function MultiformHeading({  heading }: MultiformHeaderProps) {
     const [animationDone, setAnimationDone] = useState(false)
     const letters = heading?.split('') || []
 
@@ -25,17 +23,9 @@ export default function MultiformHeading({ image, heading }: MultiformHeaderProp
 
     return (
         <div className="flex items-start gap-4 flex-col sm:flex-row md:flex-row lg:flex-row sm:items-center md:items-center lg:items-center">
-            <div>
-                <Image
-                    src={image || "/default-avatar.png"}
-                    alt="heading image"
-                    width={70}
-                    height={70}
-                    className="rounded-full object-cover h-auto border-2 border-white shadow"
-                />
-            </div>
+            
 
-            <div className="text-lg font-semibold w-5/6 sm:w-1/2 md:w-1/2 lg:w-1/2">
+            <div className="text-lg font-semibold w-5/6 sm:w-[500px]">
                 {animationDone ? (
                     heading
                 ) : (
