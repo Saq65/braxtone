@@ -47,46 +47,50 @@ export default function MultipleFormPage() {
             <SidebarSteps />
           </aside>
 
-          <main className="w-full xl:w-3/4 space-y-6 h-[850px] overflow-y-scroll scroll-smooth scrollbar-hide">
-            <div className='flex mt-35'>
-              <div className='fixed top-38 left-1/3'>
-                <Image
-                  src={image || "/default-avatar.png"}
-                  alt="heading image"
-                  width={55}
-                  height={55}
-                  className="rounded-full object-cover h-auto border-2 border-white shadow"
-                />
-              </div>
-              <div className={`ml-10 transition-transform duration-1000 ${carConfirmed ? "-translate-y-32 opacity-60" : "translate-y-0 opacity-100"}`}>
-                <MultiformHeading heading={heading} />
-              </div>
+          {/* <main className="w-3/4 space-y-4">
+            <div>
+              <MultiformHeading image={image} heading={heading} />
+            </div>
+            <div className="flex flex-col items-end gap-4 w-2/4">
+              {!showForm &&
+                cars.map((car, idx) => (
+                  <CarCard
+                    key={idx}
+                    name={car.name}
+                    icon={<div className="w-6 h-6 bg-black" />}
+                    selected={car.selected}
+                    onToggle={() => toggleCar(idx)}
+                  />
+                ))}
+
+              {showForm ? (
+                <CarStepForm
+                  onCancel={() => setShowForm(false)}
+                  onBack={() => setShowForm(false)} />
+              ) : (
+                <AddCarCard onClick={() => setShowForm(true)} />
+              )}
             </div>
 
-            {addedCars.length > 0 && (
-              <div className={`ml-10 transition-transform duration-1000 ${carConfirmed ? "-translate-y-32 " : "translate-y-0 "} space-y-2`}>
-                {addedCars.map((entry, index) => (
-                  <div
-                    key={index}
-                    className="transition-all duration-700 transform"
-                  >
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      {Object.values(entry).filter(Boolean).join(" ")}
-                    </h3>
-                  </div>
-                ))}
-              </div>
-            )}
 
-            {showDriverForm && (
-              <div className="ml-10 mt-2">
-                <DriverForm />
-              </div>
-            )}
+            <div className="flex justify-center w-[500px]">
+              <button
+                className="mt-4 px-6 py-2 bg-gray-300 rounded text-white disabled:opacity-50 mx-auto"
+                disabled={!cars.some((car) => car.selected)}
+              >
+                Next →
+              </button>
+            </div>
+          </main> */}
 
-            {!showForm && addedCars.length === 0 && (
-              <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 ml-10">
-                {cars.map((car, idx) => (
+          <main className="w-full space-y-4 sm:w-2/3 md:w-2/3 lg:w-2/3 xl:w-2/3">
+            <div>
+              <MultiformHeading image={image} heading={heading} />
+            </div>
+
+            <div className="flex flex-col gap-4 w-2/4 mx-8 sm:items-end md:items-end lg:items-end xl:items-end">
+              {!showForm &&
+                cars.map((car, idx) => (
                   <CarCard
                     key={idx}
                     name={car.name}
@@ -102,13 +106,19 @@ export default function MultipleFormPage() {
               <div className="mt-6">
                 <CarStepForm
                   onCancel={() => setShowForm(false)}
-                  onComplete={handleCarFormComplete}
+                  // onBack={() => setShowForm(false)}
+                  onComplete={(car) => {
+                    // setCars([...cars, car]);
+                    setShowForm(false);
+                  }}
                 />
-              </div>
-            )}
+              )}
 
-            {!showForm && addedCars.length === 0 && (
-              <div className="flex justify-center w-3/5">
+              {!showForm && <AddCarCard onClick={() => setShowForm(true)} />}
+            </div>
+
+            {!showForm && (
+              <div className="flex justify-center w-[500px]">
                 <button
                   className="mt-4 px-8 py-3 bg-gray-300 rounded text-white disabled:opacity-50"
                   disabled={!cars.some((car) => car.selected)}
