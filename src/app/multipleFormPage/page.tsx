@@ -40,6 +40,7 @@ export default function MultipleFormPage() {
 
   return (
     <div className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)] overflow-x-hidden">
+      {/* <MultiformHeader/> */}
       <div className="w-full max-w-7xl mx-auto px-4 mt-3">
         <div className="flex flex-col xl:flex-row gap-6">
           <aside className="w-full xl:w-1/4 hidden md:block mt-35">
