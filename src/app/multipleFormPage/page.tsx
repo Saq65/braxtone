@@ -125,13 +125,12 @@ export default function MultipleFormPage() {
                 ))}
                 <AddCarCard
                   onClick={() => setShowForm(true)} 
-                  
+
                   onComplete={handleCarFormComplete}
                 />
               </div>
             )}
 
-            {/* Show the car form */}
             {showForm && (
               <div className="mt-6">
                 <CarStepForm
@@ -141,11 +140,10 @@ export default function MultipleFormPage() {
               </div>
             )}
 
-            {/* Next Button */}
             {!showForm && addedCars.length === 0 && (
-              <div className="flex justify-center w-3/5">
+              <div className="flex justify-center w-[440px]">
                 <button
-                  className="mt-4 px-8 py-3 bg-gray-300 rounded text-white disabled:opacity-50"
+                  className="mt-4 px-10 font-semibold py-3 bg-[#d0d0d0] rounded text-gray-800  disabled:opacity-50"
                   disabled={!cars.some((car) => car.selected)}
                 >
                   Next →
