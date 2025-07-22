@@ -6,12 +6,12 @@ type Props = {
 
 function MultiOption({ data }: Props) {
   return (
-    <div className="w-[300px] border border-gray-300 py-4">
+    <div className="">
       <ul>
         {data.map(item => (
-          <li key={item.id} className="py-2 px-4">
+          <div key={item.id} className="w-[350px] border border-gray-300 py-4 gap-3 mt-3 rounded-md text-center font-semibold">
             {item.value}
-          </li>
+          </div>
         ))}
       </ul>
     </div>

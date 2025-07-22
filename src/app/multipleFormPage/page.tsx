@@ -10,6 +10,7 @@ import MultiformHeading from "@/components/cars/MultiformHeading";
 import { MultiFormheader } from "@/data/multiformheading";
 import CarStepForm from "@/components/cars/CarStepForm";
 import DriverStepForm from '@/components/drivers/DriverStepForm';
+import FinanceType from '@/components/multiOption/FinanceType';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -124,8 +125,7 @@ export default function MultipleFormPage() {
                   />
                 ))}
                 <AddCarCard
-                  onClick={() => setShowForm(true)} 
-
+                  onClick={() => setShowForm(true)}
                   onComplete={handleCarFormComplete}
                 />
               </div>
@@ -148,6 +148,13 @@ export default function MultipleFormPage() {
                 >
                   Next →
                 </button>
+              </div>
+            )}
+
+            {/* Conditionally render FinanceType after driver form is confirmed */}
+            {driverConfirmed && (
+              <div className="ml-10 mt-6">
+                <FinanceType />
               </div>
             )}
           </main>
