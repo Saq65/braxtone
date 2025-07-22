@@ -22,14 +22,14 @@ export default function AddCarCard({ onClick, onComplete }: AddCarCardProps) {
         <CarStepForm
           onCancel={() => setShowForm(false)}
           onComplete={(car) => {
-            onComplete(car); // ✅ pass car data to parent
+            onComplete(car);
             setShowForm(false);
           }}
         />
       ) : (
         <button
           onClick={handleClick}
-          className="w-auto border border-dashed p-6 rounded text-center text-gray-500 hover:bg-gray-50 cursor-pointer sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px]"
+          className="w-auto border border-dashed p-6 rounded text-center text-gray-800 font-semibold hover:bg-gray-50 cursor-pointer sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px]"
         >
           + Add car
         </button>

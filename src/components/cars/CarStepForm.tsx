@@ -170,14 +170,14 @@ export default function CarStepForm({
             <div className="flex justify-between mt-4">
               <button
                 onClick={() => setStep(3)}
-                className="rounded-md w-[180px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100"
+                className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100"
               >
                 Back
               </button>
               <button
                 onClick={() => onComplete({ year, company, manufacturer, model })}
                 disabled={!manufacturer}
-                className="rounded-md w-[180px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100 cursor-pointer"
+                className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-800 hover:bg-[#0067a1] hover:text-white border border-gray-100 cursor-pointer  bg-[#d0d0d0]"
               >
                 Add
               </button>
@@ -213,14 +213,14 @@ function StepNavigation({
     <div className="flex justify-between mt-4">
       <button
         onClick={onBack}
-        className="rounded-md w-[180px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100 cursor-pointer"
+        className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100 cursor-pointer"
       >
         Back
       </button>
       <button
         onClick={onNext}
         disabled={!canContinue}
-        className="rounded-md w-[180px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100 cursor-pointer"
+        className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-800 hover:bg-[#0067a1] hover:text-white border border-gray-100 cursor-pointer bg-[#d0d0d0]"
       >
         Next
       </button>

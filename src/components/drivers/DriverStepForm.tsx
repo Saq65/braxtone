@@ -47,13 +47,16 @@ export default function DriverStepForm({
         {step === 1 && (
           <>
             <h2 className="text-md font-medium mb-3 text-gray-800">Enter driver's name</h2>
-            <Input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Full Name"
-              className="mb-4"
-              size="large"
-            />
+            <div>
+              <Input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Full Name"
+                className="mb-4"
+                size="large"
+              />
+            </div>
+
             <ProgressBar step={step} totalSteps={totalSteps} />
             <StepNavigation
               canContinue={!!name}
@@ -129,7 +132,7 @@ export default function DriverStepForm({
             <div className="flex justify-between mt-4">
               <button
                 onClick={() => setStep(3)}
-                className="rounded-md w-[180px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100"
+                className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100"
               >
                 Back
               </button>
@@ -138,7 +141,7 @@ export default function DriverStepForm({
                   onComplete({ name, licenseNumber, vehicleType, experienceLevel })
                 }
                 disabled={!experienceLevel}
-                className="rounded-md w-[180px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100"
+                className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-800 hover:bg-[#0067a1] hover:text-white border border-gray-100 bg-[#d0d0d0]"
               >
                 Add
               </button>
@@ -174,14 +177,14 @@ function StepNavigation({
     <div className="flex justify-between mt-4">
       <button
         onClick={onBack}
-        className="rounded-md w-[180px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100 cursor-pointer"
+        className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100 cursor-pointer"
       >
         Back
       </button>
       <button
         onClick={onNext}
         disabled={!canContinue}
-        className="rounded-md w-[180px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100 cursor-pointer"
+        className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-800 hover:bg-[#0067a1] hover:text-white border border-gray-100 cursor-pointer bg-[#d0d0d0]"
       >
         Next
       </button>
