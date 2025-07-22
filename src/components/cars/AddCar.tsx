@@ -3,7 +3,12 @@
 import { useState } from 'react';
 import CarStepForm from './CarStepForm';
 
-export default function AddCarCard({ onClick }: { onClick: () => void }) {
+type AddCarCardProps = {
+  onClick: () => void;
+  onComplete: (car: { [key: string]: string }) => void;
+};
+
+export default function AddCarCard({ onClick, onComplete }: AddCarCardProps) {
   const [showForm, setShowForm] = useState(false);
 
   const handleClick = () => {
@@ -17,7 +22,7 @@ export default function AddCarCard({ onClick }: { onClick: () => void }) {
         <CarStepForm
           onCancel={() => setShowForm(false)}
           onComplete={(car) => {
-            console.log('Car completed:', car);
+            onComplete(car); // ✅ pass car data to parent
             setShowForm(false);
           }}
         />

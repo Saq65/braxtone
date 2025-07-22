@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
 import Image from 'next/image';
 import AddCarCard from "@/components/cars/AddCar";
 import CarCard from "@/components/cars/CarsCard";
 import SidebarSteps from "@/components/Sidebar";
-import {  useState } from "react";
+import { useState } from "react";
 import MultiformHeader from "@/components/MultiformHeader";
 import MultiformHeading from "@/components/cars/MultiformHeading";
 import { MultiFormheader } from "@/data/multiformheading";
 import CarStepForm from "@/components/cars/CarStepForm";
-import DriverForm from "@/components/cars/DriverForm";
+import DriverStepForm from '@/components/drivers/DriverStepForm';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -21,6 +21,8 @@ export default function MultipleFormPage() {
   const [addedCars, setAddedCars] = useState<{ [key: string]: string }[]>([]);
   const [carConfirmed, setCarConfirmed] = useState(false);
   const [showDriverForm, setShowDriverForm] = useState(false);
+  const [addedDrivers, setAddedDrivers] = useState<{ [key: string]: string }[]>([]);
+  const [driverConfirmed, setDriverConfirmed] = useState(false);
   const { image, heading } = MultiFormheader[0];
 
   const toggleCar = (index: number) => {
@@ -38,9 +40,23 @@ export default function MultipleFormPage() {
     }, 500);
   };
 
+  const handleDriverFormComplete = (driver: { [key: string]: string }) => {
+    setAddedDrivers((prev) => [...prev, driver]);
+    setShowDriverForm(false);
+    setTimeout(() => {
+      setDriverConfirmed(true);
+    }, 500);
+  };
+
+  let activeHeader = MultiFormheader[0];
+  if (carConfirmed && !driverConfirmed) {
+    activeHeader = MultiFormheader[1];
+  } else if (driverConfirmed) {
+    activeHeader = MultiFormheader[2];
+  }
+
   return (
     <div className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)] overflow-x-hidden">
-      {/* <MultiformHeader/> */}
       <div className="w-full max-w-7xl mx-auto px-4 mt-3">
         <div className="flex flex-col xl:flex-row gap-6">
           <aside className="w-full xl:w-1/4 hidden md:block mt-35">
@@ -58,18 +74,15 @@ export default function MultipleFormPage() {
                   className="rounded-full object-cover h-auto border-2 border-white shadow"
                 />
               </div>
-              <div className={`ml-10 transition-transform duration-1000 ${carConfirmed ? "-translate-y-32 opacity-60" : "translate-y-0 opacity-100"}`}>
-                <MultiformHeading heading={heading} />
+              <div className={`ml-10 w-2/5 transition-transform duration-1000 ${carConfirmed && !driverConfirmed ? "-translate-y-32 opacity-60" : driverConfirmed ? "-translate-y-64 opacity-30" : "translate-y-0 opacity-100"}`}>
+                <MultiformHeading heading={activeHeader.heading} />
               </div>
             </div>
 
             {addedCars.length > 0 && (
               <div className={`ml-10 transition-transform duration-1000 ${carConfirmed ? "-translate-y-32 " : "translate-y-0 "} space-y-2`}>
                 {addedCars.map((entry, index) => (
-                  <div
-                    key={index}
-                    className="transition-all duration-700 transform"
-                  >
+                  <div key={index} className="transition-all duration-700 transform">
                     <h3 className="text-lg font-semibold text-gray-900">
                       {Object.values(entry).filter(Boolean).join(" ")}
                     </h3>
@@ -80,10 +93,26 @@ export default function MultipleFormPage() {
 
             {showDriverForm && (
               <div className="ml-10 mt-2">
-                <DriverForm />
+                <DriverStepForm
+                  onCancel={() => setShowDriverForm(false)}
+                  onComplete={handleDriverFormComplete}
+                />
               </div>
             )}
 
+            {addedDrivers.length > 0 && (
+              <div className={`ml-10 transition-transform duration-1000 ${driverConfirmed ? "-translate-y-32" : "translate-y-0"} space-y-2`}>
+                {addedDrivers.map((entry, index) => (
+                  <div key={index} className="transition-all duration-700 transform">
+                    <h3 className="text-lg font-semibold text-gray-700">
+                      {Object.values(entry).filter(Boolean).join(" ")}
+                    </h3>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Conditionally render the car list */}
             {!showForm && addedCars.length === 0 && (
               <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 ml-10">
                 {cars.map((car, idx) => (
@@ -94,10 +123,15 @@ export default function MultipleFormPage() {
                     onToggle={() => toggleCar(idx)}
                   />
                 ))}
-                <AddCarCard onClick={() => setShowForm(true)} />
+                <AddCarCard
+                  onClick={() => setShowForm(true)} 
+                  
+                  onComplete={handleCarFormComplete}
+                />
               </div>
             )}
 
+            {/* Show the car form */}
             {showForm && (
               <div className="mt-6">
                 <CarStepForm
@@ -107,6 +141,7 @@ export default function MultipleFormPage() {
               </div>
             )}
 
+            {/* Next Button */}
             {!showForm && addedCars.length === 0 && (
               <div className="flex justify-center w-3/5">
                 <button
