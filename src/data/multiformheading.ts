@@ -19,7 +19,7 @@ export const MultiFormheader: MultiFormheader[] = [
     {
         id: '3',
         image: '/asesst/images/dania-smile.png',
-        heading: "Alright. Would you like to add driver information?",
+        heading: "Great. Is your Nissan 370Z financed or leased?",
     }
 
 ];
