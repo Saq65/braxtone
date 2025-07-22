@@ -10,7 +10,8 @@ import MultiformHeading from "@/components/cars/MultiformHeading";
 import { MultiFormheader } from "@/data/multiformheading";
 import CarStepForm from "@/components/cars/CarStepForm";
 import DriverStepForm from '@/components/drivers/DriverStepForm';
-import FinanceType from '@/components/multiOption/FinanceType';
+import { finance } from '@/data/multiOptionsData';
+import MultiOption from '@/components/ui/MultiOption';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -140,7 +141,7 @@ export default function MultipleFormPage() {
               </div>
             )}
 
-            {!showForm && addedCars.length === 0 && (
+            {!showForm && addedCars.length === 0 && driverConfirmed &&(
               <div className="flex justify-center w-[440px]">
                 <button
                   className="mt-4 px-10 font-semibold py-3 bg-[#d0d0d0] rounded text-gray-800  disabled:opacity-50"
@@ -154,7 +155,7 @@ export default function MultipleFormPage() {
             {/* Conditionally render FinanceType after driver form is confirmed */}
             {driverConfirmed && (
               <div className="ml-10 mt-6">
-                <FinanceType />
+                <MultiOption data={finance} />
               </div>
             )}
           </main>
