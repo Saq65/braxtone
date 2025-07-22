@@ -1,5 +1,4 @@
 'use client';
-
 import Image from 'next/image';
 import AddCarCard from "@/components/cars/AddCar";
 import CarCard from "@/components/cars/CarsCard";
@@ -18,7 +17,7 @@ export default function MultipleFormPage() {
     { name: "Toyota", selected: false },
     { name: "Hyundai", selected: false },
   ]);
-
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [addedCars, setAddedCars] = useState<{ [key: string]: string }[]>([]);
   const [carConfirmed, setCarConfirmed] = useState(false);
@@ -48,6 +47,10 @@ export default function MultipleFormPage() {
     setTimeout(() => {
       setDriverConfirmed(true);
     }, 500);
+  };
+
+  const handleOptionSelect = (value: string) => {
+    setSelectedOption(value); // Store the selected value in state
   };
 
   let activeHeader = MultiFormheader[0];
@@ -154,8 +157,8 @@ export default function MultipleFormPage() {
 
             {/* Conditionally render FinanceType after driver form is confirmed */}
             {driverConfirmed && (
-              <div className="ml-10 mt-6">
-                <MultiOption data={finance} />
+              <div className="ml-10">
+                <MultiOption data={finance} onSelect={handleOptionSelect} />
               </div>
             )}
           </main>
