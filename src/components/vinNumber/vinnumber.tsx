@@ -22,7 +22,6 @@ export default function Vinnumber({ data, onSelect, onNextClick }: Props) {
   return (
     <div>
       <div>
-        {/* VIN number input field */}
         <input
           type="text"
           name="vinnumber"
