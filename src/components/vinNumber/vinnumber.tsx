@@ -7,22 +7,21 @@ type Props = {
 };
 
 export default function Vinnumber({ data, onSelect, onNextClick }: Props) {
-  const [vinnumber, setVinnumber] = useState<string>(''); // Track VIN input value
+  const [vinnumber, setVinnumber] = useState<string>('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setVinnumber(e.target.value); // Update VIN number state
+    setVinnumber(e.target.value); 
   };
 
   const handleNextClick = () => {
     if (vinnumber) {
-      onNextClick(); // Trigger onNextClick when VIN is filled
+      onNextClick(); 
     }
   };
   
   return (
     <div>
       <div>
-        {/* VIN number input field */}
         <input
           type="text"
           name="vinnumber"
