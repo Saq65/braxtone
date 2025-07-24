@@ -37,16 +37,7 @@ function MultiOption({ data, onSelect, onNext }: Props) {
         </div>
       ))}
       
-      {/* Next button: Enable only when an option is selected */}
-      {/* <div className="ml-20 mt-8">
-        <button
-          onClick={handleNextClick}
-          className={`mt-4 px-10 font-semibold py-3 ${selectedOption ? 'bg-[#005684]' : 'bg-[#d0d0d0]'} rounded text-white`}
-          disabled={!selectedOption} // Disable button if no option is selected
-        >
-          Next →
-        </button>
-      </div> */}
+     
     </div>
   );
 }

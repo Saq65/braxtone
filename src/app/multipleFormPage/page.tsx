@@ -19,20 +19,24 @@ export default function MultipleFormPage() {
     { name: "Toyota", selected: false },
     { name: "Hyundai", selected: false },
   ]);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [addedCars, setAddedCars] = useState<{ [key: string]: string }[]>([]);
   const [carConfirmed, setCarConfirmed] = useState(false);
   const [showDriverForm, setShowDriverForm] = useState(false);
   const [addedDrivers, setAddedDrivers] = useState<{ [key: string]: string }[]>([]);
   const [driverConfirmed, setDriverConfirmed] = useState(false);
-  const [financeConfirmed, setFinanceConfirmed] = useState(false); // Track if finance type is selected
-  const [showVinNumber, setShowVinNumber] = useState(false); // Track if VIN number form is shown
+  const [financeConfirmed, setFinanceConfirmed] = useState(false); 
+  const [showVinNumber, setShowVinNumber] = useState(false); 
+  const [selectedFinanceOption, setSelectedFinanceOption] = useState<string | null>(null);
+  const [vinnumber, setVinnumber] = useState<string>(''); // Store VIN number
+
   const { image, heading } = MultiFormheader[0];
 
-  // Refs for scrolling
-  const addedCarsRef = useRef(null);  // Reference to added cars section
-  const addedDriversRef = useRef(null); // Reference to added drivers section
+  // Refs for each section that will scroll
+  const addedCarsRef = useRef<HTMLDivElement | null>(null);  // Reference to added cars section
+  const addedDriversRef = useRef<HTMLDivElement | null>(null); // Reference to added drivers section
+  const financeRef = useRef<HTMLDivElement | null>(null); // Reference to finance options section
+  const vinNumberRef = useRef<HTMLDivElement | null>(null); // Reference to VIN number section
 
   const toggleCar = (index: number) => {
     const updated = [...cars];
@@ -41,29 +45,49 @@ export default function MultipleFormPage() {
   };
 
   const handleCarFormComplete = (car: { [key: string]: string }) => {
-    setAddedCars((prev) => [...prev, car]);
+    setAddedCars([car, ...addedCars]);  // Prepend the new car (latest one)
     setShowForm(false);
     setTimeout(() => {
       setCarConfirmed(true);
-      setShowDriverForm(true);
+      setShowDriverForm(true); // Show driver form after car form is completed
     }, 500);
   };
 
   const handleDriverFormComplete = (driver: { [key: string]: string }) => {
-    setAddedDrivers((prev) => [...prev, driver]);
+    setAddedDrivers([driver, ...addedDrivers]);  // Prepend the new driver (latest one)
     setShowDriverForm(false);
     setTimeout(() => {
-      setDriverConfirmed(true);
+      setDriverConfirmed(true); // Mark driver as confirmed
     }, 500);
   };
 
   const handleOptionSelect = (value: string) => {
-    setSelectedOption(value); // Store the selected value in state
+    setSelectedFinanceOption(value); // Store selected finance option
     setFinanceConfirmed(true); // Confirm the finance type selection
     setShowVinNumber(true); // Show VIN number form immediately after selecting an option
-    console.log("Finance option selected: ", value); // Debugging line
   };
 
+  const handleVinNumberChange = (value: string) => {
+    setVinnumber(value);
+  };
+
+  // Scroll only the specific sections based on form completion
+  useEffect(() => {
+    if (addedCars.length > 0 && addedCarsRef.current) {
+      addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    else if (addedDrivers.length > 0 && addedDriversRef.current) {
+      addedDriversRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    else if (financeConfirmed && financeRef.current) {
+      financeRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    else if (showVinNumber && vinNumberRef.current) {
+      vinNumberRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [addedCars, addedDrivers, financeConfirmed, showVinNumber]);
+
+  // Set active header based on form completion
   let activeHeader = MultiFormheader[0];
   if (carConfirmed && !driverConfirmed) {
     activeHeader = MultiFormheader[1];
@@ -71,24 +95,10 @@ export default function MultipleFormPage() {
     activeHeader = MultiFormheader[2];
   }
 
-  // Use useEffect to scroll after state is updated
-  useEffect(() => {
-    if (addedCars.length > 0 && addedCarsRef.current) {
-      addedCarsRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [addedCars]);
-
-  useEffect(() => {
-    if (addedDrivers.length > 0 && addedDriversRef.current) {
-      addedDriversRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [addedDrivers]);
-
   return (
-    <div className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)] overflow-x-hidden">
+    <div className="min-h-[200vh] bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)] overflow-x-hidden">
       <div>
         <MultiformHeader />
-
       </div>
       <div className="w-full max-w-7xl mx-auto px-4 mt-3">
         <div className="flex flex-col xl:flex-row gap-6">
@@ -97,6 +107,54 @@ export default function MultipleFormPage() {
           </aside>
 
           <main className="w-full xl:w-3/4 space-y-6 ">
+
+            {/* Section to show the most recent added data */}
+            <div className='overflow-y-auto max-h-[400px]' style={{ marginBottom: '20px' }}>
+              {/* Show only the latest car */}
+              {addedCars.length > 0 && (
+                <div ref={addedCarsRef} className="ml-10 space-y-2">
+                  {addedCars.slice(0, 1).map((entry, index) => ( // Show only the latest added car
+                    <div key={index} className="transition-all duration-700 transform">
+                      <h3 className="text-lg font-semibold text-gray-900">
+                       {Object.values(entry).filter(Boolean).join(" ")}
+                      </h3>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Show only the latest driver */}
+              {addedDrivers.length > 0 && (
+                <div ref={addedDriversRef} className="ml-10 space-y-2">
+                  {addedDrivers.slice(0, 1).map((entry, index) => ( // Show only the latest added driver
+                    <div key={index} className="transition-all duration-700 transform">
+                      <h3 className="text-lg font-semibold text-gray-700">
+                   {Object.values(entry).filter(Boolean).join(" ")}
+                      </h3>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Show selected finance option */}
+              {selectedFinanceOption && (
+                <div ref={financeRef} className="ml-10 space-y-2">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                 {selectedFinanceOption}
+                  </h3>
+                </div>
+              )}
+
+              {/* Show VIN number */}
+              {vinnumber && (
+                <div ref={vinNumberRef} className="ml-10 space-y-2">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                   {vinnumber}
+                  </h3>
+                </div>
+              )}
+            </div>
+
             {/* Header Section */}
             <div className='flex mt-28 gap-00'>
               <div className=''>
@@ -108,49 +166,13 @@ export default function MultipleFormPage() {
                   className="rounded-full object-cover h-auto border-2 border-white shadow"
                 />
               </div>
-              <div className={`ml-4 w-2/5 transition-transform duration-1000 ${carConfirmed && !driverConfirmed ? "-translate-y-32 opacity-60" : driverConfirmed ? "-translate-y-64 opacity-30" : "translate-y-0 opacity-100"}`}>
+              <div className={`ml-4 w-2/5`}>
                 <MultiformHeading heading={activeHeader.heading} />
               </div>
             </div>
 
-            {/* Display Cars Added */}
-            {addedCars.length > 0 && (
-              <div ref={addedCarsRef} className={`ml-10 transition-transform duration-1000 ${carConfirmed ? "-translate-y-32 " : "translate-y-0 "} space-y-2`}>
-                {addedCars.map((entry, index) => (
-                  <div key={index} className="transition-all duration-700 transform">
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      {Object.values(entry).filter(Boolean).join(" ")}
-                    </h3>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Driver Form */}
-            {showDriverForm && (
-              <div className="ml-10 mt-2">
-                <DriverStepForm
-                  onCancel={() => setShowDriverForm(false)}
-                  onComplete={handleDriverFormComplete}
-                />
-              </div>
-            )}
-
-            {/* Display Drivers Added */}
-            {addedDrivers.length > 0 && (
-              <div ref={addedDriversRef} className={`ml-10 transition-transform duration-1000 ${driverConfirmed ? "-translate-y-32" : "translate-y-0"} space-y-2`}>
-                {addedDrivers.map((entry, index) => (
-                  <div key={index} className="transition-all duration-700 transform">
-                    <h3 className="text-lg font-semibold text-gray-700">
-                      {Object.values(entry).filter(Boolean).join(" ")}
-                    </h3>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Car Selection or Form */}
-            {!showForm && addedCars.length === 0 && (
+            {/* Car Form */}
+            {!showForm && addedCars.length === 0 && !carConfirmed && (
               <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 ml-10">
                 {cars.map((car, idx) => (
                   <CarCard
@@ -164,7 +186,6 @@ export default function MultipleFormPage() {
                   onClick={() => setShowForm(true)}
                   onComplete={handleCarFormComplete}
                 />
-                {/* Next Button */}
                 <NextButton
                   disabled={!cars.some((car) => car.selected)}
                   onClick={() => {
@@ -184,7 +205,17 @@ export default function MultipleFormPage() {
               </div>
             )}
 
-            {/* Driver Form and Next Button */}
+            {/* Driver Form */}
+            {showDriverForm && !driverConfirmed && (
+              <div className="ml-10 mt-2">
+                <DriverStepForm
+                  onCancel={() => setShowDriverForm(false)}
+                  onComplete={handleDriverFormComplete}
+                />
+              </div>
+            )}
+
+            {/* Finance Options */}
             {driverConfirmed && !financeConfirmed && (
               <div className="ml-10">
                 <MultiOption data={finance} onSelect={handleOptionSelect} />
@@ -197,15 +228,16 @@ export default function MultipleFormPage() {
               </div>
             )}
 
-            {/* VIN Number after Finance Type is confirmed */}
+            {/* VIN Number */}
             {financeConfirmed && showVinNumber && (
               <div className="ml-10 mt-6">
                 <Vinnumber
                   data={[]}
-                  onSelect={() => { }}
+                  onSelect={handleVinNumberChange} // Set VIN number
+                  onNextClick={() => { /* Handle next step after VIN number */ }}
                 />
                 <NextButton
-                  disabled={false} // Adjust the condition for enabling the button based on form completion
+                  disabled={false}
                   onClick={() => {
                     // Handle "Next" button click for VIN Number step
                   }}
