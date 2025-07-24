@@ -20,23 +20,20 @@ export default function MultipleFormPage() {
     { name: "Hyundai", selected: false },
   ]);
   const [showForm, setShowForm] = useState(false);
-  const [addedCars, setAddedCars] = useState<{ [key: string]: string }[]>([]);
+  const [addedCars, setAddedCars] = useState<{ [key: string]: string }[]>([]);  // Latest car data
   const [carConfirmed, setCarConfirmed] = useState(false);
   const [showDriverForm, setShowDriverForm] = useState(false);
-  const [addedDrivers, setAddedDrivers] = useState<{ [key: string]: string }[]>([]);
+  const [addedDrivers, setAddedDrivers] = useState<{ [key: string]: string }[]>([]);  // Latest driver data
   const [driverConfirmed, setDriverConfirmed] = useState(false);
   const [financeConfirmed, setFinanceConfirmed] = useState(false); 
   const [showVinNumber, setShowVinNumber] = useState(false); 
   const [selectedFinanceOption, setSelectedFinanceOption] = useState<string | null>(null);
   const [vinnumber, setVinnumber] = useState<string>(''); // Store VIN number
+  const [addedVinNumber, setAddedVinNumber] = useState<string | null>(null); // Store added VIN number
 
   const { image, heading } = MultiFormheader[0];
 
-  // Refs for each section that will scroll
-  const addedCarsRef = useRef<HTMLDivElement | null>(null);  // Reference to added cars section
-  const addedDriversRef = useRef<HTMLDivElement | null>(null); // Reference to added drivers section
-  const financeRef = useRef<HTMLDivElement | null>(null); // Reference to finance options section
-  const vinNumberRef = useRef<HTMLDivElement | null>(null); // Reference to VIN number section
+  const addedCarsRef = useRef<HTMLDivElement | null>(null);  // Single reference for all sections
 
   const toggleCar = (index: number) => {
     const updated = [...cars];
@@ -71,23 +68,17 @@ export default function MultipleFormPage() {
     setVinnumber(value);
   };
 
-  // Scroll only the specific sections based on form completion
+  const handleVinNumberComplete = () => {
+    setAddedVinNumber(vinnumber); // Set the latest VIN number to be displayed
+    setShowVinNumber(false);
+  };
+
   useEffect(() => {
     if (addedCars.length > 0 && addedCarsRef.current) {
       addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    else if (addedDrivers.length > 0 && addedDriversRef.current) {
-      addedDriversRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    else if (financeConfirmed && financeRef.current) {
-      financeRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    else if (showVinNumber && vinNumberRef.current) {
-      vinNumberRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
   }, [addedCars, addedDrivers, financeConfirmed, showVinNumber]);
 
-  // Set active header based on form completion
   let activeHeader = MultiFormheader[0];
   if (carConfirmed && !driverConfirmed) {
     activeHeader = MultiFormheader[1];
@@ -110,7 +101,7 @@ export default function MultipleFormPage() {
 
             {/* Section to show the most recent added data */}
             <div className='overflow-y-auto max-h-[400px]' style={{ marginBottom: '20px' }}>
-              {/* Show only the latest car */}
+              {/* Show the latest car at the top */}
               {addedCars.length > 0 && (
                 <div ref={addedCarsRef} className="ml-10 space-y-2">
                   {addedCars.slice(0, 1).map((entry, index) => ( // Show only the latest added car
@@ -123,13 +114,13 @@ export default function MultipleFormPage() {
                 </div>
               )}
 
-              {/* Show only the latest driver */}
+              {/* Show the latest driver at the top */}
               {addedDrivers.length > 0 && (
-                <div ref={addedDriversRef} className="ml-10 space-y-2">
+                <div ref={addedCarsRef} className="ml-10 space-y-2">
                   {addedDrivers.slice(0, 1).map((entry, index) => ( // Show only the latest added driver
                     <div key={index} className="transition-all duration-700 transform">
                       <h3 className="text-lg font-semibold text-gray-700">
-                   {Object.values(entry).filter(Boolean).join(" ")}
+                        {Object.values(entry).filter(Boolean).join(" ")}
                       </h3>
                     </div>
                   ))}
@@ -138,7 +129,7 @@ export default function MultipleFormPage() {
 
               {/* Show selected finance option */}
               {selectedFinanceOption && (
-                <div ref={financeRef} className="ml-10 space-y-2">
+                <div ref={addedCarsRef} className="ml-10 space-y-2">
                   <h3 className="text-lg font-semibold text-gray-900">
                  {selectedFinanceOption}
                   </h3>
@@ -146,10 +137,10 @@ export default function MultipleFormPage() {
               )}
 
               {/* Show VIN number */}
-              {vinnumber && (
-                <div ref={vinNumberRef} className="ml-10 space-y-2">
+              {addedVinNumber && (
+                <div ref={addedCarsRef} className="ml-10 space-y-2">
                   <h3 className="text-lg font-semibold text-gray-900">
-                   {vinnumber}
+                  {addedVinNumber}
                   </h3>
                 </div>
               )}
@@ -234,7 +225,7 @@ export default function MultipleFormPage() {
                 <Vinnumber
                   data={[]}
                   onSelect={handleVinNumberChange} // Set VIN number
-                  onNextClick={() => { /* Handle next step after VIN number */ }}
+                  onNextClick={handleVinNumberComplete} // Proceed after VIN number input
                 />
                 <NextButton
                   disabled={false}
