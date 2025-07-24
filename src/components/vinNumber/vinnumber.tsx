@@ -33,7 +33,7 @@ export default function Vinnumber({ data, onSelect, onNextClick }: Props) {
 
         />
       </div>
-      <div className="ml-20 mt-8">
+      {/* <div className="ml-20 mt-8">
         <button
           onClick={handleNextClick} 
           className={`mt-4 px-10 font-semibold py-3 ${vinnumber ? 'bg-[#005684]' : 'bg-[#d0d0d0]'} rounded text-white`}
@@ -41,7 +41,7 @@ export default function Vinnumber({ data, onSelect, onNextClick }: Props) {
         >
           Next →
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
