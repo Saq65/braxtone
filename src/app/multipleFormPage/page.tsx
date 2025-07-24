@@ -86,16 +86,20 @@ export default function MultipleFormPage() {
 
   return (
     <div className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)] overflow-x-hidden">
+      <div>
+        <MultiformHeader />
+
+      </div>
       <div className="w-full max-w-7xl mx-auto px-4 mt-3">
         <div className="flex flex-col xl:flex-row gap-6">
           <aside className="w-full xl:w-1/4 hidden md:block mt-35">
             <SidebarSteps />
           </aside>
 
-          <main className="w-full xl:w-3/4 space-y-6 h-[850px] overflow-y-scroll scroll-smooth scrollbar-hide">
+          <main className="w-full xl:w-3/4 space-y-6 ">
             {/* Header Section */}
-            <div className='flex mt-35'>
-              <div className='fixed top-38 left-1/3'>
+            <div className='flex mt-28 gap-00'>
+              <div className=''>
                 <Image
                   src={image || "/default-avatar.png"}
                   alt="heading image"
@@ -104,7 +108,7 @@ export default function MultipleFormPage() {
                   className="rounded-full object-cover h-auto border-2 border-white shadow"
                 />
               </div>
-              <div className={`ml-10 w-2/5 transition-transform duration-1000 ${carConfirmed && !driverConfirmed ? "-translate-y-32 opacity-60" : driverConfirmed ? "-translate-y-64 opacity-30" : "translate-y-0 opacity-100"}`}>
+              <div className={`ml-4 w-2/5 transition-transform duration-1000 ${carConfirmed && !driverConfirmed ? "-translate-y-32 opacity-60" : driverConfirmed ? "-translate-y-64 opacity-30" : "translate-y-0 opacity-100"}`}>
                 <MultiformHeading heading={activeHeader.heading} />
               </div>
             </div>
@@ -198,7 +202,7 @@ export default function MultipleFormPage() {
               <div className="ml-10 mt-6">
                 <Vinnumber
                   data={[]}
-                  onSelect={() => {}}
+                  onSelect={() => { }}
                 />
                 <NextButton
                   disabled={false} // Adjust the condition for enabling the button based on form completion
