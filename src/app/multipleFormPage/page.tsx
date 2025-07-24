@@ -13,6 +13,7 @@ import { finance } from '@/data/multiOptionsData';
 import MultiOption from '@/components/ui/MultiOption';
 import Vinnumber from '@/components/vinNumber/vinnumber';
 import NextButton from '@/components/ui/NextBtn';
+import { BiPencil } from 'react-icons/bi';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -92,15 +93,19 @@ export default function MultipleFormPage() {
         <MultiformHeader />
       </div>
       <div className="w-full max-w-7xl mx-auto px-4 mt-3">
-        <div className=' flex justify-center flex-col items-center ' style={{ marginBottom: '20px',rowGap:'40px' }}>
+        <div className=' flex justify-center flex-col items-center cursor-pointer' style={{ marginBottom: '20px', rowGap: '40px' }}>
           {addedCars.length > 0 && (
             <div ref={addedCarsRef} className="ml-10 space-y-2">
               <MultiformHeading color="#8b8b8b" heading="Alright. These are the cars that I found. Which would you like to insure?" />
               {addedCars.slice(0, 1).map((entry, index) => (
                 <div key={index} className="transition-all duration-700 transform">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    {Object.values(entry).filter(Boolean).join(" ")}
-                  </h3>
+                  <div className='flex  items-center gap-2'>
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      {Object.values(entry).filter(Boolean).join(" ")}
+                    </h3>
+                    <BiPencil className='mt-1' />
+                  </div>
+
                 </div>
               ))}
             </div>
@@ -108,12 +113,17 @@ export default function MultipleFormPage() {
 
           {addedDrivers.length > 0 && (
             <div ref={addedCarsRef} className="ml-10 space-y-2">
-              <MultiformHeading  color="#8b8b8b" heading="15 Seconds could save you 15% or more" />
+              <MultiformHeading color="#8b8b8b" heading="15 Seconds could save you 15% or more" />
               {addedDrivers.slice(0, 1).map((entry, index) => (
                 <div key={index} className="transition-all duration-700 transform">
-                  <h3 className="text-lg font-semibold text-gray-700">
-                    {Object.values(entry).filter(Boolean).join(" ")}
-                  </h3>
+                  <div className='flex  items-center gap-2'>
+                    <h3 className="text-lg font-semibold text-gray-700">
+                      {Object.values(entry).filter(Boolean).join(" ")}
+                    </h3>
+                    <BiPencil className='mt-1' />
+
+                  </div>
+
                 </div>
               ))}
             </div>
@@ -121,19 +131,28 @@ export default function MultipleFormPage() {
 
           {selectedFinanceOption && (
             <div ref={addedCarsRef} className="ml-10 space-y-2">
-              <MultiformHeading  color="#8b8b8b" heading="Selected Finance Option" />
-              <h3 className="text-lg font-semibold text-gray-900">
-                {selectedFinanceOption}
-              </h3>
+              <MultiformHeading color="#8b8b8b" heading="Selected Finance Option" />
+              <div className='flex  items-center gap-2'>
+                <h3 className="text-lg font-semibold text-gray-700">
+                  {selectedFinanceOption}
+                </h3>
+                <BiPencil className='mt-1' />
+
+              </div>
+
             </div>
           )}
 
           {addedVinNumber && (
             <div ref={addedCarsRef} className="ml-10 space-y-2">
-              <MultiformHeading  color="#8b8b8b" heading="Great. Is your Nissan 370Z financed or leased?" />
-              <h3 className="text-lg font-semibold text-gray-900">
-                {addedVinNumber}
-              </h3>
+              <MultiformHeading color="#8b8b8b" heading="Great. Is your Nissan 370Z financed or leased?" />
+              <div className='flex  items-center gap-2'>
+                <h3 className="text-lg font-semibold text-gray-700">
+                  {addedVinNumber}
+                </h3>
+                <BiPencil className='mt-1' />
+
+              </div>
             </div>
           )}
         </div>
