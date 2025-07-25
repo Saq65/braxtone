@@ -10,7 +10,7 @@ const NextButton: React.FC<NextButtonProps> = ({ disabled, onClick, label = "Nex
   return (
     <div className="flex justify-center w-[440px]">
       <button
-        className="mt-4 px-10 font-semibold py-3 bg-[#d0d0d0] rounded text-gray-800 disabled:opacity-50"
+        className="mt-4 px-10 font-semibold py-3 bg-[#0068a2] rounded text-white disabled:bg-[#d0d0d0] disabled:text-gray-600"
         disabled={disabled}
         onClick={onClick}
       >

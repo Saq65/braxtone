@@ -88,11 +88,11 @@ export default function MultipleFormPage() {
   }
 
   return (
-    <div className="min-h-[230vh] bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)] overflow-x-hidden">
-      <div>
+    <div className="min-h-[330vh] bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)] overflow-x-hidden scrollbar-hide">
+      <div className='fixed  w-full'>
         <MultiformHeader />
       </div>
-      <div className="w-full max-w-7xl mx-auto px-4 mt-3">
+      <div className="w-full max-w-7xl mx-auto px-10 mt-20 ">
         <div className=' flex justify-center flex-col items-center cursor-pointer' style={{ marginBottom: '20px', rowGap: '40px' }}>
           {addedCars.length > 0 && (
             <div ref={addedCarsRef} className="ml-10 space-y-2">
@@ -174,7 +174,7 @@ export default function MultipleFormPage() {
                   className="rounded-full object-cover h-auto border-2 border-white shadow"
                 />
               </div>
-              <div className={`ml-4 w-2/5`}>
+              <div className={`ml-4 w-[42%]`}>
                 <MultiformHeading heading={activeHeader.heading} />
               </div>
             </div>
