@@ -157,7 +157,7 @@ export default function MultipleFormPage() {
           )}
         </div>
 
-        <div className="flex flex-col xl:flex-row gap-6">
+        <div className="flex flex-col xl:flex-row gap-5 w-full">
           <aside className="w-full xl:w-1/4 hidden md:block mt-14">
             <SidebarSteps />
           </aside>
