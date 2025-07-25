@@ -11,7 +11,7 @@ export default function CarCard({
 }) {
   return (
     <div
-      className={`flex items-center justify-between p-5 rounded-lg shadow-sm w-auto hover:shadow-md cursor-pointer
+      className={`ml-7 flex items-center justify-between p-5 rounded-lg shadow-sm w-auto hover:shadow-md cursor-pointer
         transition-colors duration-300 border sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px]
         ${selected ? 'border-[#0068a2]' : 'border-gray-300'}`}
     >
