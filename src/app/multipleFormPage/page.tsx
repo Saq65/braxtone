@@ -14,6 +14,11 @@ import MultiOption from '@/components/ui/MultiOption';
 import Vinnumber from '@/components/vinNumber/vinnumber';
 import NextButton from '@/components/ui/NextBtn';
 import { BiPencil } from 'react-icons/bi';
+import CarRunMiles from '@/components/progressBar/ProgressBar';
+import NextBtn from "@/components/ui/NextBtn";
+import BHDComponent from '@/components/progressBar/ProgressBar';
+
+
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -31,6 +36,27 @@ export default function MultipleFormPage() {
   const [selectedFinanceOption, setSelectedFinanceOption] = useState<string | null>(null);
   const [vinnumber, setVinnumber] = useState<string>('');
   const [addedVinNumber, setAddedVinNumber] = useState<string | null>(null);
+
+  const [carMiles, setCarMiles] = useState<number | null>(null);
+  const [showCarRunMiles, setShowCarRunMiles] = useState(false);
+  const [showBHD, setShowBHD] = useState(false);
+
+
+  const handleCarMilesChange = (val: number) => {
+    setCarMiles(val);
+  };
+
+  const handleCarMilesComplete = () => {
+    if (carMiles !== null) {
+      setShowCarRunMiles(false);
+      setShowBHD(true);
+    }
+  };
+
+  const [bhdValue, setBhdValue] = useState<number | null>(null);
+  const handleBHDComponent = (val: number) => {
+    setBhdValue(val);
+  };
 
   const { image, heading } = MultiFormheader[0];
 
@@ -72,7 +98,9 @@ export default function MultipleFormPage() {
   const handleVinNumberComplete = () => {
     setAddedVinNumber(vinnumber);
     setShowVinNumber(false);
+    setShowCarRunMiles(true); // Show CarRunMiles next
   };
+
 
   useEffect(() => {
     if (addedCars.length > 0 && addedCarsRef.current) {
@@ -238,7 +266,31 @@ export default function MultipleFormPage() {
                 <NextButton
                   disabled={false}
                   onClick={() => {
+                    handleVinNumberComplete();
+
+                    if (addedCarsRef.current) {
+                      addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                  }}
+                />
+              </div>
+            )}
+
+
+            {financeConfirmed && showVinNumber && (
+              <div className="ml-10 mt-6">
+                <Vinnumber
+                  data={[]}
+                  onSelect={handleVinNumberChange}
+                  onNextClick={handleVinNumberComplete}
+                />
+                <NextButton
+                  // disabled={false}
+                  disabled={!vinnumber}
+
+                  onClick={() => {
                     // Add VIN number when "Next" button is clicked
+
                     handleVinNumberComplete();
 
                     // Scroll to the latest data (optional)
@@ -250,6 +302,35 @@ export default function MultipleFormPage() {
               </div>
             )}
 
+
+
+            {showCarRunMiles && (
+              <div className="ml-10 mt-6">
+                <CarRunMiles
+                  max={20000}
+                  unitLabel="miles/year"
+                  defaultValue={5500}
+                  onSelect={handleCarMilesChange} 
+                />
+                <NextBtn
+                  disabled={carMiles === null}
+                  onClick={handleCarMilesComplete}
+                  label="Next →"
+                />
+              </div>
+            )}
+
+            {showBHD && (
+              <div className="ml-10 mt-6">
+                <BHDComponent
+                  max={20000}
+                  unitLabel="BHD"
+                  defaultValue={5500}
+                  onSelect={handleBHDComponent}
+                />
+
+              </div>
+            )}
           </main>
         </div>
       </div>
