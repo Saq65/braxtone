@@ -46,7 +46,7 @@ export default function DriverStepForm({
 
         {step === 1 && (
           <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">Enter driver's name</h2>
+            <h2 className="text-md font-medium mb-3 text-gray-800">Enter driver's fullname</h2>
             <div>
               <Input
                 value={name}
