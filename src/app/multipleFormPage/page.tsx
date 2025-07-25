@@ -88,7 +88,7 @@ export default function MultipleFormPage() {
   }
 
   return (
-    <div className="min-h-[200vh] bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)] overflow-x-hidden">
+    <div className="min-h-[230vh] bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)] overflow-x-hidden">
       <div>
         <MultiformHeader />
       </div>
@@ -103,7 +103,7 @@ export default function MultipleFormPage() {
                     <h3 className="text-lg font-semibold text-gray-900">
                       {Object.values(entry).filter(Boolean).join(" ")}
                     </h3>
-                    <BiPencil className='mt-1' />
+                    <BiPencil onClick={() => setShowForm(true)} className='mt-1' />
                   </div>
 
                 </div>
@@ -120,7 +120,7 @@ export default function MultipleFormPage() {
                     <h3 className="text-lg font-semibold text-gray-700">
                       {Object.values(entry).filter(Boolean).join(" ")}
                     </h3>
-                    <BiPencil className='mt-1' />
+                    <BiPencil className='mt-1' onClick={() => setShowDriverForm(true)} />
 
                   </div>
 
@@ -158,13 +158,13 @@ export default function MultipleFormPage() {
         </div>
 
         <div className="flex flex-col xl:flex-row gap-6">
-          <aside className="w-full xl:w-1/4 hidden md:block mt-35">
+          <aside className="w-full xl:w-1/4 hidden md:block mt-14">
             <SidebarSteps />
           </aside>
 
           <main className="w-full xl:w-3/4 space-y-6 ">
 
-            <div className='flex mt-28 gap-00'>
+            <div className='flex mt-12 gap-00'>
               <div className=''>
                 <Image
                   src={image || "/default-avatar.png"}
