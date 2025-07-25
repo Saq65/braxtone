@@ -33,9 +33,12 @@ export default function MultipleFormPage() {
   const [driverConfirmed, setDriverConfirmed] = useState(false);
   const [financeConfirmed, setFinanceConfirmed] = useState(false);
   const [showVinNumber, setShowVinNumber] = useState(false);
+  const [vinNumberConfirm, setVinnumberconfirm] = useState(false);
   const [selectedFinanceOption, setSelectedFinanceOption] = useState<string | null>(null);
   const [vinnumber, setVinnumber] = useState<string>('');
   const [addedVinNumber, setAddedVinNumber] = useState<string | null>(null);
+  const [addedCarMiles, setAddedCarMiles] = useState<number | null>(null);
+  const [addedBhdValue, setAddedBhdValue] = useState<number | null>(null);
 
   const [carMiles, setCarMiles] = useState<number | null>(null);
   const [showCarRunMiles, setShowCarRunMiles] = useState(false);
@@ -48,10 +51,19 @@ export default function MultipleFormPage() {
 
   const handleCarMilesComplete = () => {
     if (carMiles !== null) {
+      setAddedCarMiles(carMiles);
       setShowCarRunMiles(false);
       setShowBHD(true);
     }
   };
+
+  const handleBHDComplete = () => {
+    if (bhdValue !== null) {
+      setAddedBhdValue(bhdValue);
+      setShowBHD(false);
+    }
+  };
+
 
   const [bhdValue, setBhdValue] = useState<number | null>(null);
   const handleBHDComponent = (val: number) => {
@@ -98,7 +110,8 @@ export default function MultipleFormPage() {
   const handleVinNumberComplete = () => {
     setAddedVinNumber(vinnumber);
     setShowVinNumber(false);
-    setShowCarRunMiles(true); // Show CarRunMiles next
+    setShowCarRunMiles(true);
+    setVinnumberconfirm(true)
   };
 
 
@@ -106,34 +119,50 @@ export default function MultipleFormPage() {
     if (addedCars.length > 0 && addedCarsRef.current) {
       addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  }, [addedCars, addedDrivers, financeConfirmed, showVinNumber]);
+  }, [addedCars, addedDrivers, financeConfirmed, showVinNumber, showCarRunMiles, showBHD]);
 
   let activeHeader = MultiFormheader[0];
+
   if (carConfirmed && !driverConfirmed) {
     activeHeader = MultiFormheader[1];
-  } else if (driverConfirmed) {
+  } else if (driverConfirmed && !financeConfirmed) {
     activeHeader = MultiFormheader[2];
+  } else if (financeConfirmed && !vinNumberConfirm) {
+    activeHeader = MultiFormheader[3];
+  } else if (vinNumberConfirm && addedCarMiles === null) {
+    activeHeader = MultiFormheader[4];
+  } else if (addedCarMiles !== null && addedBhdValue === null) {
+    activeHeader = MultiFormheader[5]; 
+  } else if (addedBhdValue !== null) {
+    activeHeader = MultiFormheader[6]; 
   }
 
+
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+
   return (
-    <div className="min-h-[330vh] bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)] overflow-x-hidden scrollbar-hide">
+    <div className="min-h-[330vh] bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_16%,_white_70%,_#ceedfe_100%)] overflow-x-hidden scrollbar-hide">
       <div className='fixed  w-full'>
         <MultiformHeader />
       </div>
-      <div className="w-full max-w-7xl mx-auto px-10 mt-20 ">
-        <div className=' flex justify-center flex-col items-center cursor-pointer' style={{ marginBottom: '20px', rowGap: '40px' }}>
+      <div className="w-full max-w-7xl mx-auto px-10 mt-24">
+        <div className='flex justify-center flex-col items-center cursor-pointer mb-5 gap-10'>
+          {/* Data display blocks */}
           {addedCars.length > 0 && (
             <div ref={addedCarsRef} className="ml-10 space-y-2">
               <MultiformHeading color="#8b8b8b" heading="Alright. These are the cars that I found. Which would you like to insure?" />
               {addedCars.slice(0, 1).map((entry, index) => (
                 <div key={index} className="transition-all duration-700 transform">
-                  <div className='flex  items-center gap-2'>
+                  <div className='flex items-center gap-2'>
                     <h3 className="text-lg font-semibold text-gray-900">
                       {Object.values(entry).filter(Boolean).join(" ")}
                     </h3>
                     <BiPencil onClick={() => setShowForm(true)} className='mt-1' />
                   </div>
-
                 </div>
               ))}
             </div>
@@ -141,17 +170,15 @@ export default function MultipleFormPage() {
 
           {addedDrivers.length > 0 && (
             <div ref={addedCarsRef} className="ml-10 space-y-2">
-              <MultiformHeading color="#8b8b8b" heading="15 Seconds could save you 15% or more" />
+              <MultiformHeading color="#8b8b8b" heading="Great! Your car has been successfully added." />
               {addedDrivers.slice(0, 1).map((entry, index) => (
                 <div key={index} className="transition-all duration-700 transform">
-                  <div className='flex  items-center gap-2'>
+                  <div className='flex items-center gap-2'>
                     <h3 className="text-lg font-semibold text-gray-700">
                       {Object.values(entry).filter(Boolean).join(" ")}
                     </h3>
                     <BiPencil className='mt-1' onClick={() => setShowDriverForm(true)} />
-
                   </div>
-
                 </div>
               ))}
             </div>
@@ -160,30 +187,47 @@ export default function MultipleFormPage() {
           {selectedFinanceOption && (
             <div ref={addedCarsRef} className="ml-10 space-y-2">
               <MultiformHeading color="#8b8b8b" heading="Selected Finance Option" />
-              <div className='flex  items-center gap-2'>
-                <h3 className="text-lg font-semibold text-gray-700">
-                  {selectedFinanceOption}
-                </h3>
+              <div className='flex items-center gap-2'>
+                <h3 className="text-lg font-semibold text-gray-700">{selectedFinanceOption}</h3>
                 <BiPencil className='mt-1' />
-
               </div>
-
             </div>
           )}
 
           {addedVinNumber && (
             <div ref={addedCarsRef} className="ml-10 space-y-2">
               <MultiformHeading color="#8b8b8b" heading="Great. Is your Nissan 370Z financed or leased?" />
-              <div className='flex  items-center gap-2'>
-                <h3 className="text-lg font-semibold text-gray-700">
-                  {addedVinNumber}
-                </h3>
+              <div className='flex items-center gap-2'>
+                <h3 className="text-lg font-semibold text-gray-700">{addedVinNumber}</h3>
                 <BiPencil className='mt-1' />
-
               </div>
             </div>
           )}
+
+          {addedCarMiles !== null && (
+            <div ref={addedCarsRef} className="ml-10 space-y-2">
+              <MultiformHeading color="#8b8b8b" heading="Estimated mileage per year" />
+              <div className='flex items-center gap-2'>
+                <h3 className="text-lg font-semibold text-gray-700">{addedCarMiles.toLocaleString()} miles/year</h3>
+                <BiPencil className='mt-1' />
+              </div>
+
+            </div>
+          )}
+
+          {addedBhdValue !== null && (
+            <div ref={addedCarsRef} className="ml-10 space-y-2">
+              <MultiformHeading color="#8b8b8b" heading="Estimated Value in BHD" />
+              <div className="flex items-center gap-2">
+                <h3 className="text-lg font-semibold text-gray-700">{addedBhdValue.toLocaleString()} BHD</h3>
+                <BiPencil className='mt-1' />
+              </div>
+
+
+            </div>
+          )}
         </div>
+
 
         <div className="flex flex-col xl:flex-row gap-5 w-full">
           <aside className="w-full xl:w-1/4 hidden md:block mt-14">
@@ -264,27 +308,6 @@ export default function MultipleFormPage() {
                   onNextClick={handleVinNumberComplete}
                 />
                 <NextButton
-                  disabled={false}
-                  onClick={() => {
-                    handleVinNumberComplete();
-
-                    if (addedCarsRef.current) {
-                      addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-                    }
-                  }}
-                />
-              </div>
-            )}
-
-
-            {financeConfirmed && showVinNumber && (
-              <div className="ml-10 mt-6">
-                <Vinnumber
-                  data={[]}
-                  onSelect={handleVinNumberChange}
-                  onNextClick={handleVinNumberComplete}
-                />
-                <NextButton
                   // disabled={false}
                   disabled={!vinnumber}
 
@@ -310,7 +333,7 @@ export default function MultipleFormPage() {
                   max={20000}
                   unitLabel="miles/year"
                   defaultValue={5500}
-                  onSelect={handleCarMilesChange} 
+                  onSelect={handleCarMilesChange}
                 />
                 <NextBtn
                   disabled={carMiles === null}
@@ -328,7 +351,11 @@ export default function MultipleFormPage() {
                   defaultValue={5500}
                   onSelect={handleBHDComponent}
                 />
-
+                <NextBtn
+                  disabled={carMiles === null}
+                  onClick={handleBHDComplete}
+                  label="Next →"
+                />
               </div>
             )}
           </main>
