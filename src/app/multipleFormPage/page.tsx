@@ -143,7 +143,7 @@ export default function MultipleFormPage() {
 
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_16%,_white_70%,_#ceedfe_100%)] overflow-x-hidden">
+    <div className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_16%,_white_70%,_#ceedfe_100%)] overflow-hidden">
       <div className='fixed  w-full'>
         <MultiformHeader />
       </div>
