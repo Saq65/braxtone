@@ -143,11 +143,11 @@ export default function MultipleFormPage() {
 
 
   return (
-    <div className="min-h-[220vh] bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_16%,_white_70%,_#ceedfe_100%)] overflow-x-hidden scrollbar-hide">
+    <div className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_16%,_white_70%,_#ceedfe_100%)] overflow-x-hidden">
       <div className='fixed  w-full'>
         <MultiformHeader />
       </div>
-      <div className='max-h-screen '>
+      <div className=''>
         <div className="w-full max-w-7xl mx-auto px-10 mt-24">
           <div className='flex justify-center flex-col items-center cursor-pointer mb-5 gap-10'>
             {addedCars.length > 0 && (
@@ -227,7 +227,7 @@ export default function MultipleFormPage() {
           </div>
 
 
-          <div className="flex flex-col xl:flex-row gap-5 w-full">
+          <div className="flex flex-col xl:flex-row gap-5 w-full mt-16" style={{height:'76vh'}}>
             <aside className="w-full xl:w-1/4 hidden md:block mt-14">
               <SidebarSteps />
             </aside>
