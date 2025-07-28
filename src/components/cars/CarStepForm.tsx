@@ -66,7 +66,7 @@ export default function CarStepForm({
                 }}
                 placeholder="Select Year"
                 className="custom-dropdown outline-none focus-none no-focus-border"
-             
+
               >
                 <Option value="">Select</Option>
                 {years.map((y) => (
@@ -177,10 +177,15 @@ export default function CarStepForm({
               <button
                 onClick={() => onComplete({ year, company, manufacturer, model })}
                 disabled={!manufacturer}
-                className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-800 hover:bg-[#0067a1] hover:text-white border border-gray-100 cursor-pointer  bg-[#d0d0d0]"
+                className={`rounded-md w-[140px] py-4 mt-3 text-sm border border-gray-100 transition-colors duration-200
+                ${manufacturer
+                    ? 'cursor-pointer bg-[#0067a1] text-white hover:bg-[#005780]'
+                    : 'bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
+                `}
               >
                 Add
               </button>
+
             </div>
           </>
         )}
@@ -220,10 +225,15 @@ function StepNavigation({
       <button
         onClick={onNext}
         disabled={!canContinue}
-        className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-800 hover:bg-[#0067a1] hover:text-white border border-gray-100 cursor-pointer bg-[#d0d0d0]"
+        className={`rounded-md w-[140px] py-4 mt-3 text-sm border border-gray-100 transition-colors duration-200
+    ${canContinue
+            ? 'cursor-pointer bg-[#0067a1] text-white hover:bg-[#005780]'
+            : ' bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
+  `}
       >
         Next
       </button>
+
     </div>
   );
 }

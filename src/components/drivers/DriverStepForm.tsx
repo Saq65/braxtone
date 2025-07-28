@@ -46,7 +46,7 @@ export default function DriverStepForm({
 
         {step === 1 && (
           <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">Enter driver's fullname</h2>
+            <h2 className="text-md font-medium mb-3 text-gray-800">Enter drivers fullname</h2>
             <div>
               <Input
                 value={name}
@@ -141,10 +141,15 @@ export default function DriverStepForm({
                   onComplete({ name, licenseNumber, vehicleType, experienceLevel })
                 }
                 disabled={!experienceLevel}
-                className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-800 hover:bg-[#0067a1] hover:text-white border border-gray-100 bg-[#d0d0d0]"
+                className={`rounded-md w-[140px] py-4 mt-3 text-sm border border-gray-100 transition-colors duration-200
+               ${experienceLevel
+                    ? 'cursor-pointer bg-[#0067a1] text-white hover:bg-[#005780]'
+                    : ' bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
+               `}
               >
                 Add
               </button>
+
             </div>
           </>
         )}
