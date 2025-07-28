@@ -71,7 +71,7 @@ export default function MultipleFormPage() {
     setBhdValue(val);
   };
 
-  const { image, heading } = MultiFormheader[0];
+  const { image} = MultiFormheader[0];
 
   const addedCarsRef = useRef<HTMLDivElement | null>(null);
 
