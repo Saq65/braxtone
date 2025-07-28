@@ -184,10 +184,16 @@ function StepNavigation({
       <button
         onClick={onNext}
         disabled={!canContinue}
-        className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-800 hover:bg-[#0067a1] hover:text-white border border-gray-100 cursor-pointer bg-[#d0d0d0]"
+        className={`rounded-md w-[140px] py-4 mt-3 text-sm border border-gray-100
+        ${canContinue
+            ? 'cursor-pointer bg-[#0067a1] text-white hover:bg-[#005780]'
+            : ' bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
+          `}
       >
         Next
       </button>
+
+
     </div>
   );
 }
