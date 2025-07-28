@@ -151,7 +151,7 @@ export default function MultipleFormPage() {
       </div>
       <div className=''>
         <div className="w-full max-w-7xl mx-auto px-3 md:px-10 sm:px-10 lg:px-10 xl:px-10 sm:mt-24 md:mt-24 lg:mt-24 xl:mt-24">
-          <div className='flex justify-center flex-col items-center cursor-pointer mt-30 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0 lg:mb-25 sm:mb-25 xl:mb-25 mb-0 gap-10'>
+          <div className='flex justify-center flex-col sm:items-center md:items-center lg:items-center xl:items-center items-start cursor-pointer mt-30 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0 lg:mb-25 sm:mb-25 xl:mb-25 mb-0 gap-10'>
             {addedCars.length > 0 && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
                 <MultiformHeading color="#8b8b8b" heading="Alright. These are the cars that I found. Which would you like to insure?" />

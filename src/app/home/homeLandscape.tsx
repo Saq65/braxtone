@@ -2,8 +2,6 @@
 
 import { Nunito } from "next/font/google";
 import { motion } from "framer-motion";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from "swiper/modules";
 import { FaPhone, FaWhatsapp } from "react-icons/fa";
 import 'swiper/css';
 import Image from "next/image";
@@ -18,7 +16,7 @@ export default function HomeLandscape() {
     const router = useRouter();
     return (
         <div className="min-h-screen">
-            <div className="relative overflow-hidden bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)] w-full min-h-[92vh]  sm:p-unset scollbar-hide">
+            <div className="relative overflow-hidden bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)] w-full min-h-screen  sm:p-unset scollbar-hide">
 
                 <div className="flex justify-between items-center  ">
 
@@ -50,7 +48,7 @@ export default function HomeLandscape() {
                             initial={{ opacity: 0, x: -90 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 1.8, ease: "easeOut", delay: 0.6 }}
-                            viewport={{ once: true, amount: 0.8 }}
+                            viewport={{ once: true, amount: 0.2}}
                         >
                             <p className={`${nunito.className} text-[22px] sm:text-[26px] md:text-[30px] xl:text-[38px] 2xl:text-[45px] font-bold leading-tight text-[#1a1a1a]`}>
                                 Compare, Choose, Save <br />
@@ -78,7 +76,7 @@ export default function HomeLandscape() {
                             initial={{ opacity: 0, x: 90 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 1.8, ease: "easeOut", delay: 0.6 }}
-                            viewport={{ once: true, amount: 0.8 }}
+                            viewport={{ once: true, amount: 0.2}}
                         >
                             <div className="relative w-full max-w-[800px] mx-auto  p-4 ">
                                 <Image
@@ -96,42 +94,40 @@ export default function HomeLandscape() {
                         </motion.div>
                     </div>
 
-                 <div className="mt-20 w-full flex flex-col xl:flex-row items-center justify-between gap-6">
-  {/* Animated Logo Marquee */}
-  <div className="w-full xl:w-[75%] sm:w-full bg-[#dbedf8] rounded-md px-4 py-4 overflow-hidden relative">
-    <div className="flex w-max animate-marquee space-x-20 px-20">
-      {['ex1', 'ex2', 'ex3', 'ex4', 'ex1', 'ex2', 'ex3', 'ex4'].map((img, index) => (
-        <div key={index} className="flex justify-center items-center h-10 p-2">
-          <Image
-            src={`/asesst/images/${img}.png`}
-            alt={img}
-            width={80}
-            height={60}
-            className="w-full h-11 object-contain"
-          />
-        </div>
-      ))}
-    </div>
-  </div>
+                    <div className="mt-20 w-full flex flex-col xl:flex-row items-center justify-between gap-6">
+                        <div className="w-full xl:w-[75%] sm:w-full bg-[#dbedf8] rounded-md px-4 py-4 overflow-hidden relative">
+                            <div className="flex w-max animate-marquee space-x-20 px-20">
+                                {['ex1', 'ex2', 'ex3', 'ex4', 'ex1', 'ex2', 'ex3', 'ex4'].map((img, index) => (
+                                    <div key={index} className="flex justify-center items-center h-10 p-2">
+                                        <Image
+                                            src={`/asesst/images/${img}.png`}
+                                            alt={img}
+                                            width={80}
+                                            height={60}
+                                            className="w-full h-11 object-contain"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
 
-  {/* Contact Icons & Language Switch */}
-  <div className="hidden sm:flex gap-4 items-center justify-center xl:justify-end">
-    <span className="bg-[#0c625a] p-2 rounded-full">
-      <FaWhatsapp color="white" />
-    </span>
-    <span className="bg-[#fc7b26] p-2 rounded-full">
-      <FaPhone color="white" className="text-sm" />
-    </span>
-    <div className="relative w-16 h-8">
-      <Image
-        src="/asesst/images/arabic.png"
-        alt="arabic"
-        fill
-        className="object-contain"
-      />
-    </div>
-  </div>
-</div>
+                        <div className="hidden sm:flex gap-4 items-center justify-center xl:justify-end">
+                            <span className="bg-[#0c625a] p-2 rounded-full">
+                                <FaWhatsapp color="white" />
+                            </span>
+                            <span className="bg-[#fc7b26] p-2 rounded-full">
+                                <FaPhone color="white" className="text-sm" />
+                            </span>
+                            <div className="relative w-16 h-8">
+                                <Image
+                                    src="/asesst/images/arabic.png"
+                                    alt="arabic"
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </div>
