@@ -308,7 +308,6 @@ export default function MultipleFormPage() {
                     onClick={handleFinanceOnNext}
                     label="Next →"
                   />
-
                 </div>
               )}
               {financeConfirmed && showVinNumber && (
