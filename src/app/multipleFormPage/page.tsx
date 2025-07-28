@@ -144,11 +144,11 @@ export default function MultipleFormPage() {
 
   return (
     <div className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_16%,_white_70%,_#ceedfe_100%)] overflow-hidden">
-      <div className='fixed  w-full'>
+      <div className='fixed w-full'>
         <MultiformHeader />
       </div>
       <div className=''>
-        <div className="w-full max-w-7xl mx-auto px-10 mt-24">
+        <div className="w-full max-w-7xl mx-auto px-10 sm:mt-24 md:mt-24 lg:mt-24 xl:mt-24">
           <div className='flex justify-center flex-col items-center cursor-pointer mb-25 gap-10'>
             {addedCars.length > 0 && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
@@ -244,13 +244,13 @@ export default function MultipleFormPage() {
                     className="rounded-full object-cover h-auto border-2 border-white shadow"
                   />
                 </div>
-                <div className={`ml-4 w-[42%]`}>
+                <div className={`ml-4 w-[100%] sm:w-[42%] xl:w-[42%] md:w-[42%] lg:w-[42%]`}>
                   <MultiformHeading heading={activeHeader.heading} />
                 </div>
               </div>
 
               {!showForm && addedCars.length === 0 && !carConfirmed && (
-                <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 ml-10">
+                <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10">
                   {cars.map((car, idx) => (
                     <CarCard
                       key={idx}

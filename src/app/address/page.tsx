@@ -17,8 +17,8 @@ const Page = () => {
             <ServiceHeader image={image} heading={heading} paragraph={paragraph} />
 
 
-            <div className="input">
-                <Input value={inputValue} onChange={setInputValue}/>
+            <div className="input w-full lg:w-[660px] xl:w-[660px]">
+                <Input value={inputValue} onChange={setInputValue} />
             </div>
 
             <div className='mt-8'>

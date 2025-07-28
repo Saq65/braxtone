@@ -18,7 +18,7 @@ const Buttons = ({
 }: Props) => {
   return (
  <div className="mt-4 flex flex-col sm:flex-row justify-between items-center gap-4 
-  w-full sm:w-[450px] md:w-[600px] lg:w-[700px] xl:w-[768px]">
+  w-full sm:w-[450px] md:w-[600px] lg:w-[600px] xl:w-[655px]">
   
   <button
     onClick={onFirstClick}

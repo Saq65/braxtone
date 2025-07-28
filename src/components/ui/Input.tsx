@@ -11,7 +11,7 @@ const Input = ({ value, onChange }: InputProps) => {
         <div className=''>
             <div
                 tabIndex={0}
-                className='max-w-[350px] sm:max-w-full flex items-center rounded border border-gray-300 focus:outline-none 
+                className='max-w-[380px] sm:max-w-full flex items-center rounded border border-gray-300 focus:outline-none lg:max-w-[800px] xl:max-w-[960px]
                 focus-within:ring-0.8 focus-within:ring-sky-600 focus-within:border-sky-600 shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)]
                  hover:shadow-md transition-shadow duration-200 '
             >

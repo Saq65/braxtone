@@ -13,13 +13,12 @@ function MultiOption({ data, onSelect, onNext }: Props) {
 
   const handleOptionClick = (value: string) => {
     setSelectedOption(value); // Set the selected option
-    onSelect(value); // Pass the selected value back to the parent component
+    onSelect(value); 
   };
 
   const handleNextClick = () => {
-    // Proceed to the next step only if an option is selected
     if (selectedOption) {
-      onNext(); // Trigger the parent function to handle the next step
+      onNext(); 
     }
   };
 
