@@ -48,14 +48,14 @@ export default function HomeLandscape() {
                             initial={{ opacity: 0, x: -90 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 1.8, ease: "easeOut", delay: 0.6 }}
-                            viewport={{ once: true, amount: 0.2}}
+                            viewport={{ once: true, amount: 0.2 }}
                         >
                             <p className={`${nunito.className} text-[22px] sm:text-[26px] md:text-[30px] xl:text-[38px] 2xl:text-[45px] font-bold leading-tight text-[#1a1a1a]`}>
                                 Compare, Choose, Save <br />
                                 & Get Fast Affordable <br />
                                 Car Insurance
                             </p>
-                            <p className="text-[10px] sm:text-base md:text-lg xl:text-xl 2xl:text-[17px] text-[#646464] mt-5 max-w-[640px] 2xl:max-w-[800px] leading-relaxed mx-auto md:mx-0">
+                            <p className="text-[12px] sm:text-base md:text-lg xl:text-xl 2xl:text-[17px] text-[#646464] mt-5 max-w-[640px] 2xl:max-w-[800px] leading-relaxed mx-auto md:mx-0">
                                 Get instant car insurance coverage from the Government of Canada (GOC) to insurers,
                                 ensuring fast, reliable protection for vehicles with seamless processing.
                             </p>
@@ -76,7 +76,7 @@ export default function HomeLandscape() {
                             initial={{ opacity: 0, x: 90 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 1.8, ease: "easeOut", delay: 0.6 }}
-                            viewport={{ once: true, amount: 0.2}}
+                            viewport={{ once: true, amount: 0.2 }}
                         >
                             <div className="relative w-full max-w-[800px] mx-auto  p-4 ">
                                 <Image
