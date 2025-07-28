@@ -5,10 +5,9 @@ import { useState } from 'react';
 type Props = {
   data: { id: number; value: string }[]; // Array of options
   onSelect: (selectedValue: string) => void; // Parent function to handle selected value
-  onNext: () => void; // Function to handle next step when the button is clicked
 };
 
-function MultiOption({ data, onSelect, onNext }: Props) {
+function MultiOption({ data, onSelect }: Props) {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   const handleOptionClick = (value: string) => {
@@ -16,11 +15,7 @@ function MultiOption({ data, onSelect, onNext }: Props) {
     onSelect(value); 
   };
 
-  const handleNextClick = () => {
-    if (selectedOption) {
-      onNext(); 
-    }
-  };
+ 
 
   return (
     <div>
