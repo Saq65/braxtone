@@ -227,7 +227,7 @@ export default function MultipleFormPage() {
           </div>
 
 
-          <div className="flex flex-col xl:flex-row gap-5 w-full mt-12" style={{height:'76vh'}}>
+          <div className="flex flex-col xl:flex-row gap-5 w-full " style={{height:'79vh'}}>
             <aside className="w-full xl:w-1/4 hidden md:block mt-14">
               <SidebarSteps />
             </aside>
