@@ -308,7 +308,6 @@ export default function MultipleFormPage() {
                     onClick={handleFinanceOnNext}
                     label="Next →"
                   />
-
                 </div>
               )}
               {financeConfirmed && showVinNumber && (
@@ -319,15 +318,12 @@ export default function MultipleFormPage() {
                     onNextClick={handleVinNumberComplete}
                   />
                   <NextButton
-                    // disabled={false}
                     disabled={!vinnumber}
 
                     onClick={() => {
-                      // Add VIN number when "Next" button is clicked
 
                       handleVinNumberComplete();
 
-                      // Scroll to the latest data (optional)
                       if (addedCarsRef.current) {
                         addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
                       }
