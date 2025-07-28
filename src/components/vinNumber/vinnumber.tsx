@@ -22,7 +22,7 @@ export default function Vinnumber({ data, onSelect, onNextClick }: Props) {
   };
 
   return (
-    <div className='ml-7 mt-14 mb-7'>
+    <div className='ml-0 sm:ml-7 md:ml-7 lg:ml-7 xl:ml-7 mt-14 mb-7'>
       <div>
         <input
           type="text"

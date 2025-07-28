@@ -98,11 +98,6 @@ export default function MultipleFormPage() {
     }, 500);
   };
 
-  const handleOptionSelect = (value: string) => {
-    setSelectedFinanceOption(value);
-    setFinanceConfirmed(true);
-    setShowVinNumber(true);
-  };
 
   const handleVinNumberChange = (value: string) => {
     setVinnumber(value);
@@ -115,7 +110,13 @@ export default function MultipleFormPage() {
     setVinnumberconfirm(true)
   };
 
-
+  const handleFinanceOnNext = () => {
+    setShowVinNumber(true);
+    setFinanceConfirmed(true);
+  };
+  const handleOptionSelect = (value: string) => {
+    setSelectedFinanceOption(value);
+  };
   useEffect(() => {
     if (addedCars.length > 0 && addedCarsRef.current) {
       addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -150,7 +151,7 @@ export default function MultipleFormPage() {
       </div>
       <div className=''>
         <div className="w-full max-w-7xl mx-auto px-3 md:px-10 sm:px-10 lg:px-10 xl:px-10 sm:mt-24 md:mt-24 lg:mt-24 xl:mt-24">
-          <div className='flex justify-center flex-col items-center cursor-pointer mb-25 gap-10'>
+          <div className='flex justify-center flex-col items-center cursor-pointer mt-30 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0 lg:mb-25 sm:mb-25 xl:mb-25 mb-0 gap-10'>
             {addedCars.length > 0 && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
                 <MultiformHeading color="#8b8b8b" heading="Alright. These are the cars that I found. Which would you like to insure?" />
@@ -235,7 +236,7 @@ export default function MultipleFormPage() {
 
             <main className="w-full xl:w-3/4 space-y-6 ">
 
-              <div className='flex flex-col sm:flex-row sm:flex md:flex lg:flex xl:flex mt-12 gap-5 sm:gap-00 lg:gap-0 xl:gap-0'>
+              <div className='flex flex-col sm:flex-row sm:flex md:flex lg:flex xl:flex mt-12 gap-5 sm:gap-0 lg:gap-0 xl:gap-0'>
                 <div className=''>
                   <Image
                     src={image || "/default-avatar.png"}
@@ -251,7 +252,7 @@ export default function MultipleFormPage() {
               </div>
 
               {!showForm && addedCars.length === 0 && !carConfirmed && (
-                <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10">
+                <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10 ml-0">
                   {cars.map((car, idx) => (
                     <CarCard
                       key={idx}
@@ -290,7 +291,7 @@ export default function MultipleFormPage() {
               )}
 
               {showDriverForm && !driverConfirmed && (
-                <div className="ml-10 mt-2">
+                <div className="ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10 mt-2">
                   <DriverStepForm
                     onCancel={() => setShowDriverForm(false)}
                     onComplete={handleDriverFormComplete}
@@ -300,17 +301,18 @@ export default function MultipleFormPage() {
 
 
               {driverConfirmed && !financeConfirmed && (
-                <div className="ml-10">
+                <div className="ml-0 sm:ml-10 ">
                   <MultiOption data={finance} onSelect={handleOptionSelect} />
-                  <NextButton
-                    disabled={!financeConfirmed}
-                    onClick={() => { }}
+                  <NextBtn
+                    disabled={selectedFinanceOption === null}
+                    onClick={handleFinanceOnNext}
+                    label="Next →"
                   />
+
                 </div>
               )}
-
               {financeConfirmed && showVinNumber && (
-                <div className="ml-10 mt-6">
+                <div className="ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10  mt-6">
                   <Vinnumber
                     data={[]}
                     onSelect={handleVinNumberChange}
@@ -337,7 +339,7 @@ export default function MultipleFormPage() {
 
 
               {showCarRunMiles && (
-                <div className="ml-10 mt-6">
+                <div className="ml-0 sm:ml-10 lg:ml-10 xl:ml-10 mt-6">
                   <CarRunMiles
                     max={20000}
                     unitLabel="miles/year"
@@ -353,7 +355,7 @@ export default function MultipleFormPage() {
               )}
 
               {showBHD && (
-                <div className="ml-10 mt-6">
+                <div className="ml-0 sm:ml-10 xl:ml-10 md:ml-10 mt-6">
                   <BHDComponent
                     max={20000}
                     unitLabel="BHD"
