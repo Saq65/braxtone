@@ -3,7 +3,12 @@
 import { useState } from 'react';
 import DriverStepForm from './DriverStepForm';
 
-export default function AddDriverCard({ onClick }: { onClick: () => void }) {
+
+type AddDriverCardProps = {
+  onClick: () => void;
+  onComplete: (car: { [key: string]: string }) => void;
+};
+export default function AddDriverCard({ onClick,onComplete }:AddDriverCardProps ) {
   const [showForm, setShowForm] = useState(false);
 
   const handleClick = () => {
@@ -18,6 +23,7 @@ export default function AddDriverCard({ onClick }: { onClick: () => void }) {
           onCancel={() => setShowForm(false)}
           onComplete={(driver) => {
             console.log('Driver completed:', driver);
+                        onComplete(driver);
             setShowForm(false);
           }}
         />

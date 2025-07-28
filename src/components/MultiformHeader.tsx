@@ -35,7 +35,7 @@ const MultiformHeader = () => {
 
                     <div className="lg:hidden">
                         <button onClick={() => setIsOpen(!isOpen)}>
-                            {isOpen ? <IoClose size={28} color="white" /> : <HiOutlineMenuAlt3 size={28} color="white" />}
+                            {isOpen ? <IoClose size={28} color="white" /> : <HiOutlineMenuAlt3 size={28} className='text-[#0068a2] sm:[#fff]' />}
                         </button>
                     </div>
 

@@ -29,7 +29,7 @@ export default function AddCarCard({ onClick, onComplete }: AddCarCardProps) {
       ) : (
         <button
           onClick={handleClick}
-          className="sm:ml-7 w-auto border border-dashed p-6 rounded text-center text-gray-800 font-semibold hover:bg-gray-50 cursor-pointer sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px]"
+          className="sm:ml-7 ml-7 w-auto border border-dashed p-6 rounded text-center text-gray-800 font-semibold hover:bg-gray-50 cursor-pointer w-[80%] sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px]"
         >
           + Add car
         </button>

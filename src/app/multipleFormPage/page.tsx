@@ -144,11 +144,11 @@ export default function MultipleFormPage() {
 
   return (
     <div className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_16%,_white_70%,_#ceedfe_100%)] overflow-hidden">
-      <div className='fixed w-full'>
+      <div className='fixed w-full bg-[#d3f0ff] sm:bg-transparent xl:bg-transparent lg:bg-transparent'>
         <MultiformHeader />
       </div>
       <div className=''>
-        <div className="w-full max-w-7xl mx-auto px-10 sm:mt-24 md:mt-24 lg:mt-24 xl:mt-24">
+        <div className="w-full max-w-7xl mx-auto px-3 md:px-10 sm:px-10 lg:px-10 xl:px-10 sm:mt-24 md:mt-24 lg:mt-24 xl:mt-24">
           <div className='flex justify-center flex-col items-center cursor-pointer mb-25 gap-10'>
             {addedCars.length > 0 && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
@@ -227,14 +227,14 @@ export default function MultipleFormPage() {
           </div>
 
 
-          <div className="flex flex-col xl:flex-row gap-5 w-full " style={{height:'79vh'}}>
+          <div className="flex flex-col xl:flex-row gap-5 w-full " style={{ height: '79vh' }}>
             <aside className="w-full xl:w-1/4 hidden md:block mt-14">
               <SidebarSteps />
             </aside>
 
             <main className="w-full xl:w-3/4 space-y-6 ">
 
-              <div className='flex mt-12 gap-00'>
+              <div className='flex flex-col sm:flex-row sm:flex md:flex lg:flex xl:flex mt-12 gap-5 sm:gap-00 lg:gap-0 xl:gap-0'>
                 <div className=''>
                   <Image
                     src={image || "/default-avatar.png"}
@@ -244,7 +244,7 @@ export default function MultipleFormPage() {
                     className="rounded-full object-cover h-auto border-2 border-white shadow"
                   />
                 </div>
-                <div className={`ml-4 w-[100%] sm:w-[42%] xl:w-[42%] md:w-[42%] lg:w-[42%]`}>
+                <div className='ml-4 w-[100%]  sm:w-[42%] xl:w-[42%] md:w-[42%] lg:w-[42%]'>
                   <MultiformHeading heading={activeHeader.heading} />
                 </div>
               </div>
