@@ -25,7 +25,7 @@ const ServiceCardPage = () => {
             item={item}
             isSelected={selectedCard === item.id}
             onSelect={(id) =>
-              setSelectedCard((prev) => (prev === id ? null : id))
+              setSelectedCard((prev) => (prev === id ? id : id))
             }
           />
         ))}
@@ -36,11 +36,12 @@ const ServiceCardPage = () => {
         <Buttons
           onFirstClick={() => router.push('/')}
           onSecondClick={() => router.push('/InsuranceCoverage')}
-          secondDisabled={!selectedCard}
+          secondDisabled={selectedCard !== cardData[1].id}
         />
+
       </div>
 
-     
+
     </main>
   );
 };

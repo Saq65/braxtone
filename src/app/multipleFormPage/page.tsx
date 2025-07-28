@@ -149,7 +149,7 @@ export default function MultipleFormPage() {
       </div>
       <div className=''>
         <div className="w-full max-w-7xl mx-auto px-10 mt-24">
-          <div className='flex justify-center flex-col items-center cursor-pointer mb-5 gap-10'>
+          <div className='flex justify-center flex-col items-center cursor-pointer mb-25 gap-10'>
             {addedCars.length > 0 && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
                 <MultiformHeading color="#8b8b8b" heading="Alright. These are the cars that I found. Which would you like to insure?" />
@@ -227,7 +227,7 @@ export default function MultipleFormPage() {
           </div>
 
 
-          <div className="flex flex-col xl:flex-row gap-5 w-full mt-16" style={{height:'76vh'}}>
+          <div className="flex flex-col xl:flex-row gap-5 w-full mt-12" style={{height:'76vh'}}>
             <aside className="w-full xl:w-1/4 hidden md:block mt-14">
               <SidebarSteps />
             </aside>

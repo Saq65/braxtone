@@ -35,7 +35,7 @@ const Page = () => {
         <Buttons
           onFirstClick={() => router.push('/servicePage')}
           onSecondClick={() => router.push('/address')}
-          secondDisabled={!selectedCard}
+          secondDisabled={selectedCard !== cardData2[1].id} 
         />
       </div>
 
