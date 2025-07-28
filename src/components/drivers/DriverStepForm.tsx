@@ -6,8 +6,8 @@ import { useState } from 'react';
 const { Option } = Select;
 
 type Driver = {
-  inputData: object;
-  licenseStatus: string;
+  name: string;
+  licenseNumber: string;
   vehicleType: string;
   experienceLevel: string;
 };
@@ -20,21 +20,13 @@ export default function DriverStepForm({
   onCancel: () => void;
 }) {
   const [step, setStep] = useState(1);
-  const [licenseStatus, setLicenseStatus] = useState('');
+  const [name, setName] = useState('');
+  const [licenseNumber, setLicenseNumber] = useState('');
   const [vehicleType, setVehicleType] = useState('');
   const [experienceLevel, setExperienceLevel] = useState('');
 
-    const [inputData, setInputData] = useState({firstName:"",lastName:""});
-
-
-  const handleOnChange=(e)=>{
-    const {name,value}=e.target;
-    setInputData({...inputData,[name]:value})
-  }
-
   const vehicleTypes = ['Sedan', 'SUV', 'Truck', 'Van'];
   const experienceLevels = ['Beginner', 'Intermediate', 'Expert'];
-  const statusOfLicense = ['Valid', 'Invalid', 'Learner Permit', 'Foregien'];
 
   const totalSteps = 4;
 
@@ -54,26 +46,20 @@ export default function DriverStepForm({
 
         {step === 1 && (
           <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">Please  enter your legal name.</h2>
-            <div className='flex gap-3'>
+            <h2 className="text-md font-medium mb-3 text-gray-800">Enter driver's fullname</h2>
+            <div>
               <Input
-                name="firstName"
-                onChange={handleOnChange}
-                placeholder="First name"
-                className="mb-4 h-12"
-                
-              />
-              <Input
-                name="lastName"
-                onChange={handleOnChange}
-                placeholder="Last name"
-                className="mb-4 h-12"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Full Name"
+                className="mb-4"
+                size="large"
               />
             </div>
 
             <ProgressBar step={step} totalSteps={totalSteps} />
             <StepNavigation
-              canContinue={!!inputData}
+              canContinue={!!name}
               onBack={onCancel}
               onNext={() => setStep(2)}
             />
@@ -82,8 +68,8 @@ export default function DriverStepForm({
 
         {step === 2 && (
           <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">What is the status of your license?</h2>
-            {/* <Input
+            <h2 className="text-md font-medium mb-3 text-gray-800">Enter license number</h2>
+            <Input
               value={licenseNumber}
               onChange={(e) => setLicenseNumber(e.target.value)}
               placeholder="License Number"
@@ -93,27 +79,6 @@ export default function DriverStepForm({
             <ProgressBar step={step} totalSteps={totalSteps} />
             <StepNavigation
               canContinue={!!licenseNumber}
-              onBack={() => setStep(1)}
-              onNext={() => setStep(3)}
-            /> */}
-
-            <Select
-              value={licenseStatus}
-              onChange={(value) => setLicenseStatus(value)}
-              placeholder="Select Vehicle Type"
-              style={{ width: '100%', height: '40px', borderRadius: '8px' }}
-              className="mb-4"
-            >
-              <Option value="">Select</Option>
-              {statusOfLicense.map((v) => (
-                <Option key={v} value={v}>
-                  {v}
-                </Option>
-              ))}
-            </Select>
-            <ProgressBar step={step} totalSteps={totalSteps} />
-            <StepNavigation
-              canContinue={!!licenseStatus}
               onBack={() => setStep(1)}
               onNext={() => setStep(3)}
             />
@@ -173,7 +138,7 @@ export default function DriverStepForm({
               </button>
               <button
                 onClick={() =>
-                  onComplete({ inputData, licenseStatus, vehicleType, experienceLevel })
+                  onComplete({ name, licenseNumber, vehicleType, experienceLevel })
                 }
                 disabled={!experienceLevel}
                 className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-800 hover:bg-[#0067a1] hover:text-white border border-gray-100 bg-[#d0d0d0]"

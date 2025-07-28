@@ -1,14 +1,22 @@
+// components/drivers/AddDriverCard.tsx
 'use client';
 
 import { useState } from 'react';
 import DriverStepForm from './DriverStepForm';
 
+type Driver = {
+  name: string;
+  licenseNumber: string;
+  vehicleType: string;
+  experienceLevel: string;
+};
 
 type AddDriverCardProps = {
   onClick: () => void;
-  onComplete: (car: { [key: string]: string }) => void;
+  onComplete: (driver: Driver) => void;
 };
-export default function AddDriverCard({ onClick,onComplete }:AddDriverCardProps ) {
+
+export default function AddDriverCard({ onClick, onComplete }: AddDriverCardProps) {
   const [showForm, setShowForm] = useState(false);
 
   const handleClick = () => {
@@ -22,15 +30,14 @@ export default function AddDriverCard({ onClick,onComplete }:AddDriverCardProps 
         <DriverStepForm
           onCancel={() => setShowForm(false)}
           onComplete={(driver) => {
-            console.log('Driver completed:', driver);
-                        onComplete(driver);
+            onComplete(driver);
             setShowForm(false);
           }}
         />
       ) : (
         <button
           onClick={handleClick}
-          className="w-auto border border-dashed p-6 rounded text-center text-gray-500 hover:bg-gray-50 cursor-pointer sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px]"
+          className="sm:ml-7 ml-7 w-auto border border-dashed p-6 rounded text-center text-gray-800 font-semibold hover:bg-gray-50 cursor-pointer w-[80%] sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px]"
         >
           + Add driver
         </button>

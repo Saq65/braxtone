@@ -17,6 +17,7 @@ import { BiPencil } from 'react-icons/bi';
 import CarRunMiles from '@/components/progressBar/ProgressBar';
 import NextBtn from "@/components/ui/NextBtn";
 import BHDComponent from '@/components/progressBar/ProgressBar';
+import AddDriverCard from '@/components/drivers/AddDriver';
 
 
 
@@ -269,6 +270,15 @@ export default function MultipleFormPage() {
                   />
                 </div>
               )}
+              {!showDriverForm && carConfirmed && !driverConfirmed && (
+                <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10">
+                  <AddDriverCard
+                    onClick={() => setShowDriverForm(true)}
+                    onComplete={handleDriverFormComplete}
+                  />
+                </div>
+              )}
+
 
               {showForm && (
                 <div className="mt-6">
@@ -287,6 +297,7 @@ export default function MultipleFormPage() {
                   />
                 </div>
               )}
+
 
               {driverConfirmed && !financeConfirmed && (
                 <div className="ml-10">
