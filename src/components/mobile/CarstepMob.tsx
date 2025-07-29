@@ -1,53 +1,49 @@
-import React, { useState } from 'react';
-import type { DrawerProps, RadioChangeEvent } from 'antd';
-import { Button, Drawer, Radio, Space } from 'antd';
-type Props = {}
+'use client';
 
-const CarstepMob = (props: Props) => {
-      const [open, setOpen] = useState(false);
-  const [placement, setPlacement] = useState<DrawerProps['placement']>('left');
+import { useState } from 'react';
+import { Drawer } from 'antd';
+import CarStepForm from '../cars/CarStepForm';
 
-  const showDrawer = () => {
-    setOpen(true);
-  };
+type Props = {
+  onComplete: (car: { [key: string]: string }) => void;
+};
 
-  const onClose = () => {
-    setOpen(false);
-  };
-
-  const onChange = (e: RadioChangeEvent) => {
-    setPlacement(e.target.value);
-  };
+export default function CarstepMob({ onComplete }: Props) {
+  const [open, setOpen] = useState(false);
 
   return (
-    <div>
-         <>
-      <Space>
-        <Radio.Group value={placement} onChange={onChange}>
-          <Radio value="top">top</Radio>
-          <Radio value="right">right</Radio>
-          <Radio value="bottom">bottom</Radio>
-          <Radio value="left">left</Radio>
-        </Radio.Group>
-        <Button type="primary" onClick={showDrawer}>
-          Open
-        </Button>
-      </Space>
-      <Drawer
-        title="Basic Drawer"
-        placement={placement}
-        closable={false}
-        onClose={onClose}
-        open={open}
-        key={placement}
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className="ml-0 border border-dashed p-6 rounded text-center text-gray-800 font-semibold hover:bg-gray-50 cursor-pointer w-full"
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        + Add cars
+      </button>
+
+      <Drawer
+        placement="bottom"
+        closable={false}
+        open={open}
+        height="98.6%"
+        style={{
+          borderTopLeftRadius: '4px',
+          borderTopRightRadius: '4px',
+          width: 'calc(100% - 2px)',
+          margin: '0 auto',
+        }}
+        bodyStyle={{
+          padding: 0,
+        }}
+
+      >
+        <CarStepForm
+          onCancel={() => setOpen(false)}
+          onComplete={(car) => {
+            onComplete(car);
+            setOpen(false);
+          }}
+        />
       </Drawer>
     </>
-    </div>
-  )
+  );
 }
-
-export default CarstepMob;
