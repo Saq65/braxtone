@@ -37,9 +37,13 @@ export default function MultipleFormPage() {
   const [vinNumberConfirm, setVinnumberconfirm] = useState(false);
   const [selectedFinanceOption, setSelectedFinanceOption] = useState<string | null>(null);
 
-  //Taking use of car yes/no page state
+  //Taking user of car yes/no page state
   const [selectUseCar, setSelectUseCar] = useState<string | null>(null);
   const [useCarYesNoConfermed, setUseCarYesNoConfermed] = useState(false);
+
+  //age conformation state
+  const [selectAge, setSelectAge] = useState<string | null>(null);
+  const [ageConfermed, setAgeConformed] = useState(false);
 
   const [vinnumber, setVinnumber] = useState<string>('');
   const [addedVinNumber, setAddedVinNumber] = useState<string | null>(null);
@@ -122,14 +126,23 @@ export default function MultipleFormPage() {
   const handleOptionSelectInFinanace = (value: string) => {
     setSelectedFinanceOption(value);
   };
-
+  //functions of user car  use yes/No option
   const handleUseCarOnNext = () => {
-    setShowVinNumber(true);
+    // setShowVinNumber(true);
     setUseCarYesNoConfermed(true);
   };
 
   const handleOptionSelectInCarUse = (value: string) => {
     setSelectUseCar(value);
+  };
+
+  //age conformation function
+  const handleAgeOnNext = () => {
+    setUseCarYesNoConfermed(true);
+  };
+
+  const handleOptionSelectInHowMuchAge = (value: string) => {
+    setSelectAge(value);
   };
 
   useEffect(() => {
@@ -199,11 +212,11 @@ export default function MultipleFormPage() {
               </div>
             )}
 
-            {selectedFinanceOption && financeConfirmed  && (
+            {selectedFinanceOption && financeConfirmed && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
                 <MultiformHeading color="#8b8b8b" heading="Selected Finance Option" />
                 <div className='flex items-center gap-2'>
-                  <h3 className="text-lg font-semibold text-gray-700">{selectedFinanceOption }</h3>
+                  <h3 className="text-lg font-semibold text-gray-700">{selectedFinanceOption}</h3>
                   <BiPencil className='mt-1' />
                 </div>
               </div>
@@ -388,22 +401,22 @@ export default function MultipleFormPage() {
                   />
                   <NextBtn
                     disabled={selectUseCar === null}
-                    onClick={handleUseCarOnNext} 
+                    onClick={handleUseCarOnNext}
                     label="Next →"
                   />
                 </div>
               )}
 
 
-                 {addedBhdValue !== null && (
+              {useCarYesNoConfermed && (
                 <div className="ml-0 sm:ml-10">
                   <MultiOption
                     data={HowYoungData}
-                    onSelect={handleOptionSelectInCarUse}
+                    onSelect={handleOptionSelectInHowMuchAge}
                   />
                   <NextBtn
-                    disabled={selectUseCar === null}
-                    onClick={handleUseCarOnNext} 
+                    disabled={selectAge === null}
+                    onClick={handleAgeOnNext}
                     label="Next →"
                   />
                 </div>
