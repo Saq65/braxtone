@@ -37,7 +37,7 @@ export default function CarStepForm({
 
   return (
     <div className="relative mx-end w-[100%] sm:w-[380px] md:w-[380px] lg:w-[380px] 
-      xl:w-[380px] ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10pt-6 pb-2 
+      xl:w-[380px] ml-0 sm:ml-16 md:ml-16 lg:ml-16 xl:ml-16 pt-6 pb-2 
       border border-0 sm:!border sm:!border-[#d2d0d0]  p-4 h-[260px] rounded-md mt-8">
 
       <button
