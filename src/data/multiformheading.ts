@@ -65,13 +65,31 @@ export const MultiFormheader: MultiFormheader[] = [
         id: '11',
         image: '/asesst/images/dania-smile.png',
         heading: "Tarik, have you had any traffic violations in the past 5 years? (No need to include parking tickets)​"
-    }
-    ,
-
+    },
     {
         id: '12',
         image: '/asesst/images/dania-smile.png',
         heading: "What's your martial status?​"
+    },
+    {
+        id: '13',
+        image: '/asesst/images/dania-smile.png',
+        heading: "Is your Nissan 370Z registered in Bahrain?​"
+    },
+    {
+        id: '14',
+        image: '/asesst/images/dania-smile.png',
+        heading: "Do you currently have a car insurance policy with any company?​"
+    },
+    {
+        id: '15',
+        image: '/asesst/images/dania-smile.png',
+        heading: "Alright Tarik, have you field any claims in the past 5 years?"
+    },
+    {
+        id: '16',
+        image: '/asesst/images/dania-smile.png',
+        heading: "The cool thing about Braxtone is that safe drivers actually pay less! Stick with us, and you can unlock even more discounts over time."
     }
 
 

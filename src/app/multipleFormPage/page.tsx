@@ -187,22 +187,24 @@ export default function MultipleFormPage() {
     showBHD, showYesNo, showHowYoung, trafficYesNo, showMartial, showRegisterd]);
 
   let activeHeader = MultiFormheader[0];
-  if (showHowYoung) {
-    activeHeader = MultiFormheader[8];
-  } else if (showYesNo) {
-    activeHeader = MultiFormheader[7];
-  } else if (addedBhdValue !== null) {
-    activeHeader = MultiFormheader[6];
-  } else if (addedCarMiles !== null && addedBhdValue === null) {
-    activeHeader = MultiFormheader[5];
-  } else if (vinNumberConfirm && addedCarMiles === null) {
-    activeHeader = MultiFormheader[4];
-  } else if (financeConfirmed && !vinNumberConfirm) {
-    activeHeader = MultiFormheader[3];
-  } else if (driverConfirmed && !financeConfirmed) {
-    activeHeader = MultiFormheader[2];
+  if (carConfirmed && !driverConfirmed) {
+    activeHeader = MultiFormheader[1];
   } else if (carConfirmed && !driverConfirmed) {
     activeHeader = MultiFormheader[1];
+  } else if (driverConfirmed && !financeConfirmed) {
+    activeHeader = MultiFormheader[2];
+  } else if (financeConfirmed && !vinNumberConfirm) {
+    activeHeader = MultiFormheader[3];
+  } else if (vinNumberConfirm && addedCarMiles === null) {
+    activeHeader = MultiFormheader[4];
+  } else if (addedCarMiles !== null && addedBhdValue === null) {
+    activeHeader = MultiFormheader[5];
+  } else if (addedBhdValue !== null) {
+    activeHeader = MultiFormheader[6];
+  } else if (showYesNo) {
+    activeHeader = MultiFormheader[7];
+  } else if (ageConfermed && !addedBhdValue) {
+    activeHeader = MultiFormheader[8];
   }
 
 
@@ -212,7 +214,7 @@ export default function MultipleFormPage() {
 
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_16%,_white_70%,_#ceedfe_100%)] overflow-hidden">
+    <div className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_16%,_white_70%,_#ceedfe_100%)] overflow-hidden ">
       <div className='fixed w-full bg-[#d3f0ff] sm:bg-transparent xl:bg-transparent lg:bg-transparent'>
         <MultiformHeader />
       </div>
