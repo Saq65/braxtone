@@ -53,7 +53,9 @@ export default function MultipleFormPage() {
   const [carMiles, setCarMiles] = useState<number | null>(null);
   const [showCarRunMiles, setShowCarRunMiles] = useState(false);
   const [showBHD, setShowBHD] = useState(false);
-
+  const [howYoung, setHowYoung] = useState(false);
+  const [showYesNo, setShowYesNo] = useState(false);
+  const [showHowYoung, setShowHowYoung] = useState(false);
   const handleCarMilesChange = (val: number) => {
     setCarMiles(val);
   };
@@ -70,8 +72,10 @@ export default function MultipleFormPage() {
     if (bhdValue !== null) {
       setAddedBhdValue(bhdValue);
       setShowBHD(false);
+      setShowYesNo(true);
     }
   };
+
 
 
   const [bhdValue, setBhdValue] = useState<number | null>(null);
@@ -127,30 +131,26 @@ export default function MultipleFormPage() {
   const handleOptionSelectInFinanace = (value: string) => {
     setSelectedFinanceOption(value);
   };
-  //functions of user car  use yes/No option
-  const handleUseCarOnNext = () => {
-    // setShowVinNumber(true);
-    setUseCarYesNoConfermed(true);
-  };
+
 
   const handleOptionSelectInCarUse = (value: string) => {
     setSelectUseCar(value);
+    setHowYoung(true)
   };
 
-  //age conformation function
-  const handleAgeOnNext = () => {
-    setUseCarYesNoConfermed(true);
-  };
+
 
   const handleOptionSelectInHowMuchAge = (value: string) => {
     setSelectAge(value);
   };
 
+
+
   useEffect(() => {
     if (addedCars.length > 0 && addedCarsRef.current) {
       addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  }, [addedCars, addedDrivers, financeConfirmed, showVinNumber, showCarRunMiles, showBHD]);
+  }, [addedCars, addedDrivers, financeConfirmed, showVinNumber, showCarRunMiles, showBHD,showYesNo,showHowYoung]);
 
   let activeHeader = MultiFormheader[0];
 
@@ -180,6 +180,7 @@ export default function MultipleFormPage() {
       </div>
       <div className=''>
         <div className="w-full max-w-7xl mx-auto px-3 md:px-10 sm:px-10 lg:px-10 xl:px-10 sm:mt-24 md:mt-24 lg:mt-24 xl:mt-24">
+          {/* here all data showing after added */}
           <div className='flex justify-center flex-col sm:items-center md:items-center lg:items-center xl:items-center items-start cursor-pointer mt-30 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0 lg:mb-25 sm:mb-25 xl:mb-25 mb-0 gap-10'>
             {addedCars.length > 0 && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
@@ -255,16 +256,38 @@ export default function MultipleFormPage() {
 
               </div>
             )}
+
+
+            {useCarYesNoConfermed && selectUseCar && (
+              <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading="Do you use the car regularly?" />
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-gray-700">{selectUseCar}</h3>
+                  <BiPencil className="mt-1" />
+                </div>
+              </div>
+            )}
+
+            {ageConfermed && selectAge && (
+              <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-gray-700">{selectAge}</h3>
+                  <BiPencil className="mt-1" />
+                </div>
+              </div>
+            )}
+
           </div>
 
-
+          {/* this is main part */}
           <div className="flex flex-col xl:flex-row gap-5 w-full " style={{ height: '79vh' }}>
             <aside className="w-full xl:w-1/4 hidden md:block mt-14">
               <SidebarSteps />
             </aside>
 
             <main className="w-full xl:w-3/4 space-y-6 ">
-
+              {/* this is heading */}
               <div className='flex flex-col sm:flex-row sm:flex md:flex lg:flex xl:flex mt-12 gap-5 sm:gap-0 lg:gap-0 xl:gap-0'>
                 <div className=''>
                   <Image
@@ -280,148 +303,176 @@ export default function MultipleFormPage() {
                 </div>
               </div>
 
-              {!showForm && addedCars.length === 0 && !carConfirmed && (
-                <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10 ml-0">
-                  {cars.map((car, idx) => (
-                    <CarCard
-                      key={idx}
-                      name={car.name}
-                      selected={car.selected}
-                      onToggle={() => toggleCar(idx)}
+              {/* this is for car */}
+              <>
+                {!showForm && addedCars.length === 0 && !carConfirmed && (
+                  <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10 ml-0">
+                    {cars.map((car, idx) => (
+                      <CarCard
+                        key={idx}
+                        name={car.name}
+                        selected={car.selected}
+                        onToggle={() => toggleCar(idx)}
+                      />
+                    ))}
+                    <AddCarCard
+                      onClick={() => setShowForm(true)}
+                      onComplete={handleCarFormComplete}
                     />
-                  ))}
-                  <AddCarCard
-                    onClick={() => setShowForm(true)}
-                    onComplete={handleCarFormComplete}
-                  />
-                  <NextButton
-                    disabled={!cars.some((car) => car.selected)}
-                    onClick={() => { }}
-                  />
-                </div>
-              )}
-              {!showDriverForm && carConfirmed && !driverConfirmed && (
-                <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10">
-                  <AddDriverCard
-                    onClick={() => setShowDriverForm(true)}
-                    onComplete={handleDriverFormComplete}
-                  />
-                </div>
-              )}
+                    <NextButton
+                      disabled={!cars.some((car) => car.selected)}
+                      onClick={() => { }}
+                    />
+                  </div>
+                )}
+                {!showDriverForm && carConfirmed && !driverConfirmed && (
+                  <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10">
+                    <AddDriverCard
+                      onClick={() => setShowDriverForm(true)}
+                      onComplete={handleDriverFormComplete}
+                    />
+                  </div>
+                )}
+                {showForm && (
+                  <div className="mt-6">
+                    <CarStepForm
+                      onCancel={() => setShowForm(false)}
+                      onComplete={handleCarFormComplete}
+                    />
+                  </div>
+                )}
+
+              </>
 
 
-              {showForm && (
-                <div className="mt-6">
-                  <CarStepForm
-                    onCancel={() => setShowForm(false)}
-                    onComplete={handleCarFormComplete}
-                  />
-                </div>
-              )}
-
-              {showDriverForm && !driverConfirmed && (
-                <div className="ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10 mt-2">
-                  <DriverStepForm
-                    onCancel={() => setShowDriverForm(false)}
-                    onComplete={handleDriverFormComplete}
-                  />
-                </div>
-              )}
+              {/* this is for driver */}
+              <>
+                {showDriverForm && !driverConfirmed && (
+                  <div className="ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10 mt-2">
+                    <DriverStepForm
+                      onCancel={() => setShowDriverForm(false)}
+                      onComplete={handleDriverFormComplete}
+                    />
+                  </div>
+                )}
 
 
-              {driverConfirmed && !financeConfirmed && (
-                <div className="ml-0 sm:ml-10 ">
-                  <MultiOption data={finance} onSelect={handleOptionSelectInFinanace} />
-                  <NextBtn
-                    disabled={selectedFinanceOption === null}
-                    onClick={handleFinanceOnNext}
-                    label="Next →"
-                  />
-                </div>
-              )}
-              {financeConfirmed && showVinNumber && (
-                <div className="ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10  mt-6">
-                  <Vinnumber
-                    data={[]}
-                    onSelect={handleVinNumberChange}
-                    onNextClick={handleVinNumberComplete}
-                  />
-                  <NextButton
-                    disabled={!vinnumber}
+                {driverConfirmed && !financeConfirmed && (
+                  <div className="ml-0 sm:ml-10 ">
+                    <MultiOption data={finance} onSelect={handleOptionSelectInFinanace} />
+                    <NextBtn
+                      disabled={selectedFinanceOption === null}
+                      onClick={handleFinanceOnNext}
+                      label="Next →"
+                    />
+                  </div>
+                )}
+              </>
 
-                    onClick={() => {
+              {/* this is vin number */}
+              <>
+                {financeConfirmed && showVinNumber && (
+                  <div className="ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10  mt-6">
+                    <Vinnumber
+                      data={[]}
+                      onSelect={handleVinNumberChange}
+                      onNextClick={handleVinNumberComplete}
+                    />
+                    <NextButton
+                      disabled={!vinnumber}
 
-                      handleVinNumberComplete();
+                      onClick={() => {
 
-                      if (addedCarsRef.current) {
-                        addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-                      }
-                    }}
-                  />
-                </div>
-              )}
+                        handleVinNumberComplete();
 
-              {showCarRunMiles && (
-                <div className="ml-0 sm:ml-10 lg:ml-10 xl:ml-10 mt-6">
-                  <CarRunMiles
-                    max={20000}
-                    unitLabel="miles/year"
-                    defaultValue={5500}
-                    onSelect={handleCarMilesChange}
-                  />
-                  <NextBtn
-                    disabled={carMiles === null}
-                    onClick={handleCarMilesComplete}
-                    label="Next →"
-                  />
-                </div>
-              )}
+                        if (addedCarsRef.current) {
+                          addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+                        }
+                      }}
+                    />
+                  </div>
+                )}
 
-              {showBHD && (
-                <div className="ml-0 sm:ml-10 xl:ml-10 md:ml-10 mt-6">
-                  <BHDComponent
-                    max={20000}
-                    unitLabel="BHD"
-                    defaultValue={5500}
-                    onSelect={handleBHDComponent}
-                  />
-                  <NextBtn
-                    disabled={carMiles === null}
-                    onClick={handleBHDComplete}
-                    label="Next →"
-                  />
-                </div>
-              )}
+              </>
+
+              {/* this is car miles */}
+              <>
+                {showCarRunMiles && (
+                  <div className="ml-0 sm:ml-10 lg:ml-10 xl:ml-10 mt-6">
+                    <CarRunMiles
+                      max={20000}
+                      unitLabel="miles/year"
+                      defaultValue={5500}
+                      onSelect={handleCarMilesChange}
+                    />
+                    <NextBtn
+                      disabled={carMiles === null}
+                      onClick={handleCarMilesComplete}
+                      label="Next →"
+                    />
+                  </div>
+                )}
+              </>
+
+              {/* this is  bhd compo*/}
+              <>
+                {showBHD && (
+                  <div className="ml-0 sm:ml-10 xl:ml-10 md:ml-10 mt-6">
+                    <BHDComponent
+                      max={20000}
+                      unitLabel="BHD"
+                      defaultValue={5500}
+                      onSelect={handleBHDComponent}
+                    />
+                    <NextBtn
+                      disabled={carMiles === null}
+                      onClick={handleBHDComplete}
+                      label="Next →"
+                    />
+                  </div>
+                )}
+
+              </>
+
+              {/* this is all multi option */}
+              <>
+                {addedBhdValue !== null && showYesNo && (
+                  <div className="ml-0 sm:ml-10">
+                    <MultiOption
+                      data={yesNoData}
+                      onSelect={handleOptionSelectInCarUse}
+                    />
+                    <NextBtn
+                      disabled={selectUseCar === null}
+                      onClick={() => {
+                        setShowYesNo(false);     // hide this step
+                        setShowHowYoung(true);   // show next step
+                        setUseCarYesNoConfermed(true); // ✅ confirm value
+                      }}
+                      label="Next →"
+                    />
+                  </div>
+                )}
+
+                {showHowYoung && (
+                  <div className="ml-0 sm:ml-10">
+                    <MultiOption
+                      data={HowYoungData}
+                      onSelect={handleOptionSelectInHowMuchAge}
+                    />
+                    <NextBtn
+                      disabled={selectAge === null}
+                      onClick={() => {
+                        setAgeConformed(true); // ✅ confirm value
+                        setShowHowYoung(false); // Optionally hide this step
+                      }}
+                      label="Next →"
+                    />
+                  </div>
+                )}
+              </>
 
 
-              {addedBhdValue !== null && (
-                <div className="ml-0 sm:ml-10">
-                  <MultiOption
-                    data={yesNoData}
-                    onSelect={handleOptionSelectInCarUse}
-                  />
-                  <NextBtn
-                    disabled={selectUseCar === null}
-                    onClick={handleUseCarOnNext}
-                    label="Next →"
-                  />
-                </div>
-              )}
-
-
-              {useCarYesNoConfermed && (
-                <div className="ml-0 sm:ml-10">
-                  <MultiOption
-                    data={HowYoungData}
-                    onSelect={handleOptionSelectInHowMuchAge}
-                  />
-                  <NextBtn
-                    disabled={selectAge === null}
-                    onClick={handleAgeOnNext}
-                    label="Next →"
-                  />
-                </div>
-              )}
 
             </main>
           </div>
