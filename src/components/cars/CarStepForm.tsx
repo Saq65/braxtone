@@ -2,7 +2,6 @@
 
 import { Select } from 'antd';
 import { useState } from 'react';
-import { BsArrowLeft } from 'react-icons/bs';
 
 const { Option } = Select;
 

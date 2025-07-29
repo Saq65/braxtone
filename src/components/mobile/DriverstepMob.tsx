@@ -5,8 +5,10 @@ import { Drawer } from 'antd';
 import DriverStepForm from '../drivers/DriverStepForm';
 
 type Props = {
-  onComplete: (car: { [key: string]: string }) => void;
+  onComplete: (driver: { [key: string]: string }) => void;
+  onCancel: () => void;
 };
+
 
 export default function CarstepMob({ onComplete }: Props) {
   const [open, setOpen] = useState(false);
@@ -17,7 +19,7 @@ export default function CarstepMob({ onComplete }: Props) {
         onClick={() => setOpen(true)}
         className="ml-0 border border-dashed p-6 rounded text-center text-gray-800 font-semibold hover:bg-gray-50 cursor-pointer w-full"
       >
-        + Add cars
+        + Add driver
       </button>
 
       <Drawer

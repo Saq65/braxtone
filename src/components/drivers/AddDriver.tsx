@@ -26,30 +26,43 @@ export default function AddDriverCard({ onClick, onComplete }: AddDriverCardProp
 
   return (
     <>
-    <div className='hidden sm:block'>
-   {showForm ? (
-        <DriverStepForm
-          onCancel={() => setShowForm(false)}
+      <div className='hidden sm:block'>
+        {showForm ? (
+          <DriverStepForm
+            onCancel={() => setShowForm(false)}
+            onComplete={(driver) => {
+              onComplete({
+                name: driver.name,
+                licenseNumber: driver.licenseNumber,
+                vehicleType: driver.vehicleType,
+                experienceLevel: driver.experienceLevel,
+              });
+              setShowForm(false);
+            }}
+          />
+        ) : (
+          <button
+            onClick={handleClick}
+            className="sm:ml-7 ml-0 w-auto border border-dashed p-6 rounded text-center text-gray-800 font-semibold hover:bg-gray-50 cursor-pointer w-[80%] sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px]"
+          >
+            + Add driver
+          </button>
+        )}
+
+      </div>
+
+
+      <div className="block sm:hidden w-full">
+        <DriverstepMob
           onComplete={(driver) => {
             onComplete(driver);
             setShowForm(false);
           }}
+          onCancel={() => setShowForm(false)}
         />
-      ) : (
-        <button
-          onClick={handleClick}
-          className="sm:ml-7 ml-0 w-auto border border-dashed p-6 rounded text-center text-gray-800 font-semibold hover:bg-gray-50 cursor-pointer w-[80%] sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px]"
-        >
-          + Add driver
-        </button>
-      )}
-
-    </div>
-   
-
-      <div className="block sm:hidden w-full">
-        <DriverstepMob onComplete={onComplete} />
       </div>
+
+
     </>
   );
 }

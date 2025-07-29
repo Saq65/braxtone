@@ -94,7 +94,7 @@ export default function MultipleFormPage() {
     setShowForm(false);
     setTimeout(() => {
       setCarConfirmed(true);
-      setShowDriverForm(true);
+
     }, 500);
   };
 
@@ -103,6 +103,7 @@ export default function MultipleFormPage() {
     setShowDriverForm(false);
     setTimeout(() => {
       setDriverConfirmed(true);
+      setDriverConfirmed(true)
     }, 500);
   };
 
