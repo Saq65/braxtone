@@ -202,11 +202,11 @@ export default function MultipleFormPage() {
               </div>
             )}
 
-            {selectedFinanceOption && (
+            {selectedFinanceOption && financeConfirmed  && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
                 <MultiformHeading color="#8b8b8b" heading="Selected Finance Option" />
                 <div className='flex items-center gap-2'>
-                  <h3 className="text-lg font-semibold text-gray-700">{selectedFinanceOption}</h3>
+                  <h3 className="text-lg font-semibold text-gray-700">{selectedFinanceOption }</h3>
                   <BiPencil className='mt-1' />
                 </div>
               </div>
