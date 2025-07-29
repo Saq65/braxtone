@@ -3,6 +3,7 @@
 import CarStepForm from './CarStepForm';
 import CarstepMob from '../mobile/CarstepMob';
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion'; // ✅ Import
 
 type AddCarCardProps = {
   onClick: () => void;
@@ -21,25 +22,43 @@ export default function AddCarCard({ onClick, onComplete }: AddCarCardProps) {
     <>
       {/* Desktop version */}
       <div className="hidden sm:block">
-        {showForm ? (
-          <CarStepForm
-            onCancel={() => setShowForm(false)}
-            onComplete={(car) => {
-              onComplete(car);
-              setShowForm(false);
-            }}
-          />
-        ) : (
-          <button
-            onClick={handleClick}
-            className="ml-0 sm:ml-7 w-auto border border-dashed p-6 rounded text-center text-gray-800 font-semibold hover:bg-gray-50 cursor-pointer w-[80%] sm:w-[380px]"
-          >
-            + Add cars
-          </button>
-        )}
+        <AnimatePresence>
+          {showForm ? (
+            <motion.div
+              key="form"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 30 }}
+              transition={{
+                duration: 0.6,
+                ease: 'easeOut',
+              }}
+
+            >
+              <CarStepForm
+                onCancel={() => setShowForm(false)}
+                onComplete={(car) => {
+                  onComplete(car);
+                  setShowForm(false);
+                }}
+              />
+            </motion.div>
+          ) : (
+            <motion.button
+              key="button"
+              onClick={handleClick}
+              className="ml-0 sm:ml-7 w-auto border border-dashed p-6 rounded text-center text-gray-800 font-semibold hover:bg-gray-50 cursor-pointer w-[80%] sm:w-[380px]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+            >
+              + Add cars
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Mobile version - render drawer logic component always */}
+      {/* Mobile version */}
       <div className="block sm:hidden w-full">
         <CarstepMob onComplete={onComplete} />
       </div>

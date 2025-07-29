@@ -21,4 +21,28 @@ const HowYoungData: FinanceData[] = [
     { id: 4, value: "45+" },
 
 ]
-export { finance, yesNoData ,HowYoungData};
+const TraffficyesNoData: FinanceData[] = [
+    { id: 1, value: "Yes" },
+    { id: 2, value: "No" }
+]
+
+const MartialStatus: FinanceData[] = [
+    { id: 1, value: "Single" },
+    { id: 2, value: "Married / Civil union" },
+    { id: 3, value: "It's complicated" }
+]
+
+
+const RegisteredData: FinanceData[] = [
+    { id: 1, value: "Yes, under my or my spouse's name" },
+    { id: 2, value: "Yes, under someone else's name" },
+    { id: 3, value: "No, it's not registered in bahrain" }
+]
+
+
+const InsuranceYesNoData: FinanceData[] = [
+    { id: 1, value: "Yes" },
+    { id: 2, value: "No" }
+]
+
+export { finance, yesNoData, HowYoungData, TraffficyesNoData, MartialStatus, RegisteredData,InsuranceYesNoData };

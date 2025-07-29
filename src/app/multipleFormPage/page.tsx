@@ -9,7 +9,7 @@ import MultiformHeading from "@/components/cars/MultiformHeading";
 import { MultiFormheader } from "@/data/multiformheading";
 import CarStepForm from "@/components/cars/CarStepForm";
 import DriverStepForm from '@/components/drivers/DriverStepForm';
-import { finance, HowYoungData, yesNoData } from '@/data/multiOptionsData';
+import { finance, HowYoungData, InsuranceYesNoData, MartialStatus, RegisteredData, TraffficyesNoData, yesNoData } from '@/data/multiOptionsData';
 import MultiOption from '@/components/ui/MultiOption';
 import Vinnumber from '@/components/vinNumber/vinnumber';
 import NextButton from '@/components/ui/NextBtn';
@@ -18,7 +18,7 @@ import CarRunMiles from '@/components/progressBar/ProgressBar';
 import NextBtn from "@/components/ui/NextBtn";
 import BHDComponent from '@/components/progressBar/ProgressBar';
 import AddDriverCard from '@/components/drivers/AddDriver';
-
+import { AnimatePresence, motion } from 'framer-motion';
 
 
 export default function MultipleFormPage() {
@@ -37,13 +37,23 @@ export default function MultipleFormPage() {
   const [vinNumberConfirm, setVinnumberconfirm] = useState(false);
   const [selectedFinanceOption, setSelectedFinanceOption] = useState<string | null>(null);
 
-  //Taking user of car yes/no page state
   const [selectUseCar, setSelectUseCar] = useState<string | null>(null);
   const [useCarYesNoConfermed, setUseCarYesNoConfermed] = useState(false);
 
-  //age conformation state
   const [selectAge, setSelectAge] = useState<string | null>(null);
   const [ageConfermed, setAgeConformed] = useState(false);
+
+  const [selectTraffic, setselectTraffic] = useState<string | null>(null);
+  const [confirmselectTraffic, setconfirmselectTraffic] = useState(false);
+
+  const [selectMartial, setselectMartial] = useState<string | null>(null);
+  const [confirmselectMartial, setconfirmselectMartial] = useState(false);
+
+  const [selectRegistered, setselectRegistered] = useState<string | null>(null);
+  const [confirmselectRegistered, setconfirmselectRegistered] = useState(false);
+
+  const [selectInsuraceYesno, setselectInsuraceYesno] = useState<string | null>(null);
+  const [confirmselectInsuranceYesno, setconfirmselectInsuranceYesno] = useState(false);
 
   const [vinnumber, setVinnumber] = useState<string>('');
   const [addedVinNumber, setAddedVinNumber] = useState<string | null>(null);
@@ -53,9 +63,13 @@ export default function MultipleFormPage() {
   const [carMiles, setCarMiles] = useState<number | null>(null);
   const [showCarRunMiles, setShowCarRunMiles] = useState(false);
   const [showBHD, setShowBHD] = useState(false);
-  const [howYoung, setHowYoung] = useState(false);
   const [showYesNo, setShowYesNo] = useState(false);
   const [showHowYoung, setShowHowYoung] = useState(false);
+  const [trafficYesNo, setTrafficYesNo] = useState(false);
+  const [showMartial, setMartial] = useState(false);
+  const [showRegisterd, setshowRegisterd] = useState(false);
+  const [showInsurenceYesNo, setshowInsurenceYesNo] = useState(false);
+
   const handleCarMilesChange = (val: number) => {
     setCarMiles(val);
   };
@@ -75,8 +89,6 @@ export default function MultipleFormPage() {
       setShowYesNo(true);
     }
   };
-
-
 
   const [bhdValue, setBhdValue] = useState<number | null>(null);
   const handleBHDComponent = (val: number) => {
@@ -135,42 +147,55 @@ export default function MultipleFormPage() {
 
   const handleOptionSelectInCarUse = (value: string) => {
     setSelectUseCar(value);
-    setHowYoung(true)
   };
-
 
 
   const handleOptionSelectInHowMuchAge = (value: string) => {
     setSelectAge(value);
   };
 
+  const handleOptionSelectTraffic = (value: string) => {
+    setselectTraffic(value)
+  }
 
+  const handleOptionSelectMartial = (value: string) => {
+    setselectMartial(value)
+  }
+
+  const handleOptionSelectRegistered = (value: string) => {
+    setselectRegistered(value)
+  }
+
+  const handleOptionSelectInsuranceYesNo = (value: string) => {
+    setselectInsuraceYesno(value)
+  }
 
   useEffect(() => {
     if (addedCars.length > 0 && addedCarsRef.current) {
       addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  }, [addedCars, addedDrivers, financeConfirmed, showVinNumber, showCarRunMiles, showBHD, showYesNo, showHowYoung]);
+  }, [addedCars, addedDrivers, financeConfirmed, showVinNumber, showCarRunMiles,
+    showBHD, showYesNo, showHowYoung, trafficYesNo, showMartial, showRegisterd]);
 
   let activeHeader = MultiFormheader[0];
-
-  if (carConfirmed && !driverConfirmed) {
-    activeHeader = MultiFormheader[1];
-  } else if (driverConfirmed && !financeConfirmed) {
-    activeHeader = MultiFormheader[2];
-  } else if (financeConfirmed && !vinNumberConfirm) {
-    activeHeader = MultiFormheader[3];
-  } else if (vinNumberConfirm && addedCarMiles === null) {
-    activeHeader = MultiFormheader[4];
-  } else if (addedCarMiles !== null && addedBhdValue === null) {
-    activeHeader = MultiFormheader[5];
+  if (showHowYoung) {
+    activeHeader = MultiFormheader[8];
   } else if (showYesNo) {
     activeHeader = MultiFormheader[7];
-  } else if (showHowYoung) {
-    activeHeader = MultiFormheader[8];
   } else if (addedBhdValue !== null) {
     activeHeader = MultiFormheader[6];
+  } else if (addedCarMiles !== null && addedBhdValue === null) {
+    activeHeader = MultiFormheader[5];
+  } else if (vinNumberConfirm && addedCarMiles === null) {
+    activeHeader = MultiFormheader[4];
+  } else if (financeConfirmed && !vinNumberConfirm) {
+    activeHeader = MultiFormheader[3];
+  } else if (driverConfirmed && !financeConfirmed) {
+    activeHeader = MultiFormheader[2];
+  } else if (carConfirmed && !driverConfirmed) {
+    activeHeader = MultiFormheader[1];
   }
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -185,9 +210,14 @@ export default function MultipleFormPage() {
       <div className=''>
         <div className="w-full max-w-7xl mx-auto px-3 md:px-10 sm:px-10 lg:px-10 xl:px-10 sm:mt-24 md:mt-24 lg:mt-24 xl:mt-24">
           {/* here all data showing after added */}
-          <div className='flex justify-center flex-col sm:items-center md:items-center lg:items-center xl:items-center items-start cursor-pointer mt-30 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0 lg:mb-25 sm:mb-25 xl:mb-25 mb-0 gap-10'>
+          <div className='flex justify-center flex-col sm:items-center md:items-center lg:items-center xl:items-center items-start cursor-pointer
+           mt-30 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0 lg:mb-25 sm:mb-25 xl:mb-25 mb-0 gap-10'>
             {addedCars.length > 0 && (
-              <div ref={addedCarsRef} className="ml-10 space-y-2">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                ref={addedCarsRef} className="ml-10 space-y-2">
                 <MultiformHeading color="#8b8b8b" heading="Alright. These are the cars that I found. Which would you like to insure?" />
                 {addedCars.slice(0, 1).map((entry, index) => (
                   <div key={index} className="transition-all duration-700 transform">
@@ -199,11 +229,15 @@ export default function MultipleFormPage() {
                     </div>
                   </div>
                 ))}
-              </div>
+              </motion.div>
             )}
 
             {addedDrivers.length > 0 && (
-              <div ref={addedCarsRef} className="ml-10 space-y-2">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                ref={addedCarsRef} className="ml-10 space-y-2">
                 <MultiformHeading color="#8b8b8b" heading="Great! Your car has been successfully added." />
                 {addedDrivers.slice(0, 1).map((entry, index) => (
                   <div key={index} className="transition-all duration-700 transform">
@@ -215,7 +249,7 @@ export default function MultipleFormPage() {
                     </div>
                   </div>
                 ))}
-              </div>
+              </motion.div>
             )}
 
             {selectedFinanceOption && financeConfirmed && (
@@ -282,7 +316,50 @@ export default function MultipleFormPage() {
               </div>
             )}
 
+            {confirmselectTraffic && selectTraffic && (
+              <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-gray-700">{selectTraffic}</h3>
+                  <BiPencil className="mt-1" />
+                </div>
+              </div>
+            )}
+
+            {confirmselectMartial && selectMartial && (
+              <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-gray-700">{selectMartial}</h3>
+                  <BiPencil className="mt-1" />
+                </div>
+              </div>
+            )}
+
+            {confirmselectRegistered && selectRegistered && (
+              <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-gray-700">{selectRegistered}</h3>
+                  <BiPencil className="mt-1" />
+                </div>
+              </div>
+            )}
+
+            {confirmselectInsuranceYesno && selectInsuraceYesno && (
+              <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-gray-700">{selectInsuraceYesno}</h3>
+                  <BiPencil className="mt-1" />
+                </div>
+              </div>
+            )}
+
           </div>
+
+
+
 
           {/* this is main part */}
           <div className="flex flex-col xl:flex-row gap-5 w-full " style={{ height: '79vh' }}>
@@ -449,9 +526,9 @@ export default function MultipleFormPage() {
                     <NextBtn
                       disabled={selectUseCar === null}
                       onClick={() => {
-                        setShowYesNo(false);     // hide this step
-                        setShowHowYoung(true);   // show next step
-                        setUseCarYesNoConfermed(true); // ✅ confirm value
+                        setShowYesNo(false);
+                        setShowHowYoung(true);
+                        setUseCarYesNoConfermed(true);
                       }}
                       label="Next →"
                     />
@@ -467,16 +544,93 @@ export default function MultipleFormPage() {
                     <NextBtn
                       disabled={selectAge === null}
                       onClick={() => {
-                        setAgeConformed(true); // ✅ confirm value
-                        setShowHowYoung(false); // Optionally hide this step
+                        setAgeConformed(true);
+                        setShowHowYoung(false);
+                        setTrafficYesNo(true)
                       }}
                       label="Next →"
                     />
                   </div>
                 )}
+
+
+                {trafficYesNo && (
+                  <div className="ml-0 sm:ml-10">
+                    <MultiOption
+                      data={TraffficyesNoData}
+                      onSelect={handleOptionSelectTraffic}
+                    />
+                    <NextBtn
+                      disabled={selectAge === null}
+                      onClick={() => {
+                        setconfirmselectTraffic(true);
+                        setMartial(true)
+                        setTrafficYesNo(false)
+                      }}
+                      label="Next →"
+                    />
+                  </div>
+                )}
+
+                {showMartial && (
+                  <div className="ml-0 sm:ml-10">
+                    <MultiOption
+                      data={MartialStatus}
+                      onSelect={handleOptionSelectMartial}
+                    />
+                    <NextBtn
+                      disabled={selectAge === null}
+                      onClick={() => {
+                        setconfirmselectMartial(true)
+                        setTrafficYesNo(false)
+                        setshowRegisterd(true)
+                        setMartial(false)
+                      }}
+                      label="Next →"
+                    />
+                  </div>
+                )}
+
+                {showRegisterd && (
+                  <div className="ml-0 sm:ml-10">
+                    <MultiOption
+                      data={RegisteredData}
+                      onSelect={handleOptionSelectRegistered}
+                    />
+                    <NextBtn
+                      disabled={selectAge === null}
+                      onClick={() => {
+                        setTrafficYesNo(false)
+                        setconfirmselectRegistered(true)
+                        setShowYesNo(false)
+                        setshowRegisterd(false)
+                        setshowInsurenceYesNo(true)
+                      }}
+                      label="Next →"
+                    />
+                  </div>
+                )}
+
+
+                {showInsurenceYesNo && (
+                  <div className="ml-0 sm:ml-10">
+                    <MultiOption
+                      data={InsuranceYesNoData}
+                      onSelect={handleOptionSelectInsuranceYesNo}
+                    />
+                    <NextBtn
+                      disabled={selectAge === null}
+                      onClick={() => {
+                        setTrafficYesNo(false)
+                        setconfirmselectInsuranceYesno(true)
+                      }}
+                      label="Next →"
+                    />
+                  </div>
+                )}
+
+
               </>
-
-
 
             </main>
           </div>

@@ -13,7 +13,7 @@ type Driver = {
 
 type AddDriverCardProps = {
   onClick: () => void;
-  onComplete: (driver: Driver) => void;
+  onComplete: (driver: { [key: string]: string }) => void;
 };
 
 export default function AddDriverCard({ onClick, onComplete }: AddDriverCardProps) {

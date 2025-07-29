@@ -54,11 +54,24 @@ export const MultiFormheader: MultiFormheader[] = [
         image: '/asesst/images/dania-smile.png',
         heading: "Hey Tarik, How Young Are You?",
     },
-    
+
     {
         id: '10',
         image: '/asesst/images/dania-smile.png',
         heading: "Tarik, have you had any traffic violations in the past 5 years? (No need to include parking tickets)​"
+    },
+
+    {
+        id: '11',
+        image: '/asesst/images/dania-smile.png',
+        heading: "Tarik, have you had any traffic violations in the past 5 years? (No need to include parking tickets)​"
+    }
+    ,
+
+    {
+        id: '12',
+        image: '/asesst/images/dania-smile.png',
+        heading: "What's your martial status?​"
     }
 
 
