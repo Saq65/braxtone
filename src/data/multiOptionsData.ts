@@ -45,4 +45,9 @@ const InsuranceYesNoData: FinanceData[] = [
     { id: 2, value: "No" }
 ]
 
-export { finance, yesNoData, HowYoungData, TraffficyesNoData, MartialStatus, RegisteredData,InsuranceYesNoData };
+const ClaimYesNoData: FinanceData[] = [
+    { id: 1, value: "Yes" },
+    { id: 2, value: "No" }
+]
+
+export { finance, yesNoData, HowYoungData, TraffficyesNoData, MartialStatus, RegisteredData,InsuranceYesNoData,ClaimYesNoData };

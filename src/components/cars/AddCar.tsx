@@ -26,7 +26,7 @@ export default function AddCarCard({ onClick, onComplete }: AddCarCardProps) {
           {showForm ? (
             <motion.div
               key="form"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 30 }}
               transition={{

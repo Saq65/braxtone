@@ -9,7 +9,7 @@ import MultiformHeading from "@/components/cars/MultiformHeading";
 import { MultiFormheader } from "@/data/multiformheading";
 import CarStepForm from "@/components/cars/CarStepForm";
 import DriverStepForm from '@/components/drivers/DriverStepForm';
-import { finance, HowYoungData, InsuranceYesNoData, MartialStatus, RegisteredData, TraffficyesNoData, yesNoData } from '@/data/multiOptionsData';
+import { ClaimYesNoData, finance, HowYoungData, InsuranceYesNoData, MartialStatus, RegisteredData, TraffficyesNoData, yesNoData } from '@/data/multiOptionsData';
 import MultiOption from '@/components/ui/MultiOption';
 import Vinnumber from '@/components/vinNumber/vinnumber';
 import NextButton from '@/components/ui/NextBtn';
@@ -55,6 +55,9 @@ export default function MultipleFormPage() {
   const [selectInsuraceYesno, setselectInsuraceYesno] = useState<string | null>(null);
   const [confirmselectInsuranceYesno, setconfirmselectInsuranceYesno] = useState(false);
 
+  const [selectClaim, setselectselectClaim] = useState<string | null>(null);
+  const [confirmselectClaim, setconfirmselectClaim] = useState(false);
+
   const [vinnumber, setVinnumber] = useState<string>('');
   const [addedVinNumber, setAddedVinNumber] = useState<string | null>(null);
   const [addedCarMiles, setAddedCarMiles] = useState<number | null>(null);
@@ -69,6 +72,8 @@ export default function MultipleFormPage() {
   const [showMartial, setMartial] = useState(false);
   const [showRegisterd, setshowRegisterd] = useState(false);
   const [showInsurenceYesNo, setshowInsurenceYesNo] = useState(false);
+  const [showClaim, setshowshowClaim] = useState(false);
+
 
   const handleCarMilesChange = (val: number) => {
     setCarMiles(val);
@@ -168,6 +173,10 @@ export default function MultipleFormPage() {
 
   const handleOptionSelectInsuranceYesNo = (value: string) => {
     setselectInsuraceYesno(value)
+  }
+
+  const handleOptionSelectClaim = (value: string) => {
+    setselectselectClaim(value)
   }
 
   useEffect(() => {
@@ -351,6 +360,16 @@ export default function MultipleFormPage() {
                 <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold text-gray-700">{selectInsuraceYesno}</h3>
+                  <BiPencil className="mt-1" />
+                </div>
+              </div>
+            )}
+
+            {confirmselectClaim && selectClaim && (
+              <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-gray-700">{selectClaim}</h3>
                   <BiPencil className="mt-1" />
                 </div>
               </div>
@@ -623,6 +642,8 @@ export default function MultipleFormPage() {
                       onClick={() => {
                         setTrafficYesNo(false)
                         setconfirmselectInsuranceYesno(true)
+                        setshowshowClaim(true)
+                        setshowInsurenceYesNo(false)
                       }}
                       label="Next →"
                     />
@@ -630,6 +651,24 @@ export default function MultipleFormPage() {
                 )}
 
 
+                {showClaim && (
+                  <div className="ml-0 sm:ml-10">
+                    <MultiOption
+                      data={ClaimYesNoData}
+                      onSelect={handleOptionSelectClaim}
+                    />
+                    <NextBtn
+                      disabled={selectAge === null}
+                      onClick={() => {
+                        setTrafficYesNo(false)
+                        setconfirmselectInsuranceYesno(false)
+                        setconfirmselectClaim(true)
+
+                      }}
+                      label="Next →"
+                    />
+                  </div>
+                )}
               </>
 
             </main>
