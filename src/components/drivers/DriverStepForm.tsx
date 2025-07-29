@@ -36,7 +36,9 @@ export default function DriverStepForm({
         + Add Driver
       </button> */}
 
-      <div className="relative mx-end w-[100%] sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px] ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10pt-6 pb-2 border border-[#d2d0d0] p-4 h-[260px] rounded-md mt-8">
+      <div className="relative mx-end w-[100%] sm:w-[380px] md:w-[380px] lg:w-[380px] 
+      xl:w-[380px] ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10pt-6 pb-2 
+      border border-0 sm:!border sm:!border-[#d2d0d0]  p-4 h-[260px] rounded-md mt-8">
         <button
           onClick={onCancel}
           className="absolute top-2 right-3 text-2xl text-gray-400 hover:text-gray-600 cursor-pointer"
@@ -56,13 +58,14 @@ export default function DriverStepForm({
                 size="large"
               />
             </div>
-
-            <ProgressBar step={step} totalSteps={totalSteps} />
-            <StepNavigation
-              canContinue={!!name}
-              onBack={onCancel}
-              onNext={() => setStep(2)}
-            />
+            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+              <ProgressBar step={step} totalSteps={totalSteps} />
+              <StepNavigation
+                canContinue={!!name}
+                onBack={onCancel}
+                onNext={() => setStep(2)}
+              />
+            </div>
           </>
         )}
 
@@ -76,12 +79,14 @@ export default function DriverStepForm({
               className="mb-4"
               size="large"
             />
-            <ProgressBar step={step} totalSteps={totalSteps} />
-            <StepNavigation
-              canContinue={!!licenseNumber}
-              onBack={() => setStep(1)}
-              onNext={() => setStep(3)}
-            />
+            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+              <ProgressBar step={step} totalSteps={totalSteps} />
+              <StepNavigation
+                canContinue={!!licenseNumber}
+                onBack={() => setStep(1)}
+                onNext={() => setStep(3)}
+              />
+            </div>
           </>
         )}
 
@@ -102,12 +107,15 @@ export default function DriverStepForm({
                 </Option>
               ))}
             </Select>
-            <ProgressBar step={step} totalSteps={totalSteps} />
-            <StepNavigation
-              canContinue={!!vehicleType}
-              onBack={() => setStep(2)}
-              onNext={() => setStep(4)}
-            />
+
+            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+              <ProgressBar step={step} totalSteps={totalSteps} />
+              <StepNavigation
+                canContinue={!!vehicleType}
+                onBack={() => setStep(2)}
+                onNext={() => setStep(4)}
+              />
+            </div>
           </>
         )}
 
@@ -128,28 +136,30 @@ export default function DriverStepForm({
                 </Option>
               ))}
             </Select>
-            <ProgressBar step={step} totalSteps={totalSteps} />
-            <div className="flex justify-between mt-4">
-              <button
-                onClick={() => setStep(3)}
-                className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100"
-              >
-                Back
-              </button>
-              <button
-                onClick={() =>
-                  onComplete({ name, licenseNumber, vehicleType, experienceLevel })
-                }
-                disabled={!experienceLevel}
-                className={`rounded-md w-[140px] py-4 mt-3 text-sm border border-gray-100 transition-colors duration-200
+            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+              <ProgressBar step={step} totalSteps={totalSteps} />
+              <div className="flex justify-between mt-4">
+                <button
+                  onClick={() => setStep(3)}
+                  className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100"
+                >
+                  Back
+                </button>
+                <button
+                  onClick={() =>
+                    onComplete({ name, licenseNumber, vehicleType, experienceLevel })
+                  }
+                  disabled={!experienceLevel}
+                  className={`rounded-md w-[140px] py-4 mt-3 text-sm border border-gray-100 transition-colors duration-200
                ${experienceLevel
-                    ? 'cursor-pointer bg-[#0067a1] text-white hover:bg-[#005780]'
-                    : ' bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
+                      ? 'cursor-pointer bg-[#0067a1] text-white hover:bg-[#005780]'
+                      : ' bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
                `}
-              >
-                Add
-              </button>
+                >
+                  Add
+                </button>
 
+              </div>
             </div>
           </>
         )}
