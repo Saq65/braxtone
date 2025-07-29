@@ -150,7 +150,7 @@ export default function MultipleFormPage() {
     if (addedCars.length > 0 && addedCarsRef.current) {
       addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  }, [addedCars, addedDrivers, financeConfirmed, showVinNumber, showCarRunMiles, showBHD,showYesNo,showHowYoung]);
+  }, [addedCars, addedDrivers, financeConfirmed, showVinNumber, showCarRunMiles, showBHD, showYesNo, showHowYoung]);
 
   let activeHeader = MultiFormheader[0];
 
@@ -164,6 +164,10 @@ export default function MultipleFormPage() {
     activeHeader = MultiFormheader[4];
   } else if (addedCarMiles !== null && addedBhdValue === null) {
     activeHeader = MultiFormheader[5];
+  } else if (showYesNo) {
+    activeHeader = MultiFormheader[7];
+  } else if (showHowYoung) {
+    activeHeader = MultiFormheader[8];
   } else if (addedBhdValue !== null) {
     activeHeader = MultiFormheader[6];
   }
