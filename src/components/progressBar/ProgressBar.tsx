@@ -48,7 +48,6 @@ export default function ProgressBar({
                      {value.toLocaleString()} {unitLabel}
                 </div>
 
-                {/* Range input wrapper */}
                 <div className="relative">
                     <input
                         type="range"

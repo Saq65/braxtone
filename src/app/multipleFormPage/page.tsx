@@ -9,7 +9,7 @@ import MultiformHeading from "@/components/cars/MultiformHeading";
 import { MultiFormheader } from "@/data/multiformheading";
 import CarStepForm from "@/components/cars/CarStepForm";
 import DriverStepForm from '@/components/drivers/DriverStepForm';
-import { finance, yesNoData } from '@/data/multiOptionsData';
+import { finance, HowYoungData, yesNoData } from '@/data/multiOptionsData';
 import MultiOption from '@/components/ui/MultiOption';
 import Vinnumber from '@/components/vinNumber/vinnumber';
 import NextButton from '@/components/ui/NextBtn';
@@ -49,7 +49,6 @@ export default function MultipleFormPage() {
   const [carMiles, setCarMiles] = useState<number | null>(null);
   const [showCarRunMiles, setShowCarRunMiles] = useState(false);
   const [showBHD, setShowBHD] = useState(false);
-
 
   const handleCarMilesChange = (val: number) => {
     setCarMiles(val);
@@ -384,7 +383,22 @@ export default function MultipleFormPage() {
               {addedBhdValue !== null && (
                 <div className="ml-0 sm:ml-10">
                   <MultiOption
-                    data={yesNoData} // Pass `yesNoData` for the next set of options
+                    data={yesNoData}
+                    onSelect={handleOptionSelectInCarUse}
+                  />
+                  <NextBtn
+                    disabled={selectUseCar === null}
+                    onClick={handleUseCarOnNext} 
+                    label="Next →"
+                  />
+                </div>
+              )}
+
+
+                 {addedBhdValue !== null && (
+                <div className="ml-0 sm:ml-10">
+                  <MultiOption
+                    data={HowYoungData}
                     onSelect={handleOptionSelectInCarUse}
                   />
                   <NextBtn
