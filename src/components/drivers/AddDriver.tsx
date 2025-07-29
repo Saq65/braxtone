@@ -1,8 +1,8 @@
-// components/drivers/AddDriverCard.tsx
 'use client';
 
 import { useState } from 'react';
 import DriverStepForm from './DriverStepForm';
+import DriverstepMob from '@/components/mobile/DriverstepMob';
 
 type Driver = {
   name: string;
@@ -26,7 +26,8 @@ export default function AddDriverCard({ onClick, onComplete }: AddDriverCardProp
 
   return (
     <>
-      {showForm ? (
+    <div className='hidden sm:block'>
+   {showForm ? (
         <DriverStepForm
           onCancel={() => setShowForm(false)}
           onComplete={(driver) => {
@@ -42,6 +43,13 @@ export default function AddDriverCard({ onClick, onComplete }: AddDriverCardProp
           + Add driver
         </button>
       )}
+
+    </div>
+   
+
+      <div className="block sm:hidden w-full">
+        <DriverstepMob onComplete={onComplete} />
+      </div>
     </>
   );
 }

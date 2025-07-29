@@ -116,7 +116,6 @@ export default function MultipleFormPage() {
   };
 
 
-  //Finance Page functions
   const handleFinanceOnNext = () => {
     setShowVinNumber(true);
     setFinanceConfirmed(true);
@@ -125,7 +124,6 @@ export default function MultipleFormPage() {
     setSelectedFinanceOption(value);
   };
 
-  //Taking use of car yes/no page function
   const handleUseCarOnNext = () => {
     setShowVinNumber(true);
     setUseCarYesNoConfermed(true);
@@ -349,8 +347,6 @@ export default function MultipleFormPage() {
                   />
                 </div>
               )}
-
-
 
               {showCarRunMiles && (
                 <div className="ml-0 sm:ml-10 lg:ml-10 xl:ml-10 mt-6">
