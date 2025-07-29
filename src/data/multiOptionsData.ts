@@ -9,4 +9,9 @@ const finance: FinanceData[] = [
     { id: 3, value: "It's paid in full" }
 ];
 
-export { finance };
+const yesNoData:FinanceData[]=[
+    {id:1,value:"Yes"},
+    {id:2,value:"No"}
+]
+
+export { finance ,yesNoData};

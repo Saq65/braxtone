@@ -9,7 +9,7 @@ import MultiformHeading from "@/components/cars/MultiformHeading";
 import { MultiFormheader } from "@/data/multiformheading";
 import CarStepForm from "@/components/cars/CarStepForm";
 import DriverStepForm from '@/components/drivers/DriverStepForm';
-import { finance } from '@/data/multiOptionsData';
+import { finance, yesNoData } from '@/data/multiOptionsData';
 import MultiOption from '@/components/ui/MultiOption';
 import Vinnumber from '@/components/vinNumber/vinnumber';
 import NextButton from '@/components/ui/NextBtn';
@@ -36,6 +36,11 @@ export default function MultipleFormPage() {
   const [showVinNumber, setShowVinNumber] = useState(false);
   const [vinNumberConfirm, setVinnumberconfirm] = useState(false);
   const [selectedFinanceOption, setSelectedFinanceOption] = useState<string | null>(null);
+
+  //Taking use of car yes/no page state
+  const [selectUseCar, setSelectUseCar] = useState<string | null>(null);
+  const [useCarYesNoConfermed, setUseCarYesNoConfermed] = useState(false);
+
   const [vinnumber, setVinnumber] = useState<string>('');
   const [addedVinNumber, setAddedVinNumber] = useState<string | null>(null);
   const [addedCarMiles, setAddedCarMiles] = useState<number | null>(null);
@@ -71,7 +76,7 @@ export default function MultipleFormPage() {
     setBhdValue(val);
   };
 
-  const { image} = MultiFormheader[0];
+  const { image } = MultiFormheader[0];
 
   const addedCarsRef = useRef<HTMLDivElement | null>(null);
 
@@ -110,13 +115,26 @@ export default function MultipleFormPage() {
     setVinnumberconfirm(true)
   };
 
+
+  //Finance Page functions
   const handleFinanceOnNext = () => {
     setShowVinNumber(true);
     setFinanceConfirmed(true);
   };
-  const handleOptionSelect = (value: string) => {
+  const handleOptionSelectInFinanace = (value: string) => {
     setSelectedFinanceOption(value);
   };
+
+  //Taking use of car yes/no page function
+  const handleUseCarOnNext = () => {
+    setShowVinNumber(true);
+    setUseCarYesNoConfermed(true);
+  };
+
+  const handleOptionSelectInCarUse = (value: string) => {
+    setSelectUseCar(value);
+  };
+
   useEffect(() => {
     if (addedCars.length > 0 && addedCarsRef.current) {
       addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -302,7 +320,7 @@ export default function MultipleFormPage() {
 
               {driverConfirmed && !financeConfirmed && (
                 <div className="ml-0 sm:ml-10 ">
-                  <MultiOption data={finance} onSelect={handleOptionSelect} />
+                  <MultiOption data={finance} onSelect={handleOptionSelectInFinanace} />
                   <NextBtn
                     disabled={selectedFinanceOption === null}
                     onClick={handleFinanceOnNext}
@@ -365,6 +383,22 @@ export default function MultipleFormPage() {
                   />
                 </div>
               )}
+
+
+              {addedBhdValue !== null && (
+                <div className="ml-0 sm:ml-10">
+                  <MultiOption
+                    data={yesNoData} // Pass `yesNoData` for the next set of options
+                    onSelect={handleOptionSelectInCarUse}
+                  />
+                  <NextBtn
+                    disabled={selectUseCar === null}
+                    onClick={handleUseCarOnNext} 
+                    label="Next →"
+                  />
+                </div>
+              )}
+
             </main>
           </div>
         </div>

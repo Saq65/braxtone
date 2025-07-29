@@ -18,7 +18,7 @@ function MultiOption({ data, onSelect }: Props) {
  
 
   return (
-    <div>
+    <div className='ml-7 mb-8'>
       {data.map(item => (
         <div
           key={item.id}
