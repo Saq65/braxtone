@@ -90,7 +90,11 @@ export const MultiFormheader: MultiFormheader[] = [
         id: '16',
         image: '/asesst/images/dania-smile.png',
         heading: "The cool thing about Braxtone is that safe drivers actually pay less! Stick with us, and you can unlock even more discounts over time."
+    },
+    {
+        id: '17',
+        image: '/asesst/images/dania-smile.png',
+        heading: "Could you kindly provide your contact number for further communicatin?"
     }
-
 
 ];

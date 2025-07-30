@@ -18,7 +18,8 @@ import CarRunMiles from '@/components/progressBar/ProgressBar';
 import NextBtn from "@/components/ui/NextBtn";
 import BHDComponent from '@/components/progressBar/ProgressBar';
 import AddDriverCard from '@/components/drivers/AddDriver';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
+
 
 
 export default function MultipleFormPage() {
@@ -58,6 +59,9 @@ export default function MultipleFormPage() {
   const [selectClaim, setselectselectClaim] = useState<string | null>(null);
   const [confirmselectClaim, setconfirmselectClaim] = useState(false);
 
+  const [confirmselectSound, setconfirmselectSound] = useState(false);
+
+
   const [vinnumber, setVinnumber] = useState<string>('');
   const [addedVinNumber, setAddedVinNumber] = useState<string | null>(null);
   const [addedCarMiles, setAddedCarMiles] = useState<number | null>(null);
@@ -73,7 +77,8 @@ export default function MultipleFormPage() {
   const [showRegisterd, setshowRegisterd] = useState(false);
   const [showInsurenceYesNo, setshowInsurenceYesNo] = useState(false);
   const [showClaim, setshowshowClaim] = useState(false);
-
+  const [showSoundGood, setshowSoundGood] = useState(false);
+  const [soundsGoodvalue, setsoundsGoodvalue] = useState('');
 
   const handleCarMilesChange = (val: number) => {
     setCarMiles(val);
@@ -184,29 +189,39 @@ export default function MultipleFormPage() {
       addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [addedCars, addedDrivers, financeConfirmed, showVinNumber, showCarRunMiles,
-    showBHD, showYesNo, showHowYoung, trafficYesNo, showMartial, showRegisterd]);
+    showBHD, showYesNo, showHowYoung, trafficYesNo, showMartial, showRegisterd,showInsurenceYesNo,
+    showClaim,confirmselectSound
+  ]);
 
   let activeHeader = MultiFormheader[0];
-  if (carConfirmed && !driverConfirmed) {
-    activeHeader = MultiFormheader[1];
-  } else if (carConfirmed && !driverConfirmed) {
-    activeHeader = MultiFormheader[1];
-  } else if (driverConfirmed && !financeConfirmed) {
-    activeHeader = MultiFormheader[2];
-  } else if (financeConfirmed && !vinNumberConfirm) {
-    activeHeader = MultiFormheader[3];
-  } else if (vinNumberConfirm && addedCarMiles === null) {
-    activeHeader = MultiFormheader[4];
-  } else if (addedCarMiles !== null && addedBhdValue === null) {
-    activeHeader = MultiFormheader[5];
-  } else if (addedBhdValue !== null) {
-    activeHeader = MultiFormheader[6];
-  } else if (showYesNo) {
-    activeHeader = MultiFormheader[7];
-  } else if (ageConfermed && !addedBhdValue) {
-    activeHeader = MultiFormheader[8];
-  }
 
+  if (confirmselectClaim) {
+    activeHeader = MultiFormheader[14];
+  } else if (confirmselectInsuranceYesno) {
+    activeHeader = MultiFormheader[13];
+  } else if (confirmselectRegistered) {
+    activeHeader = MultiFormheader[12];
+  } else if (confirmselectMartial) {
+    activeHeader = MultiFormheader[11];
+  } else if (confirmselectTraffic) {
+    activeHeader = MultiFormheader[9];
+  } else if (ageConfermed) {
+    activeHeader = MultiFormheader[7];
+  } else if (useCarYesNoConfermed) {
+    activeHeader = MultiFormheader[6];
+  } else if (addedBhdValue !== null) {
+    activeHeader = MultiFormheader[5];
+  } else if (carMiles !== null) {
+    activeHeader = MultiFormheader[4];
+  } else if (vinNumberConfirm) {
+    activeHeader = MultiFormheader[3];
+  } else if (selectedFinanceOption) {
+    activeHeader = MultiFormheader[2];
+  } else if (driverConfirmed) {
+    activeHeader = MultiFormheader[1];
+  } else if (carConfirmed) {
+    activeHeader = MultiFormheader[0];
+  }
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -301,8 +316,6 @@ export default function MultipleFormPage() {
                   <h3 className="text-lg font-semibold text-gray-700">{addedBhdValue.toLocaleString()} BHD</h3>
                   <BiPencil className='mt-1' />
                 </div>
-
-
               </div>
             )}
 
@@ -372,6 +385,16 @@ export default function MultipleFormPage() {
                 <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold text-gray-700">{selectClaim}</h3>
+                  <BiPencil className="mt-1" />
+                </div>
+              </div>
+            )}
+
+            {confirmselectSound && (
+              <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-gray-700">{soundsGoodvalue}</h3>
                   <BiPencil className="mt-1" />
                 </div>
               </div>
@@ -665,7 +688,8 @@ export default function MultipleFormPage() {
                         setTrafficYesNo(false)
                         setconfirmselectInsuranceYesno(false)
                         setconfirmselectClaim(true)
-
+                        setshowSoundGood(true)
+                        setshowshowClaim(false)
                       }}
                       label="Next →"
                     />
@@ -673,6 +697,27 @@ export default function MultipleFormPage() {
                 )}
               </>
 
+              {/* sounds good */}
+              <>
+                {
+                  showSoundGood && (
+                    <div className='mt-14 ml-18'>
+                      <button
+                        onClick={() => {
+                          setsoundsGoodvalue("sounds good");
+                          setconfirmselectSound(true)
+                        }
+                      }
+
+                        className='btn py-2.5 px-2.5 rounded text-[#fff] font-[10px] bg-[#0067a1]'
+                      >
+                        Sounds good
+                      </button>
+                    </div>
+                  )
+                }
+
+              </>
             </main>
           </div>
         </div>
