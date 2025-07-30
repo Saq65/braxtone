@@ -243,8 +243,6 @@ export default function MultipleFormPage() {
 
 
 
-
-
   return (
     <div className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_16%,_white_70%,_#ceedfe_100%)] overflow-hidden ">
       <div className='fixed w-full bg-[#d3f0ff] sm:bg-transparent xl:bg-transparent lg:bg-transparent'>
@@ -490,14 +488,7 @@ export default function MultipleFormPage() {
                     />
                   </div>
                 )}
-                {!showDriverForm && carConfirmed && !driverConfirmed && (
-                  <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10">
-                    <AddDriverCard
-                      onClick={() => setShowDriverForm(true)}
-                      onComplete={handleDriverFormComplete}
-                    />
-                  </div>
-                )}
+
                 {showForm && (
                   <div className="mt-6">
                     <CarStepForm
@@ -520,7 +511,14 @@ export default function MultipleFormPage() {
                     />
                   </div>
                 )}
-
+                {!showDriverForm && carConfirmed && !driverConfirmed && (
+                  <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10">
+                    <AddDriverCard
+                      onClick={() => setShowDriverForm(true)}
+                      onComplete={handleDriverFormComplete}
+                    />
+                  </div>
+                )}
 
                 {driverConfirmed && !financeConfirmed && (
                   <div className="ml-0 sm:ml-10 ">
