@@ -19,8 +19,8 @@ import NextBtn from "@/components/ui/NextBtn";
 import BHDComponent from '@/components/progressBar/ProgressBar';
 import AddDriverCard from '@/components/drivers/AddDriver';
 import { motion } from 'framer-motion';
-
-
+import CommunicationForm from '@/components/form/CommunicationForm';
+import axios from 'axios';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -79,6 +79,8 @@ export default function MultipleFormPage() {
   const [showClaim, setshowshowClaim] = useState(false);
   const [showSoundGood, setshowSoundGood] = useState(false);
   const [soundsGoodvalue, setsoundsGoodvalue] = useState('');
+  const [showCommunication, setshowCommunication] = useState(false);
+  const [comminicationFormData, setcomminicationFormData] = useState('');
 
   const handleCarMilesChange = (val: number) => {
     setCarMiles(val);
@@ -145,6 +147,17 @@ export default function MultipleFormPage() {
     setVinnumberconfirm(true)
   };
 
+  const [communicationData, setCommunicationData] = useState({
+    country: '',
+    phone: '',
+    email: '',
+  });
+
+
+  const handleCommunicationChange = (field: string, value: string) => {
+    setCommunicationData(prev => ({ ...prev, [field]: value }));
+  };
+
 
   const handleFinanceOnNext = () => {
     setShowVinNumber(true);
@@ -189,43 +202,47 @@ export default function MultipleFormPage() {
       addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [addedCars, addedDrivers, financeConfirmed, showVinNumber, showCarRunMiles,
-    showBHD, showYesNo, showHowYoung, trafficYesNo, showMartial, showRegisterd,showInsurenceYesNo,
-    showClaim,confirmselectSound
+    showBHD, showYesNo, showHowYoung, trafficYesNo, showMartial, showRegisterd, showInsurenceYesNo,
+    showClaim, confirmselectSound, comminicationFormData
   ]);
 
   let activeHeader = MultiFormheader[0];
 
   if (confirmselectClaim) {
-    activeHeader = MultiFormheader[14];
-  } else if (confirmselectInsuranceYesno) {
     activeHeader = MultiFormheader[13];
-  } else if (confirmselectRegistered) {
+  } else if (confirmselectInsuranceYesno) {
     activeHeader = MultiFormheader[12];
-  } else if (confirmselectMartial) {
+  } else if (confirmselectRegistered) {
     activeHeader = MultiFormheader[11];
-  } else if (confirmselectTraffic) {
+  } else if (confirmselectMartial) {
+    activeHeader = MultiFormheader[10];
+  } else if (confirmselectMartial) {
     activeHeader = MultiFormheader[9];
-  } else if (ageConfermed) {
-    activeHeader = MultiFormheader[7];
+  } else if (confirmselectTraffic) {
+    activeHeader = MultiFormheader[8];
   } else if (useCarYesNoConfermed) {
+    activeHeader = MultiFormheader[7];
+  } else if (addedBhdValue) {
     activeHeader = MultiFormheader[6];
-  } else if (addedBhdValue !== null) {
+  } else if (carMiles) {
     activeHeader = MultiFormheader[5];
-  } else if (carMiles !== null) {
-    activeHeader = MultiFormheader[4];
   } else if (vinNumberConfirm) {
+    activeHeader = MultiFormheader[4];
+  } else if (financeConfirmed) {
     activeHeader = MultiFormheader[3];
-  } else if (selectedFinanceOption) {
-    activeHeader = MultiFormheader[2];
   } else if (driverConfirmed) {
-    activeHeader = MultiFormheader[1];
+    activeHeader = MultiFormheader[2];
   } else if (carConfirmed) {
-    activeHeader = MultiFormheader[0];
+    activeHeader = MultiFormheader[1];
   }
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+
+
+
 
 
   return (
@@ -400,20 +417,43 @@ export default function MultipleFormPage() {
               </div>
             )}
 
+            {
+              comminicationFormData && (
+                <div ref={addedCarsRef} className="ml-10 space-y-2">
+                  <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                  <div className="flex flex-col items-start gap-2">
+                    <div className='flex items-center gap-2'>
+                      <span className='text-gray-500 '>Country</span>
+                      <h3 className="text-lg font-semibold text-gray-700">{communicationData.country}</h3>     <BiPencil className="mt-1" />
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <span className='text-gray-500 '>Email</span>
+                      <h3 className="text-lg font-semibold text-gray-700">{communicationData.email}</h3>  <BiPencil className="mt-1" />
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <span className='text-gray-500 '>Phone</span>
+                      <h3 className="text-lg font-semibold text-gray-700">{communicationData.phone}</h3>  <BiPencil className="mt-1" />
+
+                    </div>
+                  </div>
+                </div>
+              )
+            }
+
           </div>
 
 
 
 
           {/* this is main part */}
-          <div className="flex flex-col xl:flex-row gap-5 w-full " style={{ height: '79vh' }}>
+          <div className="flex flex-col xl:flex-row gap-5 w-full " style={{ height: '78vh' }}>
             <aside className="w-full xl:w-1/4 hidden md:block mt-14">
               <SidebarSteps />
             </aside>
 
             <main className="w-full xl:w-3/4 space-y-6 ">
               {/* this is heading */}
-              <div className='flex flex-col sm:flex-row sm:flex md:flex lg:flex xl:flex mt-12 gap-5 sm:gap-0 lg:gap-0 xl:gap-0'>
+              <div className='flex flex-col items-center sm:flex-row sm:flex md:flex lg:flex xl:flex mt-14 gap-5 sm:gap-0 lg:gap-0 xl:gap-0'>
                 <div className=''>
                   <Image
                     src={image || "/default-avatar.png"}
@@ -706,13 +746,50 @@ export default function MultipleFormPage() {
                         onClick={() => {
                           setsoundsGoodvalue("sounds good");
                           setconfirmselectSound(true)
+                          setshowSoundGood(false)
+                          setshowCommunication(true)
                         }
-                      }
+                        }
 
                         className='btn py-2.5 px-2.5 rounded text-[#fff] font-[10px] bg-[#0067a1]'
                       >
                         Sounds good
                       </button>
+                    </div>
+                  )
+                }
+
+              </>
+
+
+              {/*communication form */}
+              <>
+                {
+                  showCommunication && (
+                    <div>
+                      <CommunicationForm
+                        country={communicationData.country}
+                        phone={communicationData.phone}
+                        email={communicationData.email}
+                        onChange={handleCommunicationChange}
+                      />
+                      <NextBtn
+                        disabled={
+                          !communicationData.country ||
+                          !communicationData.phone ||
+                          !communicationData.email
+                        }
+
+                        onClick={() => {
+                          const combined = `  ${communicationData.country} 
+                           ${communicationData.phone} 
+                            ${communicationData.email}`;
+                          setcomminicationFormData(combined);
+                        }}
+
+                        label="Next →"
+                      />
+
                     </div>
                   )
                 }

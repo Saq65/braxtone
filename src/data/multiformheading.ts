@@ -95,6 +95,11 @@ export const MultiFormheader: MultiFormheader[] = [
         id: '17',
         image: '/asesst/images/dania-smile.png',
         heading: "Could you kindly provide your contact number for further communicatin?"
+    },
+    {
+        id: '18',
+        image: '/asesst/images/dania-smile.png',
+        heading: "Tarik, your insurance package is ready!"
     }
 
 ];
