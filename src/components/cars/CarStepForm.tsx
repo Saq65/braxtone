@@ -14,6 +14,10 @@ type Car = {
   brands: string;
 };
 
+type Model = {
+  modelName: string;
+};
+
 export default function CarStepForm({
   onComplete,
   onCancel,
@@ -38,15 +42,20 @@ export default function CarStepForm({
   const totalSteps = 5;
   const [brands, setBrands] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState<string>("select");
-  const [models, setModels] = useState<string[]>([]);
+  const [models, setModels] = useState([]);
+  const [brandsMap, setBrandsMap] = useState<Record<string, any>>({});
+
   useEffect(() => {
     const fetchBrands = async () => {
       try {
         const res = await axios.get('/api/brands');
-
         const allBrandsObj = res.data?.[0]?.brands || {};
-        const brandList = Object.values(allBrandsObj);
 
+        const brandList = Object.entries(allBrandsObj).map(([key, brand]: [string, any]) => ({
+          _id: key, // use key like "toyota", "bmw"
+          ...brand,
+        }));
+        setBrandsMap(allBrandsObj);
         setBrands(brandList);
       } catch (error) {
         console.error('Client fetch error:', error);
@@ -56,25 +65,33 @@ export default function CarStepForm({
     fetchBrands();
   }, []);
 
-useEffect(() => {
-  const fetchModels = async () => {
+  useEffect(() => {
     if (!selectedBrandId) return;
-    try {
-      const res = await axios.get(`/api/car/model?brandID=${selectedBrandId}`);
-      const modelData = res.data?.models || {};
-      const modelList = Object.values(modelData).map((m: any) => m.modelName);
-      setModels(modelList);
-    } catch (error) {
-      console.error('Failed to fetch models:', error);
-    }
-  };
-  fetchModels();
-}, [selectedBrandId]);
+
+    const fetchModels = async () => {
+      try {
+        const res = await axios.get(`/api/car/model?brandID=${selectedBrandId}`);
+
+        const data = res.data;
+        const modelsList = Object.keys(data.models || {});
+
+
+        setModels(modelsList);
+      } catch (error) {
+        console.error('Failed to fetch models:', error);
+      }
+    };
+
+    fetchModels();
+  }, [selectedBrandId]);
+
+
 
 
 
   console.log(brands, "jafok")
-
+  console.log("Selected brand ID:", selectedBrandId);
+  console.log("Models for selected brand:", models);
   return (
     <div className="relative mx-end w-[100%] sm:w-[380px] md:w-[380px] lg:w-[380px] 
       xl:w-[380px] ml-0 sm:ml-16 md:ml-16 lg:ml-16 xl:ml-16 pt-6 pb-2 
@@ -133,56 +150,60 @@ useEffect(() => {
       {step === 3 && (
         <>
           <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's Brand</h2>
-   <Select
-  value={selectedBrandId}
-  onChange={(value) => setSelectedBrandId(value)}
-  style={{ width: '100%', borderRadius: 8, height: 40 }}
-  placeholder="Select Brand"
-  optionLabelProp="label"
->
-  <Option value="" disabled>Select</Option>
-  {brands.map((b: any) => (
-    <Option key={b._id} value={b._id} label={b.brandName}>
-      <div className="flex items-center gap-2">
-        <img src={b.brandImage} alt={b.brandName} className="w-6 h-6 object-contain" />
-        {b.brandName}
-      </div>
-    </Option>
-  ))}
-</Select>
-
-
-          <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
-            <ProgressBar step={step} totalSteps={totalSteps} />
-            <StepNavigation canContinue={!!selectedBrand} onBack={() => setStep(2)} onNext={() => setStep(4)} />
-          </div>
-        </>
-      )}
-
-      {step === 4 && (
-        <>
-          <h2 className="text-md font-medium mb-3 text-gray-800">Select the car model</h2>
           <Select
-            value={model}
-            onChange={setModel}
+            labelInValue
+            value={
+              selectedBrand
+                ? {
+                  value: selectedBrand.value,
+                  label: (
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={brandsMap[selectedBrand.value]?.brandImage}
+                        alt={brandsMap[selectedBrand.value]?.brandName}
+                        className="w-6 h-6 object-contain"
+                      />
+                      {brandsMap[selectedBrand.value]?.brandName}
+                    </div>
+                  ),
+                }
+                : undefined
+            }
+            onChange={(option) => {
+              setSelectedBrand(option); // { value: 'audi', label: <...> }
+              setSelectedBrandId(option.value); // use ID for API
+            }}
             style={{ width: '100%', borderRadius: 8, height: 40 }}
-            placeholder="Select Model"
+            placeholder="Select Brand"
           >
-            <Option value="">Select</Option>
-            {models.map((m) => (
-              <Option key={m} value={m}>{m}</Option>
+            <Option value="" disabled>Select</Option>
+            {Object.entries(brandsMap).map(([key, brand]: [string, any]) => (
+              <Option key={key} value={key}>
+                <div className="flex items-center gap-2">
+                  <img src={brand.brandImage} alt={brand.brandName} className="w-6 h-6 object-contain" />
+                  {brand.brandName}
+                </div>
+              </Option>
             ))}
           </Select>
 
+
+
+
           <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+
             <ProgressBar step={step} totalSteps={totalSteps} />
-            <StepNavigation canContinue={!!model} onBack={() => setStep(3)} onNext={() => setStep(5)} />
+            <StepNavigation canContinue={!!brands} onBack={() => setStep(3)} onNext={() => setStep(5)} />
+
+
           </div>
         </>
       )}
 
 
-      {step === 5 && (
+
+
+      {step === 4 && (
         <>
           <h2 className="text-md font-medium mb-3 text-gray-800">Select the car body style</h2>
           <Select
@@ -203,30 +224,23 @@ useEffect(() => {
         </>
       )}
 
-      {/* {step === 5 && (
+
+      {step === 5 && (
         <>
-          <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's Brand</h2>
+          <h2 className="text-md font-medium mb-3 text-gray-800">Select the car model</h2>
           <Select
-            value={selectedBrand}
-            onChange={setSelectedBrand}
+            value={model}
+            onChange={setModel}
             style={{ width: '100%', borderRadius: 8, height: 40 }}
-            placeholder="Select Brand"
-            optionLabelProp="label"
+            placeholder="Select Model"
           >
-            <Option value="__none__" disabled>Select</Option>
-            {brands.map((b: any) => (
-              <Option key={b.brandName} value={b.brandName} label={b.brandName}>
-                <div className="flex items-center gap-2">
-                  <img src={b.brandImage} alt={b.brandName} className="w-6 h-6 object-contain" />
-                  {b.brandName}
-                </div>
-              </Option>
+            <Option value="">Select</Option>
+            {models.map((m) => (
+              <Option key={m} value={m}>{m}</Option>
             ))}
           </Select>
 
-
           <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
-
             <ProgressBar step={step} totalSteps={totalSteps} />
             <div className="flex justify-between mt-4">
               <button
@@ -236,10 +250,10 @@ useEffect(() => {
                 Back
               </button>
               <button
-                onClick={() => onComplete({ year, company, manufacturer, model, brands: selectedBrand })}
-                disabled={!selectedBrand}
+                onClick={() => onComplete({ year, company, manufacturer, model, brands: selectedBrandId })}
+                disabled={!selectedBrandId}
                 className={`rounded-md w-[140px] py-4 mt-3 text-sm border border-gray-100 transition-colors duration-200
-                ${selectedBrand ? 'bg-[#0067a1] text-white hover:bg-[#005780]' : 'bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
+                ${selectedBrandId ? 'bg-[#0067a1] text-white hover:bg-[#005780]' : 'bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
               `}
               >
                 Add
@@ -247,7 +261,7 @@ useEffect(() => {
             </div>
           </div>
         </>
-      )} */}
+      )}
     </div>
   );
 }

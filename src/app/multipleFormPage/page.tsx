@@ -9,7 +9,7 @@ import MultiformHeading from "@/components/cars/MultiformHeading";
 import { MultiFormheader } from "@/data/multiformheading";
 import CarStepForm from "@/components/cars/CarStepForm";
 import DriverStepForm from '@/components/drivers/DriverStepForm';
-import { ClaimYesNoData, finance, HowYoungData, InsuranceYesNoData, MartialStatus, RegisteredData, TraffficyesNoData, yesNoData } from '@/data/multiOptionsData';
+import { ClaimYesNoData, finance, HowYoungData, InsuranceYesNoData, MartialStatus, packagesData, RegisteredData, TraffficyesNoData, yesNoData } from '@/data/multiOptionsData';
 import MultiOption from '@/components/ui/MultiOption';
 import Vinnumber from '@/components/vinNumber/vinnumber';
 import NextButton from '@/components/ui/NextBtn';
@@ -20,7 +20,7 @@ import BHDComponent from '@/components/progressBar/ProgressBar';
 import AddDriverCard from '@/components/drivers/AddDriver';
 import { motion } from 'framer-motion';
 import CommunicationForm from '@/components/form/CommunicationForm';
-import axios from 'axios';
+import PackageType from '@/components/packages/Packages';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -81,6 +81,8 @@ export default function MultipleFormPage() {
   const [soundsGoodvalue, setsoundsGoodvalue] = useState('');
   const [showCommunication, setshowCommunication] = useState(false);
   const [comminicationFormData, setcomminicationFormData] = useState('');
+  const [showPackages, setshowPackages] = useState(false);
+  const [selectPackage, setselectPackage] = useState<string | null>(null);
 
   const handleCarMilesChange = (val: number) => {
     setCarMiles(val);
@@ -197,6 +199,10 @@ export default function MultipleFormPage() {
     setselectselectClaim(value)
   }
 
+
+  const handleOptionSelectPackage = (value:string) =>{
+    setselectPackage(value)
+  }
   useEffect(() => {
     if (addedCars.length > 0 && addedCarsRef.current) {
       addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -241,18 +247,16 @@ export default function MultipleFormPage() {
   }, []);
 
 
-
-
   return (
     <div className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_16%,_white_70%,_#ceedfe_100%)] overflow-hidden ">
       <div className='fixed w-full bg-[#d3f0ff] sm:bg-transparent xl:bg-transparent lg:bg-transparent'>
         <MultiformHeader />
       </div>
       <div className=''>
-        <div className="w-full max-w-7xl mx-auto px-3 md:px-10 sm:px-10 lg:px-10 xl:px-10 sm:mt-24 md:mt-24 lg:mt-24 xl:mt-24">
+        <div className="w-full max-w-7xl mx-auto px-3 md:px-10 sm:px-10 lg:px-10 xl:px-10 ">
           {/* here all data showing after added */}
           <div className='flex justify-center flex-col sm:items-center md:items-center lg:items-center xl:items-center items-start cursor-pointer
-           mt-30 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0 lg:mb-25 sm:mb-25 xl:mb-25 mb-0 gap-10'>
+           mt-30 sm:mt-10 md:mt-10 lg:mt-20 xl:mt-20 lg:mb-25 sm:mb-25 xl:mb-25 mb-0 gap-10'>
             {addedCars.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -783,6 +787,8 @@ export default function MultipleFormPage() {
                            ${communicationData.phone} 
                             ${communicationData.email}`;
                           setcomminicationFormData(combined);
+                          setshowPackages(true)
+                          setshowCommunication(false)
                         }}
 
                         label="Next →"
@@ -791,7 +797,19 @@ export default function MultipleFormPage() {
                     </div>
                   )
                 }
+              </>
 
+              {/* pacakages */}
+              <>
+              {showPackages && (
+                <div className='ml-10'>
+                  {/* <PackageType/> */}
+                    <MultiOption
+                      data={packagesData}
+                      onSelect={handleOptionSelectPackage}
+                    />
+                </div>
+              )}
               </>
             </main>
           </div>
