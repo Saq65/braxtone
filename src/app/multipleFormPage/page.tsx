@@ -11,7 +11,7 @@ import CarStepForm from "@/components/cars/CarStepForm";
 import DriverStepForm from '@/components/drivers/DriverStepForm';
 import { ClaimYesNoData, finance, HowYoungData, InsuranceYesNoData, MartialStatus, packagesData, RegisteredData, TraffficyesNoData, yesNoData } from '@/data/multiOptionsData';
 import MultiOption from '@/components/ui/MultiOption';
-import Vinnumber from '@/components/vinNumber/vinnumber';
+import Vinnumber from '@/components/vinNumber/VinNumber';
 import NextButton from '@/components/ui/NextBtn';
 import { BiPencil } from 'react-icons/bi';
 import CarRunMiles from '@/components/progressBar/ProgressBar';
@@ -21,6 +21,7 @@ import AddDriverCard from '@/components/drivers/AddDriver';
 import { motion } from 'framer-motion';
 import CommunicationForm from '@/components/form/CommunicationForm';
 import PackageType from '@/components/packages/Packages';
+import Packages from '@/components/packages/Packages';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -83,6 +84,7 @@ export default function MultipleFormPage() {
   const [comminicationFormData, setcomminicationFormData] = useState('');
   const [showPackages, setshowPackages] = useState(false);
   const [selectPackage, setselectPackage] = useState<string | null>(null);
+  const [showPackageType,setshowPackageType] = useState(false);
 
   const handleCarMilesChange = (val: number) => {
     setCarMiles(val);
@@ -201,7 +203,12 @@ export default function MultipleFormPage() {
 
 
   const handleOptionSelectPackage = (value:string) =>{
-    setselectPackage(value)
+    if(value === "Comprehensive"){
+        setselectPackage(value);
+        setshowPackageType(true)
+    }else{
+      setshowPackageType(false)
+    }
   }
   useEffect(() => {
     if (addedCars.length > 0 && addedCarsRef.current) {
@@ -803,12 +810,15 @@ export default function MultipleFormPage() {
               <>
               {showPackages && (
                 <div className='ml-10'>
-                  {/* <PackageType/> */}
                     <MultiOption
                       data={packagesData}
                       onSelect={handleOptionSelectPackage}
                     />
                 </div>
+              )}
+
+              {showPackageType && (
+                <Packages/>
               )}
               </>
             </main>
