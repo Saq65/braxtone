@@ -52,7 +52,7 @@ const ClaimYesNoData: FinanceData[] = [
 
 const packagesData: FinanceData[] = [
     { id: 1, value: "Comprehensive" },
-    { id: 2, value: "Third Party" }
+    { id: 2, value: "Third-Party" }
 ]
 
 export { finance, yesNoData, HowYoungData, TraffficyesNoData, MartialStatus, RegisteredData,InsuranceYesNoData,ClaimYesNoData ,packagesData};

@@ -22,6 +22,7 @@ import { motion } from 'framer-motion';
 import CommunicationForm from '@/components/form/CommunicationForm';
 import PackageType from '@/components/packages/Packages';
 import Packages from '@/components/packages/Packages';
+import ThirdPartyPackage from '@/components/packages/ThirdPartyPackage';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -84,7 +85,8 @@ export default function MultipleFormPage() {
   const [comminicationFormData, setcomminicationFormData] = useState('');
   const [showPackages, setshowPackages] = useState(false);
   const [selectPackage, setselectPackage] = useState<string | null>(null);
-  const [showPackageType,setshowPackageType] = useState(false);
+  const [showPackageType, setshowPackageType] = useState(false);
+  const [showThirdParty, setshowThirdParty] = useState(false);
 
   const handleCarMilesChange = (val: number) => {
     setCarMiles(val);
@@ -202,12 +204,19 @@ export default function MultipleFormPage() {
   }
 
 
-  const handleOptionSelectPackage = (value:string) =>{
-    if(value === "Comprehensive"){
-        setselectPackage(value);
-        setshowPackageType(true)
-    }else{
+  const handleOptionSelectPackage = (value: string) => {
+    if (value === "Comprehensive") {
+      setselectPackage(value);
+      setshowThirdParty(false)
+      setshowPackageType(true)
+    } else if (value = "Third-Party") {
+      setselectPackage(value)
+      setshowThirdParty(true)
       setshowPackageType(false)
+    }
+    else {
+      setshowPackageType(false)
+      setshowThirdParty(false)
     }
   }
   useEffect(() => {
@@ -255,7 +264,7 @@ export default function MultipleFormPage() {
 
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_16%,_white_70%,_#ceedfe_100%)] overflow-hidden ">
+    <div className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_16%,_white_70%,_#ceedfe_100%)] overflow-hidden scrollbar-hide">
       <div className='fixed w-full bg-[#d3f0ff] sm:bg-transparent xl:bg-transparent lg:bg-transparent'>
         <MultiformHeader />
       </div>
@@ -433,7 +442,7 @@ export default function MultipleFormPage() {
                   <div className="flex flex-col items-start gap-2">
                     <div className='flex items-center gap-2'>
                       <span className='text-gray-500 '>Country</span>
-                      <h3 className="text-lg font-semibold text-gray-700">{communicationData.country}</h3>     <BiPencil className="mt-1" />
+                      <h3 className="text-lg font-semibold text-gray-700">{communicationData.country}</h3> <BiPencil className="mt-1" />
                     </div>
                     <div className='flex items-center gap-2'>
                       <span className='text-gray-500 '>Email</span>
@@ -455,14 +464,14 @@ export default function MultipleFormPage() {
 
 
           {/* this is main part */}
-          <div className="flex flex-col xl:flex-row gap-5 w-full " style={{ height: '78vh' }}>
+          <div className="flex flex-col xl:flex-row gap-5 w-full  scrollbar-hide " style={{ height: '82vh' }}>
             <aside className="w-full xl:w-1/4 hidden md:block mt-14">
               <SidebarSteps />
             </aside>
 
             <main className="w-full xl:w-3/4 space-y-6 ">
               {/* this is heading */}
-              <div className='flex flex-col items-center sm:flex-row sm:flex md:flex lg:flex xl:flex mt-14 gap-5 sm:gap-0 lg:gap-0 xl:gap-0'>
+              <div className='flex flex-col items-start sm:items-center xl:items-center sm:flex-row sm:flex md:flex lg:flex xl:flex mt-14 gap-5 sm:gap-0 lg:gap-0 xl:gap-0'>
                 <div className=''>
                   <Image
                     src={image || "/default-avatar.png"}
@@ -796,6 +805,7 @@ export default function MultipleFormPage() {
                           setcomminicationFormData(combined);
                           setshowPackages(true)
                           setshowCommunication(false)
+                          setshowThirdParty(true)
                         }}
 
                         label="Next →"
@@ -808,18 +818,24 @@ export default function MultipleFormPage() {
 
               {/* pacakages */}
               <>
-              {showPackages && (
-                <div className='ml-10'>
+                {showPackages && (
+                  <div className='ml-0 sm:ml-10 xl:ml-10 lg:ml-10 md:ml-10'>
                     <MultiOption
                       data={packagesData}
                       onSelect={handleOptionSelectPackage}
                     />
-                </div>
-              )}
+                  </div>
+                )}
 
-              {showPackageType && (
-                <Packages/>
-              )}
+                {showPackageType && (
+                  <Packages />
+                )}
+
+                {
+                  showThirdParty && (
+                    <ThirdPartyPackage />
+                  )
+                }
               </>
             </main>
           </div>

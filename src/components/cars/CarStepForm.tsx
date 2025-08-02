@@ -12,11 +12,9 @@ type Car = {
   company: string;
   model: string;
   brands: string;
+  owner:string;
 };
 
-type Model = {
-  modelName: string;
-};
 
 export default function CarStepForm({
   onComplete,
@@ -28,21 +26,24 @@ export default function CarStepForm({
   const [step, setStep] = useState(1);
   const [year, setYear] = useState('');
   const [company, setCompany] = useState('');
-  // const [brand, setBrands] = useState('');
   const [model, setModel] = useState('');
   const [manufacturer, setManufacturer] = useState('');
 
-  // const brands = ['Nissan', 'Toyoto', 'GMC', 'Honda', 'Hyundai'];
   const years = Array.from({ length: 8 }, (_, i) => `${2026 - i}`);
   const companies = ['Acura', 'BMW', 'Audi', 'Toyota'];
-  // const models = ['copper', 'sample1', 'sample2'];
   const [selectedBrandId, setSelectedBrandId] = useState<string>('');
   const manufacturers = ['5/40xi 4WD', '4/20i RWD', '3/10xi AWD'];
+  const carTrim = ['NAVIGATION', 'ROADSTER', 'STD'];
+  const registationMonth = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'];
+  const Ownership = ['Cash / Fully owned', 'Installment'];
+  const [owner, setOwner] = useState('');
+  const [registationMon, setregistationMon] = useState('');
+  const [trim, setCarTrim] = useState('');
 
-  const totalSteps = 5;
-  const [brands, setBrands] = useState([]);
-  const [selectedBrand, setSelectedBrand] = useState<string>("select");
-  const [models, setModels] = useState([]);
+  const totalSteps = 6;
+  const [brands, setBrands] = useState<string[]>([]); useState([]);
+  const [selectedBrand, setSelectedBrand] = useState<{ value: string; label: React.ReactNode } | undefined>(undefined);
+  const [models, setModels] = useState<string[]>([]);
   const [brandsMap, setBrandsMap] = useState<Record<string, any>>({});
 
   useEffect(() => {
@@ -85,13 +86,6 @@ export default function CarStepForm({
     fetchModels();
   }, [selectedBrandId]);
 
-
-
-
-
-  console.log(brands, "jafok")
-  console.log("Selected brand ID:", selectedBrandId);
-  console.log("Models for selected brand:", models);
   return (
     <div className="relative mx-end w-[100%] sm:w-[380px] md:w-[380px] lg:w-[380px] 
       xl:w-[380px] ml-0 sm:ml-16 md:ml-16 lg:ml-16 xl:ml-16 pt-6 pb-2 
@@ -103,51 +97,7 @@ export default function CarStepForm({
       >
         ×
       </button>
-
       {step === 1 && (
-        <>
-          <h2 className="text-md font-medium mb-3 text-gray-800">Select the production year</h2>
-          <Select
-            value={year}
-            onChange={setYear}
-            style={{ width: '100%', borderRadius: 8, height: 40 }}
-            placeholder="Select Year"
-          >
-            <Option value="">Select</Option>
-            {years.map((y) => (
-              <Option key={y} value={y}>{y}</Option>
-            ))}
-          </Select>
-          <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
-            <ProgressBar step={step} totalSteps={totalSteps} />
-            <StepNavigation canContinue={!!year} onBack={onCancel} onNext={() => setStep(2)} />
-          </div>
-
-        </>
-      )}
-
-      {step === 2 && (
-        <>
-          <h2 className="text-md font-medium mb-3 text-gray-800">Select the car manufacturing company</h2>
-          <Select
-            value={company}
-            onChange={setCompany}
-            style={{ width: '100%', borderRadius: 8, height: 40 }}
-            placeholder="Select Company"
-          >
-            <Option value="">Select</Option>
-            {companies.map((c) => (
-              <Option key={c} value={c}>{c}</Option>
-            ))}
-          </Select>
-          <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
-            <ProgressBar step={step} totalSteps={totalSteps} />
-            <StepNavigation canContinue={!!company} onBack={() => setStep(1)} onNext={() => setStep(3)} />
-          </div>
-        </>
-      )}
-
-      {step === 3 && (
         <>
           <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's Brand</h2>
           <Select
@@ -188,44 +138,37 @@ export default function CarStepForm({
           </Select>
 
 
-
-
           <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
 
             <ProgressBar step={step} totalSteps={totalSteps} />
-            <StepNavigation canContinue={!!brands} onBack={() => setStep(3)} onNext={() => setStep(5)} />
-
-
+            <StepNavigation canContinue={!!selectedBrandId} onBack={onCancel} onNext={() => setStep(2)} />
           </div>
         </>
       )}
 
-
-
-
-      {step === 4 && (
+      {step === 2 && (
         <>
-          <h2 className="text-md font-medium mb-3 text-gray-800">Select the car body style</h2>
+          <h2 className="text-md font-medium mb-3 text-gray-800">Select the production year</h2>
           <Select
-            value={manufacturer}
-            onChange={setManufacturer}
+            value={year}
+            onChange={setYear}
             style={{ width: '100%', borderRadius: 8, height: 40 }}
-            placeholder="Select Manufacturer"
+            placeholder="Select Year"
           >
             <Option value="">Select</Option>
-            {manufacturers.map((m) => (
-              <Option key={m} value={m}>{m}</Option>
+            {years.map((y) => (
+              <Option key={y} value={y}>{y}</Option>
             ))}
           </Select>
           <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
             <ProgressBar step={step} totalSteps={totalSteps} />
-            <StepNavigation canContinue={!!manufacturer} onBack={() => setStep(3)} onNext={() => setStep(5)} />
+            <StepNavigation canContinue={!!year} onBack={() => setStep(1)} onNext={() => setStep(3)} />
           </div>
+
         </>
       )}
 
-
-      {step === 5 && (
+      {step === 3 && (
         <>
           <h2 className="text-md font-medium mb-3 text-gray-800">Select the car model</h2>
           <Select
@@ -242,15 +185,88 @@ export default function CarStepForm({
 
           <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
             <ProgressBar step={step} totalSteps={totalSteps} />
+            <StepNavigation canContinue={!!model} onBack={() => setStep(2)} onNext={() => setStep(4)} />
+
+          </div>
+        </>
+      )}
+
+      {step === 4 && (
+        <>
+          <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's trim</h2>
+          <Select
+            value={trim}
+            onChange={setCarTrim}
+            style={{ width: '100%', borderRadius: 8, height: 40 }}
+            placeholder="Select car trim"
+          >
+            <Option value="">Select</Option>
+            {carTrim.map((m) => (
+              <Option key={m} value={m}>{m}</Option>
+            ))}
+          </Select>
+          <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+            <ProgressBar step={step} totalSteps={totalSteps} />
+            <StepNavigation canContinue={!!trim} onBack={() => setStep(3)} onNext={() => setStep(5)} />
+          </div>
+        </>
+      )}
+
+
+      {step === 5 && (
+        <>
+          <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's registration month</h2>
+          <Select
+            value={registationMon}
+            onChange={setregistationMon}
+            style={{ width: '100%', borderRadius: 8, height: 40 }}
+            placeholder="Select car trim"
+          >
+            <Option value="">Select</Option>
+            {registationMonth.map((m) => (
+              <Option key={m} value={m}>{m}</Option>
+            ))}
+          </Select>
+          <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+            <ProgressBar step={step} totalSteps={totalSteps} />
+            <StepNavigation canContinue={!!registationMon} onBack={() => setStep(4)} onNext={() => setStep(6)} />
+          </div>
+        </>
+      )}
+
+
+      {step === 6 && (
+        <>
+          <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's ownership types</h2>
+          <Select
+            value={owner}
+            onChange={setOwner}
+            style={{ width: '100%', borderRadius: 8, height: 40 }}
+            placeholder="Select Manufacturer"
+          >
+            <Option value="">Select</Option>
+            {Ownership.map((m) => (
+              <Option key={m} value={m}>{m}</Option>
+            ))}
+          </Select>
+          <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+            <ProgressBar step={step} totalSteps={totalSteps} />
             <div className="flex justify-between mt-4">
               <button
-                onClick={() => setStep(4)}
+                onClick={() => setStep(5)}
                 className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100"
               >
                 Back
               </button>
               <button
-                onClick={() => onComplete({ year, company, manufacturer, model, brands: selectedBrandId })}
+                onClick={() => onComplete({
+                  year,
+                  company,
+                  manufacturer,
+                  model,
+                  brands: selectedBrandId,
+                  owner,
+                })}
                 disabled={!selectedBrandId}
                 className={`rounded-md w-[140px] py-4 mt-3 text-sm border border-gray-100 transition-colors duration-200
                 ${selectedBrandId ? 'bg-[#0067a1] text-white hover:bg-[#005780]' : 'bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
@@ -262,6 +278,9 @@ export default function CarStepForm({
           </div>
         </>
       )}
+
+
+
     </div>
   );
 }
@@ -285,6 +304,7 @@ function StepNavigation({
   onBack: () => void;
   onNext: () => void;
   canContinue: boolean;
+
 }) {
   return (
     <div className="flex justify-between mt-4">

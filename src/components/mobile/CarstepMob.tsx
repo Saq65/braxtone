@@ -31,9 +31,8 @@ export default function CarstepMob({ onComplete }: Props) {
           width: 'calc(100% - 2px)',
           margin: '0 auto',
         }}
-        bodyStyle={{
-          padding: 0,
-        }}
+        styles={{ body: { padding: 0 } }}
+
 
       >
         <CarStepForm
