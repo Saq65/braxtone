@@ -18,7 +18,7 @@ const Header = () => {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
-        <div className="header bg-[#1474aa] px-6 lg:px-12 py-6 sticky top-0 z-50">
+        <div className="header bg-[var(--primary2)]  px-6 lg:px-12 py-6 sticky top-0 z-50" style={{opacity:'80%'}}>
             <div className="flex justify-between items-center">
                 <div>
                     <Link href="/">

@@ -1,23 +1,22 @@
+// tailwind.config.js
 module.exports = {
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      fontFamily: {
-        futura: ["Futura", "Trebuchet MS", "Segoe UI", "sans-serif"],
-      },
       colors: {
-        primary: "#41a200ff",
-        secondary: "#f0f0f0",
-        accent: "#ff9900",
-        background: "#ffffff",
-        text: "#333333",
-        muted: "#d0d0d0",
+        primary: 'var(--primary)',
+        secondary: 'var(--secondary)',
+        background: 'var(--color-background)',
+        success: 'var(--success-color)',
+        error: 'var(--error-color)',
+        warning: 'var(--warning-color)',
+        text: 'var(--text-color)',
+        icon: 'var(--icon-color)',
+        border: 'var(--border-color)',
+      },
+      fontFamily: {
+        arabic: 'var(--font-family)',
       },
     },
   },
-  content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./features/**/*.{ts,tsx}",
-  ],
-  plugins: [require("tailwind-scrollbar-hide")],
-};
+}

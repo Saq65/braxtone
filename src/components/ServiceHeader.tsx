@@ -16,7 +16,7 @@ const ServiceHeader = ({ image, heading, paragraph }: ServiceHeaderProps) => {
             alt="Dania"
             width={100}
             height={100}
-            className="rounded-full object-cover border-2 border-white shadow"
+            className="rounded-full object-cover border-2 border-[#ff6700] shadow"
           />
         </div>
       )}

@@ -5,10 +5,29 @@
 @tailwind utilities;
 
 
+:root {
+  --primary: #ff6700;
+  --primary2: #FF6700;
+  --secondary: #002d97;
+  --gradient: #fff2e2;
+  --color-background: #fff2e2;
+  --success-color: #075e54;
+  --error-color: #ff1230;
+  --warning-color: #fbbf24;
+  --text-color: #2a2a2a;
+  --icon-color: #9b9999;
+  --font-family: 'GM Global Arabic';
+  --border-color: #ff6700;
+}
+
 @layer utilities {
   @keyframes marquee {
-    0%   { transform: translateX(0%); }
-    100% { transform: translateX(-50%); }
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
   }
 
   .animate-marquee {
