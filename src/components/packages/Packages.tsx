@@ -48,10 +48,11 @@ const Packages = () => {
         <div>
             <div className=''>
                 <div className="flex justify-center xl:w-[90%] md:w-[90%] sm:w-[90%] ml-0 sm:ml-17 xl:ml-17 lg:ml-17 h-[100%]">
+               
                     <Swiper
                         spaceBetween={30}
                         slidesPerView={2}
-               
+                 
                         modules={[Navigation]}
                         navigation={true}
                         breakpoints={{
@@ -69,7 +70,7 @@ const Packages = () => {
                             },
                         }}
                         className="mySwiper h-[100%] cursor-pointer ">
-                        
+
                         {
                             packages.map(res =>
                                 <SwiperSlide>
@@ -101,29 +102,29 @@ const Packages = () => {
                                             <div style={{ borderBottom: '0.5px solid #dddcdc' }} className='w-[100%] mt-5'></div>
                                         </div>
                                         <div className='mt-5 flex flex-col gap-4 items-start ml-2 h-[52%]'>
-                                                <div className='flex flex-col gap-5 items-start justify-start'>
-                                                    {Object.entries(res.benefits).map(([key, benefit]) => (
-                                                        <div className='flex flex-row items-start gap-2'>
-                                                            <span className='border rounded rounded-full border-[#ababab] mt-1'><IoIosArrowForward color='#0068a2' /></span>
-                                                            <p className='text-justify text-gray-500 text-[13px] line-height:1.25' key={key}>
-                                                                {benefit.addon}
-                                                            </p>
-                                                        </div>
+                                            <div className='flex flex-col gap-5 items-start justify-start'>
+                                                {Object.entries(res.benefits).map(([key, benefit]) => (
+                                                    <div className='flex flex-row items-start gap-2'>
+                                                        <span className='border rounded rounded-full border-[#ababab] mt-1'><IoIosArrowForward color='#0068a2' /></span>
+                                                        <p className='text-justify text-gray-500 text-[13px] line-height:1.25' key={key}>
+                                                            {benefit.addon}
+                                                        </p>
+                                                    </div>
 
-                                                    ))}
-                                                </div>
+                                                ))}
+                                            </div>
                                         </div>
-
-                                        <div className='mt-5'>
-                                            <Button className='btn w-full bg-[#d0d0d0] hover:bg-[#0068a2]'>Choose</Button>
+                                        <div className="flex justify-end gap-4 mb-4">
+                                            <div className='mt-5'>
+                                                <Button className='btn w-full bg-[#d0d0d0] hover:bg-[#0068a2]'>Choose</Button>
+                                            </div>
                                         </div>
                                     </div>
                                 </SwiperSlide>
                             )
                         }
-
-                 
                     </Swiper>
+         
                 </div>
 
             </div>
