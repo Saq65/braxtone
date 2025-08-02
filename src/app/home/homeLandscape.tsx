@@ -15,7 +15,7 @@ const nunito = Nunito({
 export default function HomeLandscape() {
     const router = useRouter();
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen ">
             <div className="relative overflow-hidden bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)] w-full min-h-screen  sm:p-unset scollbar-hide">
 
                 <div className="flex justify-between items-center  ">
@@ -44,7 +44,7 @@ export default function HomeLandscape() {
                     <div className="flex flex-col md:flex-row justify-between items-center gap-10 flex-1">
 
                         <motion.div
-                            className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left xl:pr-12 2xl:pr-20"
+                            className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left xl:pr-12 2xl:pr-20 bg-primary"
                             initial={{ opacity: 0, x: -90 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 1.8, ease: "easeOut", delay: 0.6 }}

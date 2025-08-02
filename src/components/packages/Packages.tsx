@@ -28,7 +28,6 @@ const Packages = () => {
                 const res = await fetch('/api/packages');
                 const data = await res.json();
 
-                // Filter to show only Comprehensive type
                 const filtered = data.filter((pkg: PackageType) => pkg.type === 'Comprehensive');
                 setPackages(filtered);
             } catch (err) {
@@ -115,7 +114,7 @@ const Packages = () => {
                                             </div>
                                         </div>
                                         <div className="flex justify-end gap-4 mb-4">
-                                            <div className='mt-5'>
+                                            <div className='mt-5 w-full'>
                                                 <Button className='btn w-full bg-[#d0d0d0] hover:bg-[#0068a2]'>Choose</Button>
                                             </div>
                                         </div>

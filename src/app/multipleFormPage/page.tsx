@@ -461,8 +461,6 @@ export default function MultipleFormPage() {
           </div>
 
 
-
-
           {/* this is main part */}
           <div className="flex flex-col xl:flex-row gap-5 w-full  scrollbar-hide " style={{ height: '80vh' }}>
             <aside className="w-full xl:w-1/4 hidden md:block mt-14">
@@ -663,7 +661,7 @@ export default function MultipleFormPage() {
                       onSelect={handleOptionSelectTraffic}
                     />
                     <NextBtn
-                      disabled={selectAge === null}
+                      disabled={selectTraffic === null}
                       onClick={() => {
                         setconfirmselectTraffic(true);
                         setMartial(true)
@@ -674,6 +672,7 @@ export default function MultipleFormPage() {
                   </div>
                 )}
 
+
                 {showMartial && (
                   <div className="ml-0 sm:ml-10">
                     <MultiOption
@@ -681,7 +680,7 @@ export default function MultipleFormPage() {
                       onSelect={handleOptionSelectMartial}
                     />
                     <NextBtn
-                      disabled={selectAge === null}
+                      disabled={selectMartial === null}
                       onClick={() => {
                         setconfirmselectMartial(true)
                         setTrafficYesNo(false)
@@ -700,7 +699,7 @@ export default function MultipleFormPage() {
                       onSelect={handleOptionSelectRegistered}
                     />
                     <NextBtn
-                      disabled={selectAge === null}
+                      disabled={selectRegistered === null}
                       onClick={() => {
                         setTrafficYesNo(false)
                         setconfirmselectRegistered(true)
@@ -721,7 +720,7 @@ export default function MultipleFormPage() {
                       onSelect={handleOptionSelectInsuranceYesNo}
                     />
                     <NextBtn
-                      disabled={selectAge === null}
+                      disabled={selectInsuraceYesno === null}
                       onClick={() => {
                         setTrafficYesNo(false)
                         setconfirmselectInsuranceYesno(true)
@@ -741,7 +740,7 @@ export default function MultipleFormPage() {
                       onSelect={handleOptionSelectClaim}
                     />
                     <NextBtn
-                      disabled={selectAge === null}
+                      disabled={selectClaim === null}
                       onClick={() => {
                         setTrafficYesNo(false)
                         setconfirmselectInsuranceYesno(false)
