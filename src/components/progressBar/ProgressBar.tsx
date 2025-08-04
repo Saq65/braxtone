@@ -35,7 +35,6 @@ export default function ProgressBar({
     return (
         <div className="ml-0 sm:ml-3 md:ml-3 xl:ml-3">
             <div className="relative w-[330px] lg:w-[380px] ml-3 mt-20">
-                {/* Value label */}
                 <div
                     className="absolute top-[-40px] bg-gray-200 px-6 py-2 rounded-2xl text-bold text-gray-800"
                     style={{

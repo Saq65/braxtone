@@ -8,6 +8,7 @@ import 'swiper/css/navigation';
 import Image from 'next/image';
 import { IoIosArrowForward } from 'react-icons/io';
 import { Button } from 'antd';
+import { Navigation } from 'swiper/modules';
 
 type PackageType = {
     packageName: string;
@@ -49,7 +50,8 @@ const ThirdPartyPackage = () => {
                     <Swiper
                         spaceBetween={30}
                         slidesPerView={2}
-                        // modules={[Navigation]}
+                        modules={[Navigation]}
+                        navigation={true}
                         breakpoints={{
                             320: {
                                 slidesPerView: 1,
@@ -117,8 +119,6 @@ const ThirdPartyPackage = () => {
                                 </SwiperSlide>
                             )
                         }
-
-
 
                     </Swiper>
                 </div>

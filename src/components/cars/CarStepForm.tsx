@@ -13,6 +13,7 @@ type Car = {
   model: string;
   brands: string;
   owner: string;
+  banksValue: string;
 };
 
 
@@ -30,9 +31,7 @@ export default function CarStepForm({
   const [manufacturer, setManufacturer] = useState('');
 
   const years = Array.from({ length: 8 }, (_, i) => `${2026 - i}`);
-  const companies = ['Acura', 'BMW', 'Audi', 'Toyota'];
   const [selectedBrandId, setSelectedBrandId] = useState<string>('');
-  const manufacturers = ['5/40xi 4WD', '4/20i RWD', '3/10xi AWD'];
   const carTrim = ['NAVIGATION', 'ROADSTER', 'STD'];
   const registationMonth = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'];
   const Ownership = ['Cash / Fully owned', 'Installment'];
@@ -40,11 +39,14 @@ export default function CarStepForm({
   const [registationMon, setregistationMon] = useState('');
   const [trim, setCarTrim] = useState('');
 
-  const totalSteps = 6;
+  const totalSteps = owner === "Installment" ? 7 : 6;
   const [brands, setBrands] = useState<string[]>([]); useState([]);
   const [selectedBrand, setSelectedBrand] = useState<{ value: string; label: React.ReactNode } | undefined>(undefined);
   const [models, setModels] = useState<string[]>([]);
   const [brandsMap, setBrandsMap] = useState<Record<string, any>>({});
+  const [banks, setbanks] = useState<string[]>([]);
+  const [banksValue, setBankValue] = useState('');
+  const [bankSelected, setBankSelected] = useState(false);
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -86,35 +88,51 @@ export default function CarStepForm({
     fetchModels();
   }, [selectedBrandId]);
 
-const handleSubmit = async () => {
-  const payload = {
-    year,
-    company,
-    manufacturer,
-    model,
-    brands: selectedBrandId,
-    owner,
-  };
+  useEffect(() => {
+    const fetchBrands = async () => {
+      try {
+        const res = await axios.get('/api/banks');
+        const data = res.data;
+        const bankList = Object.keys(data.banks || {})
+        setbanks(bankList);
+      } catch (error) {
+        console.error('Client fetch error:', error);
+      }
+    };
 
-  console.log("📤 Sending payload to API:", payload); 
+    fetchBrands();
+  }, []);
 
-  try {
-    const response = await axios.post('/api/quote', payload);
-    console.log("✅ Quote created successfully:", response.data);
 
-    // Check if database saved it
-    if (response.data && response.data.id) {
-      console.log("💾 Saved to DB with ID:", response.data.id); // Step 3
-    } else {
-      console.warn("⚠️ API response did not return a valid ID.");
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const payload = {
+      year,
+      company,
+      manufacturer,
+      model,
+      brands: selectedBrandId,
+      owner,
+      banksValue
+    };
+
+    console.log(" Sending payload to API:", payload);
+
+    try {
+      const response = await axios.post('/api/quote', payload);
+      console.log(" Quote created successfully:", response.data);
+
+      if (response.data && response.data.id) {
+        console.log("Saved to DB with ID:", response.data.id);
+      } else {
+        console.warn(" API response did not return a valid ID.");
+      }
+
+      onComplete(response.data.data);
+    } catch (error: any) {
+      console.error(" Error while creating quote:", error.response?.data || error.message);
     }
-
-    onComplete(response.data); // send to parent component if needed
-  } catch (error: any) {
-    console.error("❌ Error while creating quote:", error.response?.data || error.message); // Step 4
-  }
-};
-
+  };
 
 
   return (
@@ -128,6 +146,7 @@ const handleSubmit = async () => {
       >
         ×
       </button>
+      <form method='post' onSubmit={handleSubmit}>
         {step === 1 && (
           <>
             <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's Brand</h2>
@@ -151,8 +170,8 @@ const handleSubmit = async () => {
                   : undefined
               }
               onChange={(option) => {
-                setSelectedBrand(option); // { value: 'audi', label: <...> }
-                setSelectedBrandId(option.value); // use ID for API
+                setSelectedBrand(option);
+                setSelectedBrandId(option.value);
               }}
               style={{ width: '100%', borderRadius: 8, height: 40 }}
               placeholder="Select Brand"
@@ -265,7 +284,6 @@ const handleSubmit = async () => {
           </>
         )}
 
-
         {step === 6 && (
           <>
             <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's ownership types</h2>
@@ -277,6 +295,41 @@ const handleSubmit = async () => {
             >
               <Option value="">Select</Option>
               {Ownership.map((m) => (
+                <Option key={m} value={m}>{m}</Option>
+              ))}
+            </Select>
+            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+              <ProgressBar step={step} totalSteps={totalSteps} />
+              <StepNavigation
+                canContinue={!!owner}
+                onBack={() => setStep(5)}
+                onNext={() => {
+                  if (owner === "Installment") {
+                    setStep(7);
+                  } else {
+                    setStep(6);
+                  }
+                }}
+              />
+
+            </div>
+          </>
+        )}
+
+        {step === 7 && (
+          <>
+            <h2 className="text-md font-medium mb-3 text-gray-800">Select your bank</h2>
+            <Select
+              value={banksValue}
+              onChange={(value) => {
+                setBankValue(value);
+                setBankSelected(true); 
+              }}
+              style={{ width: '100%', borderRadius: 8, height: 40 }}
+              placeholder="Select car trim"
+            >
+              <Option value="">Select</Option>
+              {banks.map((m) => (
                 <Option key={m} value={m}>{m}</Option>
               ))}
             </Select>
@@ -298,10 +351,11 @@ const handleSubmit = async () => {
                   //   brands: selectedBrandId,
                   //   owner,
                   // })}
-                  onClick={handleSubmit}
-                  disabled={!selectedBrandId}
+                  // onClick={handleSubmit}
+                  type='submit'
+                  disabled={!banksValue}
                   className={`rounded-md w-[140px] py-4 mt-3 text-sm border border-gray-100 transition-colors duration-200
-                ${selectedBrandId ? 'bg-[#0067a1] text-white hover:bg-[#005780]' : 'bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
+                ${banksValue ? 'bg-[#0067a1] text-white hover:bg-[#005780]' : 'bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
               `}
                 >
                   Add
@@ -311,6 +365,7 @@ const handleSubmit = async () => {
           </>
         )}
 
+      </form>
     </div>
   );
 }

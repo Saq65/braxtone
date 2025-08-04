@@ -9,7 +9,10 @@ import MultiformHeading from "@/components/cars/MultiformHeading";
 import { MultiFormheader } from "@/data/multiformheading";
 import CarStepForm from "@/components/cars/CarStepForm";
 import DriverStepForm from '@/components/drivers/DriverStepForm';
-import { ClaimYesNoData, finance, HowYoungData, InsuranceYesNoData, MartialStatus, packagesData, RegisteredData, TraffficyesNoData, yesNoData } from '@/data/multiOptionsData';
+import {
+  ClaimYesNoData, finance, HowYoungData, InsuranceYesNoData, MartialStatus,
+  packagesData, RegisteredData, TraffficyesNoData, yesNoData
+} from '@/data/multiOptionsData';
 import MultiOption from '@/components/ui/MultiOption';
 import Vinnumber from '@/components/vinNumber/VinNumber';
 import NextButton from '@/components/ui/NextBtn';
@@ -20,9 +23,9 @@ import BHDComponent from '@/components/progressBar/ProgressBar';
 import AddDriverCard from '@/components/drivers/AddDriver';
 import { motion } from 'framer-motion';
 import CommunicationForm from '@/components/form/CommunicationForm';
-import PackageType from '@/components/packages/Packages';
-import Packages from '@/components/packages/Packages';
+import Packages ,{PackageType} from '@/components/packages/Packages';
 import ThirdPartyPackage from '@/components/packages/ThirdPartyPackage';
+import PersonalDetails from '@/components/form/PersonalDetails';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -87,6 +90,8 @@ export default function MultipleFormPage() {
   const [selectPackage, setselectPackage] = useState<string | null>(null);
   const [showPackageType, setshowPackageType] = useState(false);
   const [showThirdParty, setshowThirdParty] = useState(false);
+  const [showPersonalDetails, setPersonalDetails] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState<PackageType | null>(null);
 
   const handleCarMilesChange = (val: number) => {
     setCarMiles(val);
@@ -136,11 +141,9 @@ export default function MultipleFormPage() {
     setAddedDrivers([driver, ...addedDrivers]);
     setShowDriverForm(false);
     setTimeout(() => {
-      setDriverConfirmed(true);
       setDriverConfirmed(true)
     }, 500);
   };
-
 
   const handleVinNumberChange = (value: string) => {
     setVinnumber(value);
@@ -159,12 +162,20 @@ export default function MultipleFormPage() {
     email: '',
   });
 
+  const [personalData, setpersonalData] = useState({
+    nationality: '',
+    nationalId: '',
+    numberPlate: '',
+  });
+
 
   const handleCommunicationChange = (field: string, value: string) => {
     setCommunicationData(prev => ({ ...prev, [field]: value }));
   };
 
-
+  const handlePersonalDataChange = (field: string, value: string) => {
+    setpersonalData(prev => ({ ...prev, [field]: value }));
+  };
   const handleFinanceOnNext = () => {
     setShowVinNumber(true);
     setFinanceConfirmed(true);
@@ -173,11 +184,9 @@ export default function MultipleFormPage() {
     setSelectedFinanceOption(value);
   };
 
-
   const handleOptionSelectInCarUse = (value: string) => {
     setSelectUseCar(value);
   };
-
 
   const handleOptionSelectInHowMuchAge = (value: string) => {
     setSelectAge(value);
@@ -202,7 +211,6 @@ export default function MultipleFormPage() {
   const handleOptionSelectClaim = (value: string) => {
     setselectselectClaim(value)
   }
-
 
   const handleOptionSelectPackage = (value: string) => {
     if (value === "Comprehensive") {
@@ -273,44 +281,48 @@ export default function MultipleFormPage() {
           {/* here all data showing after added */}
           <div className='flex justify-center flex-col sm:items-center md:items-center lg:items-center xl:items-center items-start cursor-pointer
            mt-30 sm:mt-10 md:mt-10 lg:mt-20 xl:mt-20 lg:mb-25 sm:mb-25 xl:mb-25 mb-0 gap-10'>
+
             {addedCars.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="Alright. These are the cars that I found. Which would you like to insure?" />
-                {addedCars.slice(0, 1).map((entry, index) => (
+                ref={addedCarsRef}
+                className="ml-10 space-y-2"
+              >
+                <MultiformHeading
+                  color="#8b8b8b"
+                  heading="Alright. These are the cars that I found. Which would you like to insure?"
+                />
+
+                {addedCars.map((car, index) => (
                   <div key={index} className="transition-all duration-700 transform">
                     <div className='flex items-center gap-2'>
                       <h3 className="text-lg font-semibold text-gray-900">
-                        {Object.values(entry).filter(Boolean).join(" ")}
+                        {car.year} {car.brands} {car.model} {car.owner && `- ${car.owner}`}
                       </h3>
-                      <BiPencil onClick={() => setShowForm(true)} className='mt-1' />
+                      <BiPencil onClick={() => setShowForm(true)} className='mt-1 cursor-pointer' />
                     </div>
                   </div>
                 ))}
               </motion.div>
             )}
 
+
             {addedDrivers.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                ref={addedCarsRef} className="ml-10 space-y-2">
+              <div ref={addedCarsRef} className="ml-10 space-y-2">
                 <MultiformHeading color="#8b8b8b" heading="Great! Your car has been successfully added." />
-                {addedDrivers.slice(0, 1).map((entry, index) => (
+                {addedDrivers.map((entry, index) => (
                   <div key={index} className="transition-all duration-700 transform">
                     <div className='flex items-center gap-2'>
                       <h3 className="text-lg font-semibold text-gray-700">
-                        {Object.values(entry).filter(Boolean).join(" ")}
+                        {entry.name} {entry.whatAge} {entry.nationality} {entry.nationalId}
                       </h3>
                       <BiPencil className='mt-1' onClick={() => setShowDriverForm(true)} />
                     </div>
                   </div>
                 ))}
-              </motion.div>
+              </div>
             )}
 
             {selectedFinanceOption && financeConfirmed && (
@@ -353,7 +365,6 @@ export default function MultipleFormPage() {
                 </div>
               </div>
             )}
-
 
             {useCarYesNoConfermed && selectUseCar && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
@@ -458,11 +469,26 @@ export default function MultipleFormPage() {
               )
             }
 
+            {selectedPackage && (
+              <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading="Selected Package" />
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-gray-700">
+                    {selectedPackage.packageName}
+                  </h3>
+                  <BiPencil className="mt-1 cursor-pointer" onClick={() => {
+                    // Allow editing or reselecting the package
+                    setshowPackages(true);
+                    setPersonalDetails(false);
+                  }} />
+                </div>
+              </div>
+            )}
+
           </div>
 
-
           {/* this is main part */}
-          <div className="flex flex-col xl:flex-row gap-5 w-full  scrollbar-hide " style={{ height: '80vh' }}>
+          <div className="flex flex-col xl:flex-row gap-5 w-full  scrollbar-hide " style={{ height: '90vh' }}>
             <aside className="w-full xl:w-1/4 hidden md:block mt-14">
               <SidebarSteps />
             </aside>
@@ -573,7 +599,6 @@ export default function MultipleFormPage() {
                     />
                   </div>
                 )}
-
               </>
 
               {/* this is car miles */}
@@ -779,63 +804,76 @@ export default function MultipleFormPage() {
               </>
 
 
-              {/*communication form */}
-              <>
-                {
-                  showCommunication && (
-                    <div>
-                      <CommunicationForm
-                        country={communicationData.country}
-                        phone={communicationData.phone}
-                        email={communicationData.email}
-                        onChange={handleCommunicationChange}
-                      />
-                      <NextBtn
-                        disabled={
-                          !communicationData.country ||
-                          !communicationData.phone ||
-                          !communicationData.email
-                        }
+              {/* Show Communication Form ONLY when not showing packages or personal details */}
+              {showCommunication && !showPackages && !showPersonalDetails && (
+                <div>
+                  <CommunicationForm
+                    country={communicationData.country}
+                    phone={communicationData.phone}
+                    email={communicationData.email}
+                    onChange={handleCommunicationChange}
+                  />
+                  <NextBtn
+                    disabled={
+                      !communicationData.country?.trim() ||
+                      !communicationData.phone?.trim() ||
+                      !communicationData.email?.trim()
+                    }
+                    onClick={() => {
+                      const combined = `${communicationData.country} ${communicationData.phone} ${communicationData.email}`;
+                      setcomminicationFormData(combined);
+                      setshowPackages(true);
+                      setshowCommunication(false);
+                    }}
+                    label="Next →"
+                  />
+                </div>
+              )}
 
-                        onClick={() => {
-                          const combined = `  ${communicationData.country} 
-                           ${communicationData.phone} 
-                            ${communicationData.email}`;
-                          setcomminicationFormData(combined);
-                          setshowPackages(true)
-                          setshowCommunication(false)
-                          setshowThirdParty(true)
-                        }}
+              {/* Show Package Step ONLY when not showing personal details */}
+              {showPackages && !showPersonalDetails && (
+                <div className="ml-0 sm:ml-10 xl:ml-10 lg:ml-10 md:ml-10">
+                  <MultiOption
+                    data={packagesData}
+                    onSelect={handleOptionSelectPackage}
+                  />
 
-                        label="Next →"
-                      />
-
-                    </div>
-                  )
-                }
-              </>
-
-              {/* pacakages */}
-              <>
-                {showPackages && (
-                  <div className='ml-0 sm:ml-10 xl:ml-10 lg:ml-10 md:ml-10'>
-                    <MultiOption
-                      data={packagesData}
-                      onSelect={handleOptionSelectPackage}
+                  {showPackageType && (
+                    <Packages
+                      onSelect={(pkg) => {
+                        setSelectedPackage(pkg);
+                        setPersonalDetails(true);
+                      }}
                     />
-                  </div>
-                )}
+                  )}
 
-                {showPackageType && (
-                  <Packages />
-                )}
+                  {showThirdParty && <ThirdPartyPackage />}
 
-                {
-                  showThirdParty && (
-                    <ThirdPartyPackage />
-                  )
-                }
-              </>
+                  <NextBtn
+                    disabled={!selectedPackage }
+                    onClick={() => {
+                      setPersonalDetails(true);
+                      setshowPackageType(false);
+                      setshowThirdParty(false);
+                      setshowCommunication(false);
+                      setshowPackages(false);
+                    }}
+                    label="Next →"
+                  />
+                </div>
+              )}
+
+              {/* Show Personal Details Step */}
+              {showPersonalDetails && (
+                <PersonalDetails
+                  nationality={personalData.nationality}
+                  nationalId={personalData.nationalId}
+                  numberPlate={personalData.numberPlate}  
+                  onChange={handlePersonalDataChange}
+
+                />
+              )}
+
             </main>
           </div>
         </div>

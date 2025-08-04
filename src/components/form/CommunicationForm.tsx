@@ -31,7 +31,6 @@ const CommunicationForm = ({ country, phone, email, onChange }: ConfirmationProp
         <form action="#">
           <div className="flex flex-col gap-y-4">
 
-            {/* Country input + dropdown */}
             <div className="relative">
               <input
                 type="text"
@@ -59,7 +58,6 @@ const CommunicationForm = ({ country, phone, email, onChange }: ConfirmationProp
               )}
             </div>
 
-            {/* Phone number */}
             <div>
               <input
                 type="text"
@@ -71,7 +69,6 @@ const CommunicationForm = ({ country, phone, email, onChange }: ConfirmationProp
               />
             </div>
 
-            {/* Email */}
             <div>
               <input
                 type='email'

@@ -8,9 +8,9 @@ const { Option } = Select;
 
 type Driver = {
   name: string;
-  licenseNumber: string;
-  vehicleType: string;
-  experienceLevel: string;
+  nationality: string;
+  nationalId: string;
+  age: string;
 };
 
 export default function DriverStepForm({
@@ -22,21 +22,143 @@ export default function DriverStepForm({
 }) {
   const [step, setStep] = useState(1);
   const [name, setName] = useState('');
-  const [licenseNumber, setLicenseNumber] = useState('');
-  const [vehicleType, setVehicleType] = useState('');
-  const [experienceLevel, setExperienceLevel] = useState('');
+  const [nationality, setNationality] = useState('');
+  const [nationalId, setnationalId] = useState('');
+  const [whatAge, setwhatAge] = useState('');
 
-  const vehicleTypes = ['Sedan', 'SUV', 'Truck', 'Van'];
-  const experienceLevels = ['Beginner', 'Intermediate', 'Expert'];
+  const Age = ['18 to 24 year', '25 - 34 year', '35 - 44 year', '45+'];
+  const nationalities = [
+    "Afghan",
+    "Albanian",
+    "Algerian",
+    "American",
+    "Andorran",
+    "Angolan",
+    "Argentine",
+    "Armenian",
+    "Australian",
+    "Austrian",
+    "Azerbaijani",
+    "Bahraini",
+    "Bangladeshi",
+    "Belgian",
+    "Brazilian",
+    "British",
+    "Bulgarian",
+    "Cambodian",
+    "Cameroonian",
+    "Canadian",
+    "Chilean",
+    "Chinese",
+    "Colombian",
+    "Croatian",
+    "Cuban",
+    "Cypriot",
+    "Czech",
+    "Danish",
+    "Dutch",
+    "Ecuadorian",
+    "Egyptian",
+    "Emirati",
+    "English",
+    "Estonian",
+    "Ethiopian",
+    "Finnish",
+    "French",
+    "Georgian",
+    "German",
+    "Ghanaian",
+    "Greek",
+    "Guatemalan",
+    "Haitian",
+    "Honduran",
+    "Hungarian",
+    "Icelandic",
+    "Indian",
+    "Indonesian",
+    "Iranian",
+    "Iraqi",
+    "Irish",
+    "Israeli",
+    "Italian",
+    "Ivorian",
+    "Jamaican",
+    "Japanese",
+    "Jordanian",
+    "Kazakh",
+    "Kenyan",
+    "Kuwaiti",
+    "Latvian",
+    "Lebanese",
+    "Libyan",
+    "Lithuanian",
+    "Luxembourgish",
+    "Malaysian",
+    "Malian",
+    "Maltese",
+    "Mexican",
+    "Moroccan",
+    "Nepalese",
+    "New Zealander",
+    "Nicaraguan",
+    "Nigerian",
+    "Norwegian",
+    "Omani",
+    "Pakistani",
+    "Palestinian",
+    "Panamanian",
+    "Peruvian",
+    "Philippine",
+    "Polish",
+    "Portuguese",
+    "Qatari",
+    "Romanian",
+    "Russian",
+    "Rwandan",
+    "Saudi",
+    "Scottish",
+    "Senegalese",
+    "Serbian",
+    "Singaporean",
+    "Slovak",
+    "Slovenian",
+    "Somali",
+    "South African",
+    "South Korean",
+    "Spanish",
+    "Sri Lankan",
+    "Sudanese",
+    "Swedish",
+    "Swiss",
+    "Syrian",
+    "Taiwanese",
+    "Tanzanian",
+    "Thai",
+    "Tunisian",
+    "Turkish",
+    "UAE",
+    "USA",
+    "Ugandan",
+    "Ukrainian",
+    "Uruguayan",
+    "Uzbek",
+    "Venezuelan",
+    "Vietnamese",
+    "Welsh",
+    "Yemeni",
+    "Zambian",
+    "Zimbabwean",
+  ];
 
   const totalSteps = 4;
 
-  const handleSubmitDriver = async () => {
+  const handleSubmitDriver = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
     const payload = {
       name,
-      licenseNumber,
-      vehicleType,
-      experienceLevel
+      nationality,
+      nationalId,
+      whatAge,
     };
     console.log("Sending payload driver to API:", payload);
     try {
@@ -49,7 +171,7 @@ export default function DriverStepForm({
         console.warn("API response did not return a valid ID.");
       }
 
-      onComplete(response.data);
+      onComplete(response.data.data);
     } catch (error: any) {
       console.error("Error while creating quote:", error.response?.data || error.message);
     }
@@ -69,124 +191,140 @@ export default function DriverStepForm({
         >
           ×
         </button>
-        {step === 1 && (
-          <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">Enter drivers fullname</h2>
-            <div>
+        <form method="post" onSubmit={handleSubmitDriver}>
+          {step === 1 && (
+            <>
+              <h2 className="text-md font-medium mb-3 text-gray-800">Enter drivers fullname</h2>
+              <div>
+                <Input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Full Name"
+                  className="mb-4"
+                  size="large"
+                />
+              </div>
+              <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+                <ProgressBar step={step} totalSteps={totalSteps} />
+                <StepNavigation
+                  canContinue={!!name}
+                  onBack={onCancel}
+                  onNext={() => setStep(2)}
+                />
+              </div>
+            </>
+          )}
+
+          {step === 2 && (
+            <>
+              <h2 className="text-md font-medium mb-3 text-gray-800">What is your nationality?</h2>
+
+              <Select
+                showSearch
+                value={nationality}
+                onChange={(value) => setNationality(value)}
+                placeholder="Select Nationality"
+                optionFilterProp="children"
+                filterOption={(input, option) => {
+                  const label = (option?.label ?? option?.children) as string;
+                  return label.toLowerCase().includes(input.toLowerCase());
+                }}
+                style={{ width: '100%', height: '40px', borderRadius: '8px' }}
+                className="mb-4"
+              >
+                <Option value="">Select</Option>
+                {nationalities.map((nat) => (
+                  <Option key={nat} value={nat}>
+                    {nat}
+                  </Option>
+                ))}
+              </Select>
+
+              <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+                <ProgressBar step={step} totalSteps={totalSteps} />
+                <StepNavigation
+                  canContinue={!!nationality}
+                  onBack={() => setStep(1)}
+                  onNext={() => setStep(3)}
+                />
+              </div>
+            </>
+          )}
+
+          {step === 3 && (
+            <>
+              <h2 className="text-md font-medium mb-3 text-gray-800">What is your national id?</h2>
               <Input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Full Name"
+                value={nationalId}
+                onChange={(e) => setnationalId(e.target.value)}
+                placeholder="National Id"
                 className="mb-4"
                 size="large"
               />
-            </div>
-            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
-              <ProgressBar step={step} totalSteps={totalSteps} />
-              <StepNavigation
-                canContinue={!!name}
-                onBack={onCancel}
-                onNext={() => setStep(2)}
-              />
-            </div>
-          </>
-        )}
 
-        {step === 2 && (
-          <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">Enter license number</h2>
-            <Input
-              value={licenseNumber}
-              onChange={(e) => setLicenseNumber(e.target.value)}
-              placeholder="License Number"
-              className="mb-4"
-              size="large"
-            />
-            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
-              <ProgressBar step={step} totalSteps={totalSteps} />
-              <StepNavigation
-                canContinue={!!licenseNumber}
-                onBack={() => setStep(1)}
-                onNext={() => setStep(3)}
-              />
-            </div>
-          </>
-        )}
-
-        {step === 3 && (
-          <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">Select vehicle type</h2>
-            <Select
-              value={vehicleType}
-              onChange={(value) => setVehicleType(value)}
-              placeholder="Select Vehicle Type"
-              style={{ width: '100%', height: '40px', borderRadius: '8px' }}
-              className="mb-4"
-            >
-              <Option value="">Select</Option>
-              {vehicleTypes.map((v) => (
-                <Option key={v} value={v}>
-                  {v}
-                </Option>
-              ))}
-            </Select>
-
-            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
-              <ProgressBar step={step} totalSteps={totalSteps} />
-              <StepNavigation
-                canContinue={!!vehicleType}
-                onBack={() => setStep(2)}
-                onNext={() => setStep(4)}
-              />
-            </div>
-          </>
-        )}
-
-        {step === 4 && (
-          <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">Select experience level</h2>
-            <Select
-              value={experienceLevel}
-              onChange={(value) => setExperienceLevel(value)}
-              placeholder="Select Experience Level"
-              style={{ width: '100%', height: '40px', borderRadius: '8px' }}
-              className="mb-4"
-            >
-              <Option value="">Select</Option>
-              {experienceLevels.map((exp) => (
-                <Option key={exp} value={exp}>
-                  {exp}
-                </Option>
-              ))}
-            </Select>
-            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
-              <ProgressBar step={step} totalSteps={totalSteps} />
-              <div className="flex justify-between mt-4">
-                <button
-                  onClick={() => setStep(3)}
-                  className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100"
-                >
-                  Back
-                </button>
-                <button
-                  // onClick={() =>
-                  //   onComplete({ name, licenseNumber, vehicleType, experienceLevel })
-                  // }
-                  onClick={handleSubmitDriver}
-                  disabled={!experienceLevel}
-                  className={`rounded-md w-[140px] py-4 mt-3 text-sm border border-gray-100 transition-colors duration-200
-               ${experienceLevel
-                      ? 'cursor-pointer bg-[#0067a1] text-white hover:bg-[#005780]'
-                      : ' bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
-               `}
-                >
-                  Add
-                </button>
-
+              <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+                <ProgressBar step={step} totalSteps={totalSteps} />
+                <StepNavigation
+                  canContinue={!!nationalId}
+                  onBack={() => setStep(2)}
+                  onNext={() => setStep(4)}
+                />
               </div>
-            </div>
-          </>
-        )}
+            </>
+          )}
+
+          {step === 4 && (
+            <>
+              <h2 className="text-md font-medium mb-3 text-gray-800">What is your age?</h2>
+              <Select
+                value={whatAge}
+                onChange={(value) => setwhatAge(value)}
+                placeholder="Select Experience Level"
+                style={{ width: '100%', height: '40px', borderRadius: '8px' }}
+                className="mb-4"
+              >
+                <Option value="">Select</Option>
+                {Age.map((exp) => (
+                  <Option key={exp} value={exp}>
+                    {exp}
+                  </Option>
+                ))}
+              </Select>
+              <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+                <ProgressBar step={step} totalSteps={totalSteps} />
+                {/* <StepNavigation
+                canContinue={!!whatAge}
+                onBack={() => setStep(3)}
+                onNext={() => setStep(5)}
+              /> */}
+                <div className="flex justify-between mt-4">
+                  <button
+                    onClick={() => setStep(5)}
+                    className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100"
+                  >
+                    Back
+                  </button>
+                  <button
+                    // onClick={() =>
+                    //   onComplete({ name, licenseNumber, vehicleType, experienceLevel })
+                    // }
+                    // onClick={handleSubmitDriver}
+                    type='submit'
+                    disabled={!whatAge}
+                    className={`rounded-md w-[140px] py-4 mt-3 text-sm border border-gray-100 transition-colors duration-200
+               ${whatAge
+                        ? 'cursor-pointer bg-[#0067a1] text-white hover:bg-[#005780]'
+                        : ' bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
+               `}
+                  >
+                    Add
+                  </button>
+
+                </div>
+              </div>
+            </>
+          )}
+        </form>
       </div>
     </div>
   );

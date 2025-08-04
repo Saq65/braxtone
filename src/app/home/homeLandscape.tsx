@@ -14,9 +14,9 @@ const nunito = Nunito({
 });
 
 const arabicFont = Noto_Naskh_Arabic({
-  subsets: ['arabic'],
-  weight: ['400', '700'], 
-  variable: '--font-arabic', 
+    subsets: ['arabic'],
+    weight: ['400', '700'],
+    variable: '--font-arabic',
 });
 export default function HomeLandscape() {
     const router = useRouter();
@@ -50,18 +50,19 @@ export default function HomeLandscape() {
                     <div className="flex flex-col md:flex-row justify-between items-center gap-10 flex-1">
 
                         <motion.div
-                            className="w-full md:w-2/3 flex flex-col justify-center text-center md:text-left xl:pr-12 2xl:pr-20 "
+                            className="w-full max-w-full md:max-w-[50%] flex flex-col justify-center text-center md:text-left px-4 md:px-0 xl:pr-12 2xl:pr-20"
                             initial={{ opacity: 0, x: -90 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 1.8, ease: "easeOut", delay: 0.6 }}
                             viewport={{ once: true, amount: 0.2 }}
                         >
-                            <p className={`${nunito.className} text-[22px] sm:text-[26px] md:text-[35px] xl:text-[48px] 2xl:text-[56px] font-bold leading-tight text-[#1a1a1a]`}>
+                            <p className={`${nunito.className} text-[22px] sm:text-[26px] md:text-[30px] lg:text-[36px] xl:text-[44px] 2xl:text-[56px] font-bold leading-tight text-[#1a1a1a]`}>
                                 <span className="text-[var(--primary)]">Compare, Choose, Save </span><br />
                                 & Get Fast Affordable <br />
                                 Car Insurance
                             </p>
-                            <p className="text-[12px] sm:text-base md:text-lg xl:text-xl 2xl:text-[17px] text-[#646464] mt-5 max-w-[640px] 2xl:max-w-[800px] leading-relaxed mx-auto md:mx-0">
+
+                            <p className="text-[14px] sm:text-[16px] md:text-[17px] lg:text-[18px] xl:text-[19px] 2xl:text-[20px] text-[#646464] mt-5 leading-relaxed mx-auto md:mx-0 max-w-[640px] 2xl:max-w-[800px]">
                                 Get instant car insurance coverage from the Government of Canada (GOC) to insurers,
                                 ensuring fast, reliable protection for vehicles with seamless processing.
                             </p>
@@ -69,32 +70,32 @@ export default function HomeLandscape() {
                             <div className="w-full flex justify-center md:justify-start">
                                 <div
                                     onClick={() => router.push('/servicePage')}
-                                    className="w-auto mt-12 py-3 px-6 xl:py-4 xl:px-8 bg-[var(--secondary)] opacity-[88%] text-white rounded-md text-sm sm:text-base xl:text-lg font-semibold hover:bg-[#005584] transition cursor-pointer text-center"
+                                    className="w-auto mt-10 py-3 px-6 lg:py-4 lg:px-8 bg-[var(--secondary)] opacity-90 text-white rounded-md text-sm sm:text-base lg:text-lg font-semibold hover:bg-[#005584] transition cursor-pointer text-center"
                                 >
                                     Explore Our Pricing
                                 </div>
                             </div>
-
                         </motion.div>
 
+                        {/* Image */}
                         <motion.div
-                            className="w-full md:w-1/2 flex justify-center items-center"
+                            className="w-full md:w-1/2 flex justify-center items-center px-4 sm:px-6 md:px-0"
                             initial={{ opacity: 0, x: 90 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 1.8, ease: "easeOut", delay: 0.6 }}
                             viewport={{ once: true, amount: 0.2 }}
                         >
-                            <div className="relative w-full max-w-[800px] mx-auto  p-4 ">
+                            <div className="relative w-full max-w-[600px] sm:max-w-[700px] md:max-w-[800px] mx-auto">
                                 <Image
                                     src="/asesst/images/Horo-Section-Image.png"
                                     alt="Boy and Girl"
                                     width={900}
-                                    height={800}
+                                    height={600}
                                     className="w-full h-auto object-contain"
                                     unoptimized
+                                    priority
                                 />
                             </div>
-
                         </motion.div>
                     </div>
 
