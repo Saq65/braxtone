@@ -64,10 +64,10 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
         <div className='absolute top-2 right-5'>
           <Checkbox
             checked={isSelected}
-            className="!text-[var(--primary)] !bg-white !border-[var(--primary)]"
-            style={{
-              accentColor: 'var(--primary)',
-            }}
+            // className="!text-[var(--primary)] !bg-white !border-[var(--primary)]"
+            // style={{
+            //   accentColor: 'var(--primary)',
+            // }}
           >
           </Checkbox>
         </div>
