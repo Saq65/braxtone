@@ -49,55 +49,45 @@ export const MultiFormheader: MultiFormheader[] = [
         heading: "Hey Tarik, How Young Are You?",
     }
     ,
+
     {
         id: '9',
         image: '/asesst/images/dania-smile.png',
-        heading: "Hey Tarik, How Young Are You?",
+        heading: "Tarik, have you had any traffic violations in the past 5 years? (No need to include parking tickets)​"
     },
 
     {
         id: '10',
         image: '/asesst/images/dania-smile.png',
-        heading: "Tarik, have you had any traffic violations in the past 5 years? (No need to include parking tickets)​"
-    },
-
-    {
-        id: '11',
-        image: '/asesst/images/dania-smile.png',
-        heading: "Tarik, have you had any traffic violations in the past 5 years? (No need to include parking tickets)​"
-    },
-    {
-        id: '12',
-        image: '/asesst/images/dania-smile.png',
         heading: "What's your martial status?​"
     },
     {
-        id: '13',
+        id: '11',
         image: '/asesst/images/dania-smile.png',
         heading: "Is your Nissan 370Z registered in Bahrain?​"
     },
     {
-        id: '14',
+        id: '12',
         image: '/asesst/images/dania-smile.png',
         heading: "Do you currently have a car insurance policy with any company?​"
     },
     {
-        id: '15',
+        id: '13',
         image: '/asesst/images/dania-smile.png',
         heading: "Alright Tarik, have you field any claims in the past 5 years?"
     },
     {
-        id: '16',
+        id: '14',
         image: '/asesst/images/dania-smile.png',
         heading: "The cool thing about Braxtone is that safe drivers actually pay less! Stick with us, and you can unlock even more discounts over time."
     },
     {
-        id: '17',
+        id: '15',
         image: '/asesst/images/dania-smile.png',
         heading: "Could you kindly provide your contact number for further communicatin?"
     },
     {
-        id: '18',
+        id: '16',
         image: '/asesst/images/dania-smile.png',
         heading: "Tarik, your insurance package is ready!"
     }

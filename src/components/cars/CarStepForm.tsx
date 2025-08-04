@@ -96,7 +96,7 @@ const handleSubmit = async () => {
     owner,
   };
 
-  console.log("📤 Sending payload to API:", payload); 
+  console.log(" Sending payload to API:", payload); 
 
   try {
     const response = await axios.post('/api/quote', payload);

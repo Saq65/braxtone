@@ -34,3 +34,25 @@
     animation: marquee 10s linear infinite;
   }
 }
+
+
+/* ✔️ Style the background and border when checkbox is checked */
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+/* ✔️ Style the checkmark (tick) inside */
+.ant-checkbox-checked .ant-checkbox-inner::after {
+  border-color: white; /* you can change this too */
+}
+
+/* ✔️ Optional: focus effect when checkbox is focused */
+.ant-checkbox-input:focus + .ant-checkbox-inner {
+  box-shadow: 0 0 0 2px rgba(255, 103, 0, 0.2); /* soft orange glow */
+}
+
+/* ✔️ Optional: default border color for unchecked state */
+.ant-checkbox-inner {
+  border-color: var(--primary);
+}
