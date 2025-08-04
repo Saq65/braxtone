@@ -36,30 +36,39 @@ export default function MultipleFormPage() {
   const [addedDrivers, setAddedDrivers] = useState<{ [key: string]: string }[]>([]);
   const [driverConfirmed, setDriverConfirmed] = useState(false);
   const [financeConfirmed, setFinanceConfirmed] = useState(false);
+  const [showFinance, setShowFinance] = useState(false);
   const [showVinNumber, setShowVinNumber] = useState(false);
   const [vinNumberConfirm, setVinnumberconfirm] = useState(false);
   const [selectedFinanceOption, setSelectedFinanceOption] = useState<string | null>(null);
 
   const [selectUseCar, setSelectUseCar] = useState<string | null>(null);
   const [useCarYesNoConfermed, setUseCarYesNoConfermed] = useState(false);
+  const [showUseCar, setShowUseCar] = useState(false)
 
   const [selectAge, setSelectAge] = useState<string | null>(null);
   const [ageConfermed, setAgeConformed] = useState(false);
 
+
   const [selectTraffic, setselectTraffic] = useState<string | null>(null);
   const [confirmselectTraffic, setconfirmselectTraffic] = useState(false);
 
+
   const [selectMartial, setselectMartial] = useState<string | null>(null);
   const [confirmselectMartial, setconfirmselectMartial] = useState(false);
+ const [showMartialStatus, setShowMartialStatus] = useState(false);
 
   const [selectRegistered, setselectRegistered] = useState<string | null>(null);
   const [confirmselectRegistered, setconfirmselectRegistered] = useState(false);
+  const [showSelectRegistered, setShowSelectRegistered] = useState(false);
+
 
   const [selectInsuraceYesno, setselectInsuraceYesno] = useState<string | null>(null);
   const [confirmselectInsuranceYesno, setconfirmselectInsuranceYesno] = useState(false);
+  const [showConfirmselectInsuranceYesno, setShowConfirmselectInsuranceYesno] = useState(false);
 
   const [selectClaim, setselectselectClaim] = useState<string | null>(null);
   const [confirmselectClaim, setconfirmselectClaim] = useState(false);
+  const [showConfirmselectClaim, setShowConfirmselectClaim] = useState(false);
 
   const [confirmselectSound, setconfirmselectSound] = useState(false);
 
@@ -79,11 +88,14 @@ export default function MultipleFormPage() {
   const [showRegisterd, setshowRegisterd] = useState(false);
   const [showInsurenceYesNo, setshowInsurenceYesNo] = useState(false);
   const [showClaim, setshowshowClaim] = useState(false);
-  const [showSoundGood, setshowSoundGood] = useState(false);
+  const [showSoundGood, setShowSoundGood] = useState(false);
+  const [showSoundsGood, setshowSoundsGood] = useState(false);
   const [soundsGoodvalue, setsoundsGoodvalue] = useState('');
   const [showCommunication, setshowCommunication] = useState(false);
+  const [showContectInfo, setShowContectInfo] = useState(false);
   const [comminicationFormData, setcomminicationFormData] = useState('');
   const [showPackages, setshowPackages] = useState(false);
+  const [showInsurancePackage, setShowInsurancePackage] = useState(false);
   const [selectPackage, setselectPackage] = useState<string | null>(null);
   const [showPackageType, setshowPackageType] = useState(false);
   const [showThirdParty, setshowThirdParty] = useState(false);
@@ -105,6 +117,7 @@ export default function MultipleFormPage() {
       setAddedBhdValue(bhdValue);
       setShowBHD(false);
       setShowYesNo(true);
+      setShowUseCar(true);
     }
   };
 
@@ -135,6 +148,7 @@ export default function MultipleFormPage() {
   const handleDriverFormComplete = (driver: { [key: string]: string }) => {
     setAddedDrivers([driver, ...addedDrivers]);
     setShowDriverForm(false);
+    setShowFinance(true)
     setTimeout(() => {
       setDriverConfirmed(true);
       setDriverConfirmed(true)
@@ -197,6 +211,7 @@ export default function MultipleFormPage() {
 
   const handleOptionSelectInsuranceYesNo = (value: string) => {
     setselectInsuraceYesno(value)
+    //setShowSelectTraffic(true);
   }
 
   const handleOptionSelectClaim = (value: string) => {
@@ -229,30 +244,33 @@ export default function MultipleFormPage() {
   ]);
 
   let activeHeader = MultiFormheader[0];
-
-  if (confirmselectClaim) {
+  if (showInsurancePackage) {
+    activeHeader = MultiFormheader[15];
+  }else if (showContectInfo) {
+    activeHeader = MultiFormheader[14];
+  }else if (showSoundsGood) {
     activeHeader = MultiFormheader[13];
-  } else if (confirmselectInsuranceYesno) {
+  }else if (showConfirmselectClaim) {
     activeHeader = MultiFormheader[12];
-  } else if (confirmselectRegistered) {
+  } else if (showConfirmselectInsuranceYesno) {
     activeHeader = MultiFormheader[11];
-  } else if (confirmselectMartial) {
+  } else if (showSelectRegistered) {
     activeHeader = MultiFormheader[10];
-  } else if (confirmselectMartial) {
+  } else if (showMartialStatus) {
     activeHeader = MultiFormheader[9];
-  } else if (confirmselectTraffic) {
+  } else if (trafficYesNo) {
     activeHeader = MultiFormheader[8];
-  } else if (useCarYesNoConfermed) {
+  } else if (showHowYoung) {
     activeHeader = MultiFormheader[7];
-  } else if (addedBhdValue) {
+  } else if ( showUseCar) {
     activeHeader = MultiFormheader[6];
-  } else if (carMiles) {
+  } else if (showBHD) {
     activeHeader = MultiFormheader[5];
-  } else if (vinNumberConfirm) {
+  } else if (carMiles) {
     activeHeader = MultiFormheader[4];
-  } else if (financeConfirmed) {
+  } else if (showVinNumber) {
     activeHeader = MultiFormheader[3];
-  } else if (driverConfirmed) {
+  } else if (showFinance) {
     activeHeader = MultiFormheader[2];
   } else if (carConfirmed) {
     activeHeader = MultiFormheader[1];
@@ -712,6 +730,7 @@ export default function MultipleFormPage() {
                         setconfirmselectTraffic(true);
                         setMartial(true)
                         setTrafficYesNo(false)
+                        setShowMartialStatus(true);
                       }}
                       label="Next →"
                     />
@@ -732,6 +751,8 @@ export default function MultipleFormPage() {
                         setTrafficYesNo(false)
                         setshowRegisterd(true)
                         setMartial(false)
+                        setShowSelectRegistered(true)
+                        setShowMartialStatus(false);
                       }}
                       label="Next →"
                     />
@@ -752,6 +773,8 @@ export default function MultipleFormPage() {
                         setShowYesNo(false)
                         setshowRegisterd(false)
                         setshowInsurenceYesNo(true)
+                        setShowSelectRegistered(false)
+                        setShowConfirmselectInsuranceYesno(true)
                       }}
                       label="Next →"
                     />
@@ -772,6 +795,7 @@ export default function MultipleFormPage() {
                         setconfirmselectInsuranceYesno(true)
                         setshowshowClaim(true)
                         setshowInsurenceYesNo(false)
+                        setShowConfirmselectClaim(true)
                       }}
                       label="Next →"
                     />
@@ -791,8 +815,9 @@ export default function MultipleFormPage() {
                         setTrafficYesNo(false)
                         setconfirmselectInsuranceYesno(false)
                         setconfirmselectClaim(true)
-                        setshowSoundGood(true)
+                        setShowSoundGood(true)
                         setshowshowClaim(false)
+                        setshowSoundsGood(true)
                       }}
                       label="Next →"
                     />
@@ -809,8 +834,9 @@ export default function MultipleFormPage() {
                         onClick={() => {
                           setsoundsGoodvalue("sounds good");
                           setconfirmselectSound(true)
-                          setshowSoundGood(false)
+                          setShowSoundGood(false)
                           setshowCommunication(true)
+                          setShowContectInfo(true);
                         }
                         }
 
@@ -851,6 +877,7 @@ export default function MultipleFormPage() {
                           setshowPackages(true)
                           setshowCommunication(false)
                           setshowThirdParty(true)
+                          setShowInsurancePackage(true);
                         }}
 
                         label="Next →"
