@@ -1,6 +1,7 @@
 'use client';
 
 import { Select, Input } from 'antd';
+import axios from 'axios';
 import { useState } from 'react';
 
 const { Option } = Select;
@@ -30,6 +31,29 @@ export default function DriverStepForm({
 
   const totalSteps = 4;
 
+  const handleSubmitDriver = async () => {
+    const payload = {
+      name,
+      licenseNumber,
+      vehicleType,
+      experienceLevel
+    };
+    console.log("Sending payload driver to API:", payload);
+    try {
+      const response = await axios.post('/api/quote', payload);
+      console.log("Quote created successfully:", response.data);
+
+      if (response.data && response.data.id) {
+        console.log("Saved to DB with ID:", response.data.id);
+      } else {
+        console.warn("API response did not return a valid ID.");
+      }
+
+      onComplete(response.data);
+    } catch (error: any) {
+      console.error("Error while creating quote:", error.response?.data || error.message);
+    }
+  }
   return (
     <div className=''>
       {/* <button className="w-[100%] sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px] ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10 border border-dashed border-gray-400 p-8 rounded-lg text-center text-gray-500 hover:bg-gray-50 cursor-pointer">
@@ -45,7 +69,6 @@ export default function DriverStepForm({
         >
           ×
         </button>
-
         {step === 1 && (
           <>
             <h2 className="text-md font-medium mb-3 text-gray-800">Enter drivers fullname</h2>
@@ -146,9 +169,10 @@ export default function DriverStepForm({
                   Back
                 </button>
                 <button
-                  onClick={() =>
-                    onComplete({ name, licenseNumber, vehicleType, experienceLevel })
-                  }
+                  // onClick={() =>
+                  //   onComplete({ name, licenseNumber, vehicleType, experienceLevel })
+                  // }
+                  onClick={handleSubmitDriver}
                   disabled={!experienceLevel}
                   className={`rounded-md w-[140px] py-4 mt-3 text-sm border border-gray-100 transition-colors duration-200
                ${experienceLevel
