@@ -25,8 +25,8 @@ import CommunicationForm from '@/components/form/CommunicationForm';
 // import PackageType from '@/components/packages/Packages';
 import Packages, { PackageType } from '@/components/packages/Packages';
 import ThirdPartyPackage from '@/components/packages/ThirdPartyPackage';
-import Vinnumber from '@/components/vinNumber/vinnumber';
 import PersonalDetails from '@/components/form/PersonalDetails';
+import Vinnumber from '@/components/vinNumber/VinNumber';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -662,7 +662,6 @@ export default function MultipleFormPage() {
                     />
                   </motion.div>
                 )}
-
               </>
 
               {/* this is car miles */}

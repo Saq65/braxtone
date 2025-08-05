@@ -46,7 +46,7 @@ export default function HomeLandscape() {
                     </div>
                 </div>
 
-                <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-8 sm:py-10 py-0 flex flex-col justify-center ">
+                <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-8 sm:py-10 py-0 flex flex-col justify-center mt-16">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-10 flex-1">
 
                         <motion.div
@@ -99,7 +99,7 @@ export default function HomeLandscape() {
                         </motion.div>
                     </div>
 
-                    <div className="mt-36 w-full flex flex-col xl:flex-row items-center justify-between gap-6">
+                    <div className="mt-30 w-full flex flex-col xl:flex-row items-center justify-between gap-6">
                         <div className="w-full xl:w-[75%] sm:w-full bg-[#dbedf8] shadow px-4 py-4 overflow-hidden relative">
                             <div className="flex w-max gap-10 space-x-10 px-10">
                                 {['ex4', 'ex3', 'ex2', 'ex1'].map((img, index) => (
@@ -115,6 +115,7 @@ export default function HomeLandscape() {
                                 ))}
                             </div>
                         </div>
+
 
                         <div className="hidden  sm:flex gap-6 items-center justify-center xl:justify-end">
                             <span className="bg-[#0c625a] p-2 rounded-full">
