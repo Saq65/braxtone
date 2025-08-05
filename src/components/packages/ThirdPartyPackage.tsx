@@ -19,6 +19,7 @@ type PackageType = {
     companyLogo: string;
     benefits: object;
     _id: string;
+    minimumPrice:string;
 };
 const ThirdPartyPackage = () => {
     const [thidPartyPackages, setthidPartyPackages] = useState<PackageType[]>([]);
@@ -103,14 +104,14 @@ const ThirdPartyPackage = () => {
                                                     />
                                                 </div>
                                                 <div className='shadow p-1 w-[48%] py-2 px-2'>
-                                                    <span className='font-futura font-medium'>BHD 110 + VAT</span>
+                                                    <span className='font-futura font-medium'>BHD {res.minimumPrice} + VAT</span>
                                                     {/* <img src={res.exclude} alt="dd" /> */}
                                                 </div>
                                             </div>
 
                                             <div style={{ borderBottom: '0.5px solid #dddcdc' }} className='w-[100%] mt-5'></div>
                                         </div>
-                                        <div className='mt-5 flex flex-col gap-4 items-start ml-2 h-[48%]'>
+                                        <div className='mt-5 flex flex-col gap-4 items-start ml-2 h-[50%]'>
                                             <div className='flex flex-col gap-5 items-start justify-start'>
                                                 {Object.entries(res.benefits).map(([key, benefit]) => (
                                                     <div className='flex flex-row items-start gap-2'>

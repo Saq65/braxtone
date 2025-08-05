@@ -101,7 +101,7 @@ export default function HomeLandscape() {
 
                     <div className="mt-30 w-full flex flex-col xl:flex-row items-center justify-between gap-6">
                         <div className="w-full xl:w-[75%] sm:w-full bg-[#dbedf8] shadow px-4 py-4 overflow-hidden relative">
-                            <div className="flex w-max gap-10 space-x-10 px-10">
+                            <div className="flex w-max gap-10 space-x-10 px-10 ">
                                 {['ex4', 'ex3', 'ex2', 'ex1'].map((img, index) => (
                                     <div key={index} className="flex justify-center items-center h-10 p-2">
                                         <Image

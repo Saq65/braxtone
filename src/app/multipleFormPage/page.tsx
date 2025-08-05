@@ -202,7 +202,6 @@ export default function MultipleFormPage() {
     setSelectedFinanceOption(value);
   };
 
-
   const handleOptionSelectInCarUse = (value: string) => {
     setSelectUseCar(value);
   };
@@ -247,6 +246,19 @@ export default function MultipleFormPage() {
       setshowThirdParty(false)
     }
   }
+
+  const [fileUploaded, setFileUploaded] = useState({
+    nationalId: false,
+    driverLicense: false,
+    ownershipCard: false,
+  });
+
+
+  const handleFileStatusChange = (type: string, status: boolean) => {
+    setFileUploaded((prev) => ({ ...prev, [type]: status }));
+  };
+
+
   useEffect(() => {
     if (addedCars.length > 0 && addedCarsRef.current) {
       addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -257,7 +269,9 @@ export default function MultipleFormPage() {
   ]);
 
   let activeHeader = MultiFormheader[0];
-  if (showInsurancePackage) {
+  if (showPersonalDetails) {
+    activeHeader = MultiFormheader[16];
+  } else if (showInsurancePackage) {
     activeHeader = MultiFormheader[15];
   } else if (showContectInfo) {
     activeHeader = MultiFormheader[14];
@@ -496,14 +510,31 @@ export default function MultipleFormPage() {
                   <h3 className="text-lg font-semibold text-gray-700">
                     {selectedPackage.packageName}
                   </h3>
-                  <BiPencil className="mt-1 cursor-pointer" onClick={() => {
-                    // Allow editing or reselecting the package
-                    setshowPackages(true);
-                    setPersonalDetails(false);
-                  }} />
+
                 </div>
               </div>
             )}
+
+            <div ref={addedCarsRef} className=''>
+              {/* <MultiformHeading color="#8b8b8b" heading="your document uploaded" /> */}
+              <div className='flex items-start gap-2'>
+                {Object.values(fileUploaded).some((status) => status) && (
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-700">National ID: {fileUploaded.nationalId ? '✅ Uploaded' : 'Not Uploaded'}</h3>
+                    <h3 className="text-lg font-semibold text-gray-700">Driver License: {fileUploaded.driverLicense ? '✅ Uploaded' : 'Not Uploaded'}</h3>
+                    <h3 className="text-lg font-semibold text-gray-700">Ownership Card: {fileUploaded.ownershipCard ? '✅ Uploaded' : 'Not Uploaded'}</h3>
+                  </div>
+                )}
+                {/* <BiPencil className="mt-1 cursor-pointer" onClick={() => {
+                  // Allow editing or reselecting the package
+                  setshowPackages(true);
+                  setPersonalDetails(false);
+                }} /> */}
+              </div>
+
+            </div>
+
+
 
           </div>
 
@@ -924,11 +955,7 @@ export default function MultipleFormPage() {
                     {showThirdParty && <ThirdPartyPackage />}
 
                     <NextBtn
-                      disabled={
-                        !communicationData.country?.trim() ||
-                        !communicationData.phone?.trim() ||
-                        !communicationData.email?.trim()
-                      }
+                      disabled={selectedPackage === null}
                       onClick={() => {
                         setPersonalDetails(true);
                         setshowPackageType(false);
@@ -957,7 +984,7 @@ export default function MultipleFormPage() {
                         !personalData.nationality?.trim() ||
                         !personalData.nationalId?.trim() ||
                         !personalData.numberPlate?.trim()
-                      } 
+                      }
                       onClick={() => {
                         setPersonalDetails(false);
                         setshowPackageType(false);
@@ -977,7 +1004,7 @@ export default function MultipleFormPage() {
               <>
                 {showCPR && (
                   <>
-                    <CprForm />
+                    <CprForm onFileStatusChange={handleFileStatusChange} />
                   </>
                 )}
               </>

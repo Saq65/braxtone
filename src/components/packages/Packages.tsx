@@ -17,6 +17,7 @@ type PackageType = {
   features: string[];
   type: string;
   companyLogo: string;
+  minimumPrice:string;
   benefits: Record<string, { addon: string }>;
 };
 
@@ -107,14 +108,14 @@ const Packages = ({ onSelect }: PackagesProps) => {
                     </div>
                     <div className="shadow py-2 px-2 w-[48%]">
                       <span className="font-futura font-medium">
-                        BHD {res.price} + VAT
+                        BHD {res.minimumPrice} + VAT
                       </span>
                     </div>
                   </div>
 
                   <div className="w-full mt-5 border-b border-[#dddcdc]" />
 
-                  <div className="mt-5 flex flex-col gap-4 items-start ml-2 h-[52%] overflow-y-auto">
+                  <div className="mt-5 flex flex-col gap-4 items-start ml-2 h-[54%] overflow-y-auto">
                     {Object.entries(res.benefits).map(([key, benefit]) => (
                       <div key={key} className="flex flex-row items-start gap-2">
                         <span className="border rounded-full border-[#ababab] mt-1">
