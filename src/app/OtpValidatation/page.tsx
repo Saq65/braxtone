@@ -53,6 +53,7 @@ export default function BestDealForm() {
       const data = await response.json();
 
       if (response.ok) {
+          console.log('OTP:', data.otp);
         setOtpStatus({ message: 'OTP sent successfully!', success: true });
         setTimer(30);
       } else {
@@ -64,6 +65,7 @@ export default function BestDealForm() {
       setLoading(false);
     }
   };
+console.log(`${selectedCode.value}${phone}`);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white px-4">
@@ -89,7 +91,7 @@ export default function BestDealForm() {
             <Select
               options={countryCodes}
               value={selectedCode}
-              // onChange={setSelectedCode}
+              onChange={(option) => setSelectedCode(option)}
               className="text-sm"
               classNamePrefix="react-select"
               isSearchable

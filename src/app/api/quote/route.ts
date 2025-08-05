@@ -1,16 +1,30 @@
-// src/app/api/quote/route.ts
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // Example: validate or process the incoming data
-    console.log('Received quote request:', body);
+    const response = await fetch('https://test-aggregator.braxtone.com/api/quote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
 
-    // Respond back
-    return NextResponse.json({ success: true, message: 'Quote received.', data: body });
+    const externalData = await response.json();
+
+    console.log('🔍 Braxtone Response:', externalData); // <== LOG FULL RESPONSE
+
+    return NextResponse.json({
+      success: true,
+      message: 'Quote received.',
+      otp: externalData.otp, // May be undefined
+      data: body,
+    });
   } catch (error) {
-    return NextResponse.json({ success: false, message: 'Invalid request.' }, { status: 400 });
+    console.error('❌ Error:', error);
+    return NextResponse.json(
+      { success: false, message: 'Invalid request.' },
+      { status: 400 }
+    );
   }
 }

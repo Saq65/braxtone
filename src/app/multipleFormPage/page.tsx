@@ -10,11 +10,10 @@ import { MultiFormheader } from "@/data/multiformheading";
 import CarStepForm from "@/components/cars/CarStepForm";
 import DriverStepForm from '@/components/drivers/DriverStepForm';
 import {
-  ClaimYesNoData, finance, HowYoungData, InsuranceYesNoData, MartialStatus,
-  packagesData, RegisteredData, TraffficyesNoData, yesNoData
+  ClaimYesNoData, finance, HowYoungData, InsuranceYesNoData, MartialStatus, packagesData,
+  RegisteredData, TraffficyesNoData, yesNoData
 } from '@/data/multiOptionsData';
 import MultiOption from '@/components/ui/MultiOption';
-import Vinnumber from '@/components/vinNumber/VinNumber';
 import NextButton from '@/components/ui/NextBtn';
 import { BiPencil } from 'react-icons/bi';
 import CarRunMiles from '@/components/progressBar/ProgressBar';
@@ -23,8 +22,10 @@ import BHDComponent from '@/components/progressBar/ProgressBar';
 import AddDriverCard from '@/components/drivers/AddDriver';
 import { motion } from 'framer-motion';
 import CommunicationForm from '@/components/form/CommunicationForm';
-import Packages ,{PackageType} from '@/components/packages/Packages';
+// import PackageType from '@/components/packages/Packages';
+import Packages, { PackageType } from '@/components/packages/Packages';
 import ThirdPartyPackage from '@/components/packages/ThirdPartyPackage';
+import Vinnumber from '@/components/vinNumber/VinNumber';
 import PersonalDetails from '@/components/form/PersonalDetails';
 
 export default function MultipleFormPage() {
@@ -39,30 +40,39 @@ export default function MultipleFormPage() {
   const [addedDrivers, setAddedDrivers] = useState<{ [key: string]: string }[]>([]);
   const [driverConfirmed, setDriverConfirmed] = useState(false);
   const [financeConfirmed, setFinanceConfirmed] = useState(false);
+  const [showFinance, setShowFinance] = useState(false);
   const [showVinNumber, setShowVinNumber] = useState(false);
   const [vinNumberConfirm, setVinnumberconfirm] = useState(false);
   const [selectedFinanceOption, setSelectedFinanceOption] = useState<string | null>(null);
 
   const [selectUseCar, setSelectUseCar] = useState<string | null>(null);
   const [useCarYesNoConfermed, setUseCarYesNoConfermed] = useState(false);
+  const [showUseCar, setShowUseCar] = useState(false)
 
   const [selectAge, setSelectAge] = useState<string | null>(null);
   const [ageConfermed, setAgeConformed] = useState(false);
 
+
   const [selectTraffic, setselectTraffic] = useState<string | null>(null);
   const [confirmselectTraffic, setconfirmselectTraffic] = useState(false);
 
+
   const [selectMartial, setselectMartial] = useState<string | null>(null);
   const [confirmselectMartial, setconfirmselectMartial] = useState(false);
+  const [showMartialStatus, setShowMartialStatus] = useState(false);
 
   const [selectRegistered, setselectRegistered] = useState<string | null>(null);
   const [confirmselectRegistered, setconfirmselectRegistered] = useState(false);
+  const [showSelectRegistered, setShowSelectRegistered] = useState(false);
+
 
   const [selectInsuraceYesno, setselectInsuraceYesno] = useState<string | null>(null);
   const [confirmselectInsuranceYesno, setconfirmselectInsuranceYesno] = useState(false);
+  const [showConfirmselectInsuranceYesno, setShowConfirmselectInsuranceYesno] = useState(false);
 
   const [selectClaim, setselectselectClaim] = useState<string | null>(null);
   const [confirmselectClaim, setconfirmselectClaim] = useState(false);
+  const [showConfirmselectClaim, setShowConfirmselectClaim] = useState(false);
 
   const [confirmselectSound, setconfirmselectSound] = useState(false);
 
@@ -82,12 +92,17 @@ export default function MultipleFormPage() {
   const [showRegisterd, setshowRegisterd] = useState(false);
   const [showInsurenceYesNo, setshowInsurenceYesNo] = useState(false);
   const [showClaim, setshowshowClaim] = useState(false);
-  const [showSoundGood, setshowSoundGood] = useState(false);
+  const [showSoundGood, setShowSoundGood] = useState(false);
+  const [showSoundsGood, setshowSoundsGood] = useState(false);
   const [soundsGoodvalue, setsoundsGoodvalue] = useState('');
   const [showCommunication, setshowCommunication] = useState(false);
+  const [showContectInfo, setShowContectInfo] = useState(false);
   const [comminicationFormData, setcomminicationFormData] = useState('');
   const [showPackages, setshowPackages] = useState(false);
+  const [showInsurancePackage, setShowInsurancePackage] = useState(false);
   const [selectPackage, setselectPackage] = useState<string | null>(null);
+
+
   const [showPackageType, setshowPackageType] = useState(false);
   const [showThirdParty, setshowThirdParty] = useState(false);
   const [showPersonalDetails, setPersonalDetails] = useState(false);
@@ -110,6 +125,7 @@ export default function MultipleFormPage() {
       setAddedBhdValue(bhdValue);
       setShowBHD(false);
       setShowYesNo(true);
+      setShowUseCar(true);
     }
   };
 
@@ -140,10 +156,13 @@ export default function MultipleFormPage() {
   const handleDriverFormComplete = (driver: { [key: string]: string }) => {
     setAddedDrivers([driver, ...addedDrivers]);
     setShowDriverForm(false);
+    setShowFinance(true)
     setTimeout(() => {
+      setDriverConfirmed(true);
       setDriverConfirmed(true)
     }, 500);
   };
+
 
   const handleVinNumberChange = (value: string) => {
     setVinnumber(value);
@@ -176,6 +195,8 @@ export default function MultipleFormPage() {
   const handlePersonalDataChange = (field: string, value: string) => {
     setpersonalData(prev => ({ ...prev, [field]: value }));
   };
+
+
   const handleFinanceOnNext = () => {
     setShowVinNumber(true);
     setFinanceConfirmed(true);
@@ -184,9 +205,11 @@ export default function MultipleFormPage() {
     setSelectedFinanceOption(value);
   };
 
+
   const handleOptionSelectInCarUse = (value: string) => {
     setSelectUseCar(value);
   };
+
 
   const handleOptionSelectInHowMuchAge = (value: string) => {
     setSelectAge(value);
@@ -206,11 +229,13 @@ export default function MultipleFormPage() {
 
   const handleOptionSelectInsuranceYesNo = (value: string) => {
     setselectInsuraceYesno(value)
+    //setShowSelectTraffic(true);
   }
 
   const handleOptionSelectClaim = (value: string) => {
     setselectselectClaim(value)
   }
+
 
   const handleOptionSelectPackage = (value: string) => {
     if (value === "Comprehensive") {
@@ -237,30 +262,33 @@ export default function MultipleFormPage() {
   ]);
 
   let activeHeader = MultiFormheader[0];
-
-  if (confirmselectClaim) {
+  if (showInsurancePackage) {
+    activeHeader = MultiFormheader[15];
+  } else if (showContectInfo) {
+    activeHeader = MultiFormheader[14];
+  } else if (showSoundsGood) {
     activeHeader = MultiFormheader[13];
-  } else if (confirmselectInsuranceYesno) {
+  } else if (showConfirmselectClaim) {
     activeHeader = MultiFormheader[12];
-  } else if (confirmselectRegistered) {
+  } else if (showConfirmselectInsuranceYesno) {
     activeHeader = MultiFormheader[11];
-  } else if (confirmselectMartial) {
+  } else if (showSelectRegistered) {
     activeHeader = MultiFormheader[10];
-  } else if (confirmselectMartial) {
+  } else if (showMartialStatus) {
     activeHeader = MultiFormheader[9];
-  } else if (confirmselectTraffic) {
+  } else if (trafficYesNo) {
     activeHeader = MultiFormheader[8];
-  } else if (useCarYesNoConfermed) {
+  } else if (showHowYoung) {
     activeHeader = MultiFormheader[7];
-  } else if (addedBhdValue) {
+  } else if (showUseCar) {
     activeHeader = MultiFormheader[6];
-  } else if (carMiles) {
+  } else if (showBHD) {
     activeHeader = MultiFormheader[5];
-  } else if (vinNumberConfirm) {
+  } else if (carMiles) {
     activeHeader = MultiFormheader[4];
-  } else if (financeConfirmed) {
+  } else if (showVinNumber) {
     activeHeader = MultiFormheader[3];
-  } else if (driverConfirmed) {
+  } else if (showFinance) {
     activeHeader = MultiFormheader[2];
   } else if (carConfirmed) {
     activeHeader = MultiFormheader[1];
@@ -281,53 +309,49 @@ export default function MultipleFormPage() {
           {/* here all data showing after added */}
           <div className='flex justify-center flex-col sm:items-center md:items-center lg:items-center xl:items-center items-start cursor-pointer
            mt-30 sm:mt-10 md:mt-10 lg:mt-20 xl:mt-20 lg:mb-25 sm:mb-25 xl:mb-25 mb-0 gap-10'>
-
             {addedCars.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                ref={addedCarsRef}
-                className="ml-10 space-y-2"
-              >
-                <MultiformHeading
-                  color="#8b8b8b"
-                  heading="Alright. These are the cars that I found. Which would you like to insure?"
-                />
-
-                {addedCars.map((car, index) => (
+                ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[0]?.heading} />
+                {addedCars.slice(0, 1).map((entry, index) => (
                   <div key={index} className="transition-all duration-700 transform">
                     <div className='flex items-center gap-2'>
                       <h3 className="text-lg font-semibold text-gray-900">
-                        {car.year} {car.brands} {car.model} {car.owner && `- ${car.owner}`}
+                        {Object.values(entry).filter(Boolean).join(" ")}
                       </h3>
-                      <BiPencil onClick={() => setShowForm(true)} className='mt-1 cursor-pointer' />
+                      <BiPencil onClick={() => setShowForm(true)} className='mt-1' />
                     </div>
                   </div>
                 ))}
               </motion.div>
             )}
 
-
             {addedDrivers.length > 0 && (
-              <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="Great! Your car has been successfully added." />
-                {addedDrivers.map((entry, index) => (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[1]?.heading} />
+                {addedDrivers.slice(0, 1).map((entry, index) => (
                   <div key={index} className="transition-all duration-700 transform">
                     <div className='flex items-center gap-2'>
                       <h3 className="text-lg font-semibold text-gray-700">
-                        {entry.name} {entry.whatAge} {entry.nationality} {entry.nationalId}
+                        {Object.values(entry).filter(Boolean).join(" ")}
                       </h3>
                       <BiPencil className='mt-1' onClick={() => setShowDriverForm(true)} />
                     </div>
                   </div>
                 ))}
-              </div>
+              </motion.div>
             )}
 
             {selectedFinanceOption && financeConfirmed && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="Selected Finance Option" />
+                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[2]?.heading} />
                 <div className='flex items-center gap-2'>
                   <h3 className="text-lg font-semibold text-gray-700">{selectedFinanceOption}</h3>
                   <BiPencil className='mt-1' />
@@ -337,7 +361,7 @@ export default function MultipleFormPage() {
 
             {addedVinNumber && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="Great. Is your Nissan 370Z financed or leased?" />
+                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[3]?.heading} />
                 <div className='flex items-center gap-2'>
                   <h3 className="text-lg font-semibold text-gray-700">{addedVinNumber}</h3>
                   <BiPencil className='mt-1' />
@@ -347,7 +371,7 @@ export default function MultipleFormPage() {
 
             {addedCarMiles !== null && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="Estimated mileage per year" />
+                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[4]?.heading} />
                 <div className='flex items-center gap-2'>
                   <h3 className="text-lg font-semibold text-gray-700">{addedCarMiles.toLocaleString()} miles/year</h3>
                   <BiPencil className='mt-1' />
@@ -358,7 +382,7 @@ export default function MultipleFormPage() {
 
             {addedBhdValue !== null && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="Estimated Value in BHD" />
+                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[5]?.heading} />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold text-gray-700">{addedBhdValue.toLocaleString()} BHD</h3>
                   <BiPencil className='mt-1' />
@@ -366,9 +390,10 @@ export default function MultipleFormPage() {
               </div>
             )}
 
+
             {useCarYesNoConfermed && selectUseCar && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="Do you use the car regularly?" />
+                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[6]?.heading} />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold text-gray-700">{selectUseCar}</h3>
                   <BiPencil className="mt-1" />
@@ -378,7 +403,7 @@ export default function MultipleFormPage() {
 
             {ageConfermed && selectAge && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[7]?.heading} />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold text-gray-700">{selectAge}</h3>
                   <BiPencil className="mt-1" />
@@ -388,7 +413,7 @@ export default function MultipleFormPage() {
 
             {confirmselectTraffic && selectTraffic && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[8]?.heading} />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold text-gray-700">{selectTraffic}</h3>
                   <BiPencil className="mt-1" />
@@ -398,7 +423,7 @@ export default function MultipleFormPage() {
 
             {confirmselectMartial && selectMartial && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[9]?.heading} />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold text-gray-700">{selectMartial}</h3>
                   <BiPencil className="mt-1" />
@@ -408,7 +433,7 @@ export default function MultipleFormPage() {
 
             {confirmselectRegistered && selectRegistered && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[10]?.heading} />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold text-gray-700">{selectRegistered}</h3>
                   <BiPencil className="mt-1" />
@@ -418,7 +443,7 @@ export default function MultipleFormPage() {
 
             {confirmselectInsuranceYesno && selectInsuraceYesno && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[11]?.heading} />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold text-gray-700">{selectInsuraceYesno}</h3>
                   <BiPencil className="mt-1" />
@@ -428,7 +453,7 @@ export default function MultipleFormPage() {
 
             {confirmselectClaim && selectClaim && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[12]?.heading} />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold text-gray-700">{selectClaim}</h3>
                   <BiPencil className="mt-1" />
@@ -438,7 +463,7 @@ export default function MultipleFormPage() {
 
             {confirmselectSound && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[13]?.heading} />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold text-gray-700">{soundsGoodvalue}</h3>
                   <BiPencil className="mt-1" />
@@ -449,7 +474,7 @@ export default function MultipleFormPage() {
             {
               comminicationFormData && (
                 <div ref={addedCarsRef} className="ml-10 space-y-2">
-                  <MultiformHeading color="#8b8b8b" heading="How young is the driver?" />
+                  <MultiformHeading color="#8b8b8b" heading={MultiFormheader[14]?.heading} />
                   <div className="flex flex-col items-start gap-2">
                     <div className='flex items-center gap-2'>
                       <span className='text-gray-500 '>Country</span>
@@ -469,26 +494,11 @@ export default function MultipleFormPage() {
               )
             }
 
-            {selectedPackage && (
-              <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="Selected Package" />
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-semibold text-gray-700">
-                    {selectedPackage.packageName}
-                  </h3>
-                  <BiPencil className="mt-1 cursor-pointer" onClick={() => {
-                    // Allow editing or reselecting the package
-                    setshowPackages(true);
-                    setPersonalDetails(false);
-                  }} />
-                </div>
-              </div>
-            )}
-
           </div>
 
+
           {/* this is main part */}
-          <div className="flex flex-col xl:flex-row gap-5 w-full  scrollbar-hide " style={{ height: '90vh' }}>
+          <div className="flex flex-col xl:flex-row gap-5 w-full  scrollbar-hide " style={{ height: '80vh' }}>
             <aside className="w-full xl:w-1/4 hidden md:block mt-14">
               <SidebarSteps />
             </aside>
@@ -533,13 +543,29 @@ export default function MultipleFormPage() {
                   </div>
                 )}
 
-                {showForm && (
+                {/* {showForm && (
                   <div className="mt-6">
                     <CarStepForm
                       onCancel={() => setShowForm(false)}
                       onComplete={handleCarFormComplete}
                     />
                   </div>
+                )} */}
+
+
+                {showForm && (
+                  <motion.div
+                    className="mt-6"
+                    initial={{ opacity: 0, y: 100 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 50 }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                  >
+                    <CarStepForm
+                      onCancel={() => setShowForm(false)}
+                      onComplete={handleCarFormComplete}
+                    />
+                  </motion.div>
                 )}
 
               </>
@@ -548,38 +574,58 @@ export default function MultipleFormPage() {
               {/* this is for driver */}
               <>
                 {showDriverForm && !driverConfirmed && (
-                  <div className="ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10 mt-2">
+                  <motion.div className="ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10 mt-2"
+                    initial={{ opacity: 0, y: 100 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 50 }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                  >
                     <DriverStepForm
                       onCancel={() => setShowDriverForm(false)}
                       onComplete={handleDriverFormComplete}
                     />
-                  </div>
+                  </motion.div>
                 )}
                 {!showDriverForm && carConfirmed && !driverConfirmed && (
-                  <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10">
+                  <motion.div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 50 }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                  >
                     <AddDriverCard
                       onClick={() => setShowDriverForm(true)}
                       onComplete={handleDriverFormComplete}
                     />
-                  </div>
+                  </motion.div>
                 )}
 
                 {driverConfirmed && !financeConfirmed && (
-                  <div className="ml-0 sm:ml-10 ">
+                  <motion.div className="ml-0 sm:ml-10 "
+                    initial={{ opacity: 0, y: 100 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 50 }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                  >
                     <MultiOption data={finance} onSelect={handleOptionSelectInFinanace} />
                     <NextBtn
                       disabled={selectedFinanceOption === null}
                       onClick={handleFinanceOnNext}
                       label="Next →"
                     />
-                  </div>
+                  </motion.div>
                 )}
               </>
 
               {/* this is vin number */}
               <>
                 {financeConfirmed && showVinNumber && (
-                  <div className="ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10  mt-6">
+                  <motion.div className="ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10  mt-6"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 50 }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                  >
                     <Vinnumber
                       data={[]}
                       onSelect={handleVinNumberChange}
@@ -597,14 +643,20 @@ export default function MultipleFormPage() {
                         }
                       }}
                     />
-                  </div>
+                  </motion.div>
                 )}
+
               </>
 
               {/* this is car miles */}
               <>
                 {showCarRunMiles && (
-                  <div className="ml-0 sm:ml-10 lg:ml-10 xl:ml-10 mt-6">
+                  <motion.div className="ml-0 sm:ml-10 lg:ml-10 xl:ml-10 mt-6"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 50 }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                  >
                     <CarRunMiles
                       max={20000}
                       unitLabel="miles/year"
@@ -616,14 +668,19 @@ export default function MultipleFormPage() {
                       onClick={handleCarMilesComplete}
                       label="Next →"
                     />
-                  </div>
+                  </motion.div>
                 )}
               </>
 
               {/* this is  bhd compo*/}
               <>
                 {showBHD && (
-                  <div className="ml-0 sm:ml-10 xl:ml-10 md:ml-10 mt-6">
+                  <motion.div className="ml-0 sm:ml-10 xl:ml-10 md:ml-10 mt-6"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 50 }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                  >
                     <BHDComponent
                       max={20000}
                       unitLabel="BHD"
@@ -635,7 +692,7 @@ export default function MultipleFormPage() {
                       onClick={handleBHDComplete}
                       label="Next →"
                     />
-                  </div>
+                  </motion.div>
                 )}
 
               </>
@@ -691,6 +748,7 @@ export default function MultipleFormPage() {
                         setconfirmselectTraffic(true);
                         setMartial(true)
                         setTrafficYesNo(false)
+                        setShowMartialStatus(true);
                       }}
                       label="Next →"
                     />
@@ -711,6 +769,8 @@ export default function MultipleFormPage() {
                         setTrafficYesNo(false)
                         setshowRegisterd(true)
                         setMartial(false)
+                        setShowSelectRegistered(true)
+                        setShowMartialStatus(false);
                       }}
                       label="Next →"
                     />
@@ -731,6 +791,8 @@ export default function MultipleFormPage() {
                         setShowYesNo(false)
                         setshowRegisterd(false)
                         setshowInsurenceYesNo(true)
+                        setShowSelectRegistered(false)
+                        setShowConfirmselectInsuranceYesno(true)
                       }}
                       label="Next →"
                     />
@@ -751,6 +813,7 @@ export default function MultipleFormPage() {
                         setconfirmselectInsuranceYesno(true)
                         setshowshowClaim(true)
                         setshowInsurenceYesNo(false)
+                        setShowConfirmselectClaim(true)
                       }}
                       label="Next →"
                     />
@@ -770,8 +833,9 @@ export default function MultipleFormPage() {
                         setTrafficYesNo(false)
                         setconfirmselectInsuranceYesno(false)
                         setconfirmselectClaim(true)
-                        setshowSoundGood(true)
+                        setShowSoundGood(true)
                         setshowshowClaim(false)
+                        setshowSoundsGood(true)
                       }}
                       label="Next →"
                     />
@@ -788,8 +852,9 @@ export default function MultipleFormPage() {
                         onClick={() => {
                           setsoundsGoodvalue("sounds good");
                           setconfirmselectSound(true)
-                          setshowSoundGood(false)
+                          setShowSoundGood(false)
                           setshowCommunication(true)
+                          setShowContectInfo(true);
                         }
                         }
 
@@ -804,76 +869,79 @@ export default function MultipleFormPage() {
               </>
 
 
-              {/* Show Communication Form ONLY when not showing packages or personal details */}
-              {showCommunication && !showPackages && !showPersonalDetails && (
-                <div>
-                  <CommunicationForm
-                    country={communicationData.country}
-                    phone={communicationData.phone}
-                    email={communicationData.email}
-                    onChange={handleCommunicationChange}
-                  />
-                  <NextBtn
-                    disabled={
-                      !communicationData.country?.trim() ||
-                      !communicationData.phone?.trim() ||
-                      !communicationData.email?.trim()
-                    }
-                    onClick={() => {
-                      const combined = `${communicationData.country} ${communicationData.phone} ${communicationData.email}`;
-                      setcomminicationFormData(combined);
-                      setshowPackages(true);
-                      setshowCommunication(false);
-                    }}
-                    label="Next →"
-                  />
-                </div>
-              )}
-
-              {/* Show Package Step ONLY when not showing personal details */}
-              {showPackages && !showPersonalDetails && (
-                <div className="ml-0 sm:ml-10 xl:ml-10 lg:ml-10 md:ml-10">
-                  <MultiOption
-                    data={packagesData}
-                    onSelect={handleOptionSelectPackage}
-                  />
-
-                  {showPackageType && (
-                    <Packages
-                      onSelect={(pkg) => {
-                        setSelectedPackage(pkg);
-                        setPersonalDetails(true);
-                      }}
+              {/*communication form */}
+              <>
+                {/* Show Communication Form ONLY when not showing packages or personal details */}
+                {showCommunication && !showPackages && !showPersonalDetails && (
+                  <div>
+                    <CommunicationForm
+                      country={communicationData.country}
+                      phone={communicationData.phone}
+                      email={communicationData.email}
+                      onChange={handleCommunicationChange}
                     />
-                  )}
+                    <NextBtn
+                      disabled={
+                        !communicationData.country?.trim() ||
+                        !communicationData.phone?.trim() ||
+                        !communicationData.email?.trim()
+                      }
+                      onClick={() => {
+                        const combined = `${communicationData.country} ${communicationData.phone} ${communicationData.email}`;
+                        setcomminicationFormData(combined);
+                        setshowPackages(true);
+                        setshowCommunication(false);
+                      }}
+                      label="Next →"
+                    />
+                  </div>
+                )}
 
-                  {showThirdParty && <ThirdPartyPackage />}
+                {/* Show Package Step ONLY when not showing personal details */}
+                {showPackages && !showPersonalDetails && (
+                  <div className="ml-0 sm:ml-10 xl:ml-10 lg:ml-10 md:ml-10">
+                    <MultiOption
+                      data={packagesData}
+                      onSelect={handleOptionSelectPackage}
+                    />
 
-                  <NextBtn
-                    disabled={!selectedPackage }
-                    onClick={() => {
-                      setPersonalDetails(true);
-                      setshowPackageType(false);
-                      setshowThirdParty(false);
-                      setshowCommunication(false);
-                      setshowPackages(false);
-                    }}
-                    label="Next →"
+                    {showPackageType && (
+                      <Packages
+                        onSelect={(pkg) => {
+                          setSelectedPackage(pkg);
+                          setPersonalDetails(true);
+                        }}
+                      />
+                    )}
+
+                    {showThirdParty && <ThirdPartyPackage />}
+
+                    <NextBtn
+                      disabled={!selectedPackage}
+                      onClick={() => {
+                        setPersonalDetails(true);
+                        setshowPackageType(false);
+                        setshowThirdParty(false);
+                        setshowCommunication(false);
+                        setshowPackages(false);
+                      }}
+                      label="Next →"
+                    />
+                  </div>
+                )}
+
+                {/* Show Personal Details Step */}
+                {showPersonalDetails && (
+                  <PersonalDetails
+                    nationality={personalData.nationality}
+                    nationalId={personalData.nationalId}
+                    numberPlate={personalData.numberPlate}
+                    onChange={handlePersonalDataChange}
+
                   />
-                </div>
-              )}
-
-              {/* Show Personal Details Step */}
-              {showPersonalDetails && (
-                <PersonalDetails
-                  nationality={personalData.nationality}
-                  nationalId={personalData.nationalId}
-                  numberPlate={personalData.numberPlate}  
-                  onChange={handlePersonalDataChange}
-
-                />
-              )}
-
+                )}
+         
+              </>
             </main>
           </div>
         </div>
