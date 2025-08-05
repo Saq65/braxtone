@@ -515,7 +515,7 @@ export default function MultipleFormPage() {
 
 
           {/* this is main part */}
-          <div className="flex flex-col xl:flex-row gap-5 w-full  scrollbar-hide " style={{ height: '80vh' }}>
+          <div className="flex flex-col xl:flex-row gap-5 w-full  scrollbar-hide " style={{ height: '81vh' }}>
             <aside className="w-full xl:w-1/4 hidden md:block mt-14">
               <SidebarSteps />
             </aside>
@@ -952,9 +952,9 @@ export default function MultipleFormPage() {
                     nationality={personalData.nationality}
                     nationalId={personalData.nationalId}
                     numberPlate={personalData.numberPlate}
-                    onChange={handlePersonalDataChange}
-
+                    onChange={handlePersonalDataChange}                
                   />
+                  
                 )}
          
               </>

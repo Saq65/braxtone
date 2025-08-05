@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { IoIosArrowForward } from 'react-icons/io';
 import { Button } from 'antd';
 import { Navigation } from 'swiper/modules';
+import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 
 type PackageType = {
     packageName: string;
@@ -17,7 +18,7 @@ type PackageType = {
     type: string;
     companyLogo: string;
     benefits: object;
-    _id:string;
+    _id: string;
 };
 const ThirdPartyPackage = () => {
     const [thidPartyPackages, setthidPartyPackages] = useState<PackageType[]>([]);
@@ -46,12 +47,19 @@ const ThirdPartyPackage = () => {
     return (
         <div>
             <div className=''>
-                <div className="flex justify-center sm:w-[90%] ml-0 w-100 xl:ml-17 lg:ml-17 xl:w-[90%] sm:ml-17 h-[100%]">
+                <div className="flex items-center justify-center w-full relative">
+                    <div className="flex justify-between items-center mb-4 px-2">
+                        <button className="absolute top-50 right-[96%] z-99 swiper-button-prev-custom px-4 py-2  cursor-pointer">
+                            <SlArrowLeft color='#3c89b5' size={22} style={{ fontWeight: 'bold' }} />
+                        </button>
+                        <button className="absolute top-50 left-[95%] z-99 swiper-button-next-custom px-4 py-2  cursor-pointer">
+                            <SlArrowRight color='#3c89b5' size={22} />
+                        </button>
+                    </div>
                     <Swiper
-                        spaceBetween={30}
+                        spaceBetween={1}
                         slidesPerView={2}
                         modules={[Navigation]}
-                        navigation={true}
                         breakpoints={{
                             320: {
                                 slidesPerView: 1,
@@ -66,9 +74,14 @@ const ThirdPartyPackage = () => {
                                 slidesPerView: 2,
                             },
                         }}
-                        className="mySwiper h-[100%]">
+                        navigation={{
+                            nextEl: '.swiper-button-next-custom',
+                            prevEl: '.swiper-button-prev-custom',
+                        }}
+                        className="mySwiper h-[100%]"
+                    >
                         {
-                            thidPartyPackages.map((res, index) => 
+                            thidPartyPackages.map((res, index) =>
                                 <SwiperSlide key={res._id}>
                                     <div
                                         style={{
@@ -77,7 +90,7 @@ const ThirdPartyPackage = () => {
                                         className="p-6 text-center w-[380px] h-[440px] rounded m-2 bg-[#fff] mb-4">
                                         <div className='flex items-start flex-col'>
                                             <div>
-                                                <h2 style={{ fontWeight: '500', fontSize: '16px' }} className='text-futura'>{res.packageName} - Basic</h2>
+                                                <h2 style={{ fontWeight: '500', fontSize: '16px' }} className='text-futura'>{res.packageName}</h2>
                                             </div>
                                             <div className='mt-6 flex flex-row w-full items-center justify-between'>
                                                 <div className='shadow py-2 px-2 w-[48%]'>
@@ -97,7 +110,7 @@ const ThirdPartyPackage = () => {
 
                                             <div style={{ borderBottom: '0.5px solid #dddcdc' }} className='w-[100%] mt-5'></div>
                                         </div>
-                                        <div className='mt-5 flex flex-col gap-4 items-start ml-2 h-[52%]'>
+                                        <div className='mt-5 flex flex-col gap-4 items-start ml-2 h-[48%]'>
                                             <div className='flex flex-col gap-5 items-start justify-start'>
                                                 {Object.entries(res.benefits).map(([key, benefit]) => (
                                                     <div className='flex flex-row items-start gap-2'>
