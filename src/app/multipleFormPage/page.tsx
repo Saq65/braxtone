@@ -37,8 +37,6 @@ export default function MultipleFormPage() {
   const [showForm, setShowForm] = useState(false);
   const [addedCars, setAddedCars] = useState<{ [key: string]: string }[]>([]);
   const [carConfirmed, setCarConfirmed] = useState(false);
-  const [isCarMilesSelect, setIsCarMilesSelect] = useState(false);
-
   const [showDriverForm, setShowDriverForm] = useState(false);
   const [addedDrivers, setAddedDrivers] = useState<{ [key: string]: string }[]>([]);
   const [driverConfirmed, setDriverConfirmed] = useState(false);
@@ -87,7 +85,6 @@ export default function MultipleFormPage() {
   const [carMiles, setCarMiles] = useState<number | null>(null);
   const [showCarRunMiles, setShowCarRunMiles] = useState(false);
   const [showBHD, setShowBHD] = useState(false);
-  const [isBHDValueSelect, setIsBHDValueSELECT] = useState(false);
   const [showYesNo, setShowYesNo] = useState(false);
   const [showHowYoung, setShowHowYoung] = useState(false);
   const [trafficYesNo, setTrafficYesNo] = useState(false);
@@ -267,13 +264,8 @@ export default function MultipleFormPage() {
       addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [addedCars, addedDrivers, financeConfirmed, showVinNumber, showCarRunMiles,
-<<<<<<< HEAD
-    showBHD, showYesNo, showHowYoung, trafficYesNo, showMartial, showRegisterd, showInsurenceYesNo,
-    showClaim, confirmselectSound, comminicationFormData, selectedPackage
-=======
     showBHD, showYesNo, showHowYoung, trafficYesNo, showMartial, showRegisterd,
     showInsurenceYesNo, showClaim, confirmselectSound, comminicationFormData, selectedPackage
->>>>>>> 9d3503c08783cb11aca89b6ac4c6d32fb593f6c2
   ]);
 
   let activeHeader = MultiFormheader[0];
@@ -709,17 +701,10 @@ export default function MultipleFormPage() {
                       max={20000}
                       unitLabel="miles/year"
                       defaultValue={5500}
-                      // onSelect={handleCarMilesChange}
-                      onSelect={(value, isUser) => {
-                        handleCarMilesChange(value);
-                        if (isUser) {
-                          setIsCarMilesSelect(true); // triggers "Next"
-                        }
-                      }}
+                      onSelect={handleCarMilesChange}
                     />
                     <NextBtn
-                      
-                      disabled={!isCarMilesSelect || carMiles === null}
+                      disabled={carMiles === null}
                       onClick={handleCarMilesComplete}
                       label="Next →"
                     />
@@ -1021,8 +1006,8 @@ export default function MultipleFormPage() {
                   <>
                     <CprForm onFileStatusChange={handleFileStatusChange} />
                   </>
-
-                        </>
+                )}
+              </>
             </main>
           </div>
         </div>
