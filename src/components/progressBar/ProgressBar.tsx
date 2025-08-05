@@ -7,8 +7,9 @@ type CarRunMilesProps = {
     unitLabel: string;
     min?: number;
     defaultValue?: number;
-    onSelect: (value: number) => void;
+    onSelect: (value: number, isUser?: boolean) => void;
 };
+
 
 export default function ProgressBar({
     max,
@@ -20,13 +21,22 @@ export default function ProgressBar({
     const [value, setValue] = useState(defaultValue);
     const [position, setPosition] = useState(0);
 
-    const updateSlider = (newValue: number) => {
+    // const updateSlider = (newValue: number) => {
+    //     const numVal = Number(newValue);
+    //     setValue(numVal);
+    //     onSelect(numVal);
+    //     const percent = (numVal - min) / (max - min);
+    //     setPosition(percent * 100);
+    // };
+
+    const updateSlider = (newValue: number, isUser = false) => {
         const numVal = Number(newValue);
         setValue(numVal);
-        onSelect(numVal);
+        onSelect(numVal, isUser);
         const percent = (numVal - min) / (max - min);
         setPosition(percent * 100);
     };
+
 
     useEffect(() => {
         updateSlider(defaultValue);
@@ -44,7 +54,7 @@ export default function ProgressBar({
                         whiteSpace: 'nowrap',
                     }}
                 >
-                     {value.toLocaleString()} {unitLabel}
+                    {value.toLocaleString()} {unitLabel}
                 </div>
 
                 <div className="relative">
@@ -53,7 +63,8 @@ export default function ProgressBar({
                         min={min}
                         max={max}
                         value={value}
-                        onChange={(e) => updateSlider(Number(e.target.value))}
+                        // onChange={(e) => updateSlider(Number(e.target.value))}
+                        onChange={(e) => updateSlider(Number(e.target.value), true)}
                         className="w-full h-2 rounded-full appearance-none"
                         style={{
                             background: `linear-gradient(to right, #005684 ${position}%, #E5E7EB ${position}%)`,
