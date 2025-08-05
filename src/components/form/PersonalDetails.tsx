@@ -30,8 +30,8 @@ const PersonalDetails = ({ nationality, nationalId, numberPlate, onChange }: Con
         <div>
             <div className="form-container w-75 ml-18 mt-10">
 
-                <div className='w-[330px] py-3 border border-green-400 rounded-sm bg-[rgb(220,231,220)] mb-4 flex items-center'>
-                    <div className='w-4 h-4 rounded-full bg-green-500 flex items-center justify-center ml-2'>
+                <div className='w-[330px] py-3 border border-green-300 rounded-sm bg-[rgb(220,231,220)] mb-4 flex items-center'>
+                    <div className='w-4 h-4 rounded-full bg-green-500 flex items-center justify-center ml-4'>
                         <IoCheckmark color='white' size={12} />
                     </div>
                     <p className='ml-2'>Medgulf Takaful Basic</p>

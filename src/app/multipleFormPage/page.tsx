@@ -36,6 +36,8 @@ export default function MultipleFormPage() {
   const [showForm, setShowForm] = useState(false);
   const [addedCars, setAddedCars] = useState<{ [key: string]: string }[]>([]);
   const [carConfirmed, setCarConfirmed] = useState(false);
+  const [isCarMilesSelect, setIsCarMilesSelect] = useState(false);
+
   const [showDriverForm, setShowDriverForm] = useState(false);
   const [addedDrivers, setAddedDrivers] = useState<{ [key: string]: string }[]>([]);
   const [driverConfirmed, setDriverConfirmed] = useState(false);
@@ -85,6 +87,7 @@ export default function MultipleFormPage() {
   const [carMiles, setCarMiles] = useState<number | null>(null);
   const [showCarRunMiles, setShowCarRunMiles] = useState(false);
   const [showBHD, setShowBHD] = useState(false);
+  const [isBHDValueSelect, setIsBHDValueSELECT] = useState(false);
   const [showYesNo, setShowYesNo] = useState(false);
   const [showHowYoung, setShowHowYoung] = useState(false);
   const [trafficYesNo, setTrafficYesNo] = useState(false);
@@ -258,7 +261,7 @@ export default function MultipleFormPage() {
     }
   }, [addedCars, addedDrivers, financeConfirmed, showVinNumber, showCarRunMiles,
     showBHD, showYesNo, showHowYoung, trafficYesNo, showMartial, showRegisterd, showInsurenceYesNo,
-    showClaim, confirmselectSound, comminicationFormData,selectedPackage
+    showClaim, confirmselectSound, comminicationFormData, selectedPackage
   ]);
 
   let activeHeader = MultiFormheader[0];
@@ -494,7 +497,7 @@ export default function MultipleFormPage() {
               )
             }
 
-             {selectedPackage && (
+            {selectedPackage && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
                 <MultiformHeading color="#8b8b8b" heading="Selected Package" />
                 <div className="flex items-center gap-2">
@@ -678,10 +681,17 @@ export default function MultipleFormPage() {
                       max={20000}
                       unitLabel="miles/year"
                       defaultValue={5500}
-                      onSelect={handleCarMilesChange}
+                      // onSelect={handleCarMilesChange}
+                      onSelect={(value, isUser) => {
+                        handleCarMilesChange(value);
+                        if (isUser) {
+                          setIsCarMilesSelect(true); // triggers "Next"
+                        }
+                      }}
                     />
                     <NextBtn
-                      disabled={carMiles === null}
+                      
+                      disabled={!isCarMilesSelect || carMiles === null}
                       onClick={handleCarMilesComplete}
                       label="Next →"
                     />
@@ -957,7 +967,7 @@ export default function MultipleFormPage() {
 
                   />
                 )}
-         
+
               </>
             </main>
           </div>
