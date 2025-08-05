@@ -7,34 +7,36 @@ type ConfirmationProps = {
     nationalId: string;
     numberPlate: string;
     onChange: (field: string, value: string) => void;
+    selectedPackageName?: string;
 };
 
-const countries = [
-    'India', 'United States', 'United Kingdom', 'Bahrain',
-    'Saudi Arabia', 'UAE', 'Qatar', 'Kuwait'
+const nationalities = [
+  'Indian', 'American', 'British', 'Bahraini',
+  'Saudi', 'Emirati', 'Qatari', 'Kuwaiti'
 ];
 
-const PersonalDetails = ({ nationality, nationalId, numberPlate, onChange }: ConfirmationProps) => {
+
+const PersonalDetails = ({ nationality, nationalId, numberPlate, selectedPackageName, onChange }: ConfirmationProps) => {
     const [showOptions, setShowOptions] = useState(false);
-    const filtered = countries.filter(c =>
+    const filtered = nationalities.filter(c =>
         c.toLowerCase().includes(nationality.toLowerCase())
     );
 
     const handleSelect = (selectedCountry: string) => {
-        onChange('nationality', selectedCountry); // ✅ correct field now
+        onChange('nationality', selectedCountry);
         setShowOptions(false);
     };
 
 
     return (
         <div>
-            <div className="form-container w-75 ml-18 mt-10">
+            <div className="form-container w-75 ml-0 sm:ml-18 md:ml-18 lg:ml-18 xl:ml-18 mt-10">
 
-                <div className='w-[330px] py-3 border border-green-300 rounded-sm bg-[rgb(220,231,220)] mb-4 flex items-center'>
-                    <div className='w-4 h-4 rounded-full bg-green-500 flex items-center justify-center ml-4'>
+                <div className='w-[330px] py-3 border border-green-400 rounded-sm bg-[rgb(220,231,220)] mb-4 flex items-center'>
+                    <div className='w-4 h-4 rounded-full bg-green-500 flex items-center justify-center ml-2'>
                         <IoCheckmark color='white' size={12} />
                     </div>
-                    <p className='ml-2'>Medgulf Takaful Basic</p>
+                    <p> {selectedPackageName || 'No Package Selected'}</p>
                 </div>
 
                 <form action="#">

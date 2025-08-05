@@ -90,6 +90,16 @@ export const MultiFormheader: MultiFormheader[] = [
         id: '16',
         image: '/asesst/images/dania-smile.png',
         heading: "Tarik, your insurance package is ready!"
+    },
+    {
+        id: '17',
+        image: '/asesst/images/dania-smile.png',
+        heading: "Tarik, you're almost done!"
+    },
+    {
+        id: '18',
+        image: '/asesst/images/dania-smile.png',
+        heading: "Tarik, kindly upload your National ID (CPR), Driver License, and Ownership Card to continue."
     }
 
 ];
