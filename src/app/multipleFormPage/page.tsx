@@ -258,7 +258,7 @@ export default function MultipleFormPage() {
     }
   }, [addedCars, addedDrivers, financeConfirmed, showVinNumber, showCarRunMiles,
     showBHD, showYesNo, showHowYoung, trafficYesNo, showMartial, showRegisterd, showInsurenceYesNo,
-    showClaim, confirmselectSound, comminicationFormData
+    showClaim, confirmselectSound, comminicationFormData,selectedPackage
   ]);
 
   let activeHeader = MultiFormheader[0];
@@ -493,6 +493,23 @@ export default function MultipleFormPage() {
                 </div>
               )
             }
+
+             {selectedPackage && (
+              <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading="Selected Package" />
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-gray-700">
+                    {selectedPackage.packageName}
+                  </h3>
+                  <BiPencil className="mt-1 cursor-pointer" onClick={() => {
+                    // Allow editing or reselecting the package
+                    setshowPackages(true);
+                    setPersonalDetails(false);
+                  }} />
+                </div>
+              </div>
+            )}
+
 
           </div>
 

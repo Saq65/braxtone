@@ -18,7 +18,7 @@ export default function BestDealForm() {
     { label: '🇨🇳 China (+86)', value: '+86' },
   ];
 
-  const [selectedCode, setSelectedCode] = useState(countryCodes[0]);
+const [selectedCode, setSelectedCode] = useState<{ label: string; value: string } | null>(countryCodes[0]);
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
@@ -53,7 +53,7 @@ export default function BestDealForm() {
       const data = await response.json();
 
       if (response.ok) {
-          console.log('OTP:', data.otp);
+        console.log('OTP:', data.otp);
         setOtpStatus({ message: 'OTP sent successfully!', success: true });
         setTimer(30);
       } else {
@@ -65,7 +65,6 @@ export default function BestDealForm() {
       setLoading(false);
     }
   };
-console.log(`${selectedCode.value}${phone}`);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white px-4">
@@ -91,7 +90,7 @@ console.log(`${selectedCode.value}${phone}`);
             <Select
               options={countryCodes}
               value={selectedCode}
-              onChange={(option) => setSelectedCode(option)}
+              onChange={(option) => option && setSelectedCode(option)}
               className="text-sm"
               classNamePrefix="react-select"
               isSearchable

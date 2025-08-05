@@ -32,7 +32,6 @@ const ServiceCardPage = () => {
       </div>
 
       <div>
-
         <Buttons
           onFirstClick={() => router.push('/')}
           onSecondClick={() => router.push('/InsuranceCoverage')}
@@ -40,7 +39,6 @@ const ServiceCardPage = () => {
         />
 
       </div>
-
 
     </main>
   );

@@ -21,8 +21,8 @@ const arabicFont = Noto_Naskh_Arabic({
 export default function HomeLandscape() {
     const router = useRouter();
     return (
-        <div className="min-h-screen bg-[#fefefe] overflow-hidden relative">
-            <div className="bg-[linear-gradient(to_bottom,_#FFF2E2_0%,_white_30%,_white_70%,_#FFF2E2_100%)] w-full xl:p-unset lg:p-unset min-h-screen  sm:p-unset scollbar-hide">
+        <div className=" bg-[#fefefe] overflow-hidden relative">
+            <div className="bg-[linear-gradient(to_bottom,_#FFF2E2_0%,_white_30%,_white_70%,_#FFF2E2_100%)] w-full xl:p-unset lg:p-unset min-h-[91.3vh] sm:p-unset scollbar-hide">
 
                 <div className="flex justify-between items-center overflow-hidden">
 
@@ -46,7 +46,7 @@ export default function HomeLandscape() {
                     </div>
                 </div>
 
-                <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-8 sm:py-10 py-0 flex flex-col justify-center mt-20">
+                <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-8 sm:py-10 py-0 flex flex-col justify-center ">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-10 flex-1">
 
                         <motion.div
@@ -99,7 +99,7 @@ export default function HomeLandscape() {
                         </motion.div>
                     </div>
 
-                    <div className="mt-45 w-full flex flex-col xl:flex-row items-center justify-between gap-6">
+                    <div className="mt-36 w-full flex flex-col xl:flex-row items-center justify-between gap-6">
                         <div className="w-full xl:w-[75%] sm:w-full bg-[#dbedf8] shadow px-4 py-4 overflow-hidden relative">
                             <div className="flex w-max gap-10 space-x-10 px-10">
                                 {['ex4', 'ex3', 'ex2', 'ex1'].map((img, index) => (

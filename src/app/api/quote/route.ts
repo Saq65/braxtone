@@ -12,7 +12,7 @@ export async function POST(req: Request) {
 
     const externalData = await response.json();
 
-    console.log('🔍 Braxtone Response:', externalData); // <== LOG FULL RESPONSE
+    console.log('Braxtone Response:', externalData); 
 
     return NextResponse.json({
       success: true,
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
       data: body,
     });
   } catch (error) {
-    console.error('❌ Error:', error);
+    console.error('Error:', error);
     return NextResponse.json(
       { success: false, message: 'Invalid request.' },
       { status: 400 }
