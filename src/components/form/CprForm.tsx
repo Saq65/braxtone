@@ -4,7 +4,13 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 type Props = {
-  onFileStatusChange: (type: string, status: boolean) => void;
+  onFileStatusChange: (type: string, status: boolean) => void; // Prop to handle file status change
+};
+
+type FormValues = {
+  nationalId: File | null;
+  driverLicense: File | null;
+  ownershipCard: File | null;
 };
 
 const CprForm = ({ onFileStatusChange }: Props) => {
@@ -20,7 +26,7 @@ const CprForm = ({ onFileStatusChange }: Props) => {
   });
 
   // Formik Setup
-  const formik = useFormik({
+  const formik = useFormik<FormValues>({
     initialValues: {
       nationalId: null,
       driverLicense: null,
@@ -86,12 +92,15 @@ const CprForm = ({ onFileStatusChange }: Props) => {
   const handleRemoveFile = (type: string) => {
     if (type === 'nationalId') {
       formik.setFieldValue('nationalId', null); // Reset Formik value
+      setPreviewUrl((prev) => ({ ...prev, nationalId: null })); // Clear preview
       onFileStatusChange('nationalId', false); // Notify parent that file is removed
     } else if (type === 'driverLicense') {
       formik.setFieldValue('driverLicense', null); // Reset Formik value
+      setPreviewUrl((prev) => ({ ...prev, driverLicense: null })); // Clear preview
       onFileStatusChange('driverLicense', false); // Notify parent that file is removed
     } else if (type === 'ownershipCard') {
       formik.setFieldValue('ownershipCard', null); // Reset Formik value
+      setPreviewUrl((prev) => ({ ...prev, ownershipCard: null })); // Clear preview
       onFileStatusChange('ownershipCard', false); // Notify parent that file is removed
     }
   };
@@ -267,10 +276,10 @@ const CprForm = ({ onFileStatusChange }: Props) => {
               <div className="text-red-600 text-sm">{formik.errors.ownershipCard}</div>
             )}
           </div>
-
+{/* 
           <button type="submit" className="mt-4 p-2 bg-blue-500 text-white rounded">
             Submit
-          </button>
+          </button> */}
         </div>
       </form>
     </div>

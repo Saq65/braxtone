@@ -1,6 +1,6 @@
-'use client';
+"use client"
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Select from 'react-select';
 
 export default function BestDealForm() {
@@ -18,7 +18,7 @@ export default function BestDealForm() {
     { label: '🇨🇳 China (+86)', value: '+86' },
   ];
 
-const [selectedCode, setSelectedCode] = useState<{ label: string; value: string } | null>(countryCodes[0]);
+  const [selectedCode, setSelectedCode] = useState<{ label: string; value: string } | null>(countryCodes[0]);
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
@@ -40,14 +40,26 @@ const [selectedCode, setSelectedCode] = useState<{ label: string; value: string 
       return;
     }
 
+    // Sanitize phone number: remove any non-digit characters
+    const sanitizedPhone = phone.replace(/\D/g, '');
+
+    if (sanitizedPhone.length < 10) {
+      setOtpStatus({ message: 'Invalid phone number', success: false });
+      return;
+    }
+
     setLoading(true);
     setOtpStatus({ message: '', success: false });
+
+    const fullPhoneNumber = `${selectedCode.value}${sanitizedPhone}`;
+
+    console.log('Sending OTP to:', fullPhoneNumber); // Debugging line
 
     try {
       const response = await fetch('/api/quote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: `${selectedCode.value}${phone.trim()}` }),
+        body: JSON.stringify({ phone: fullPhoneNumber }),
       });
 
       const data = await response.json();
@@ -60,6 +72,7 @@ const [selectedCode, setSelectedCode] = useState<{ label: string; value: string 
         setOtpStatus({ message: data.message || 'Failed to send OTP', success: false });
       }
     } catch (error) {
+      console.error('Error sending OTP:', error);
       setOtpStatus({ message: 'Error sending OTP', success: false });
     } finally {
       setLoading(false);
