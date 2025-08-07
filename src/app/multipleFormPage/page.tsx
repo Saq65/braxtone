@@ -1011,7 +1011,6 @@ export default function MultipleFormPage() {
               </>
 
               {/* show cpr form */}
-              <>
                 {showCPR && (
                   <>
                     <CprForm onFileStatusChange={handleFileStatusChange} />
