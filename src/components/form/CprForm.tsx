@@ -110,8 +110,8 @@ const CprForm = ({ onFileStatusChange }: Props) => {
       <form onSubmit={formik.handleSubmit}>
         <div className="flex flex-col gap-y-4 ml-0 sm:ml-17 md:ml-17 lg:ml-17 xl:ml-17">
           {/* National ID Section */}
-          <div className="relative">
-            <div className="border border-gray-300 w-[37%] flex items-center justify-between py-3 px-4 rounded-[5px] cursor-pointer">
+          <div className="flex gap-4 items-center">
+            <div className="border border-gray-300 w-[100%] sm:w-[37%] md:w-[37%] lg:w-[37%] xl:w-[37%] flex items-center justify-between py-3 px-4 rounded-[5px] cursor-pointer">
               <span className="text-[#b8b8b8]">National ID (CPR) - Photo</span>
               <span
                 className="text-[#b8b8b8]"
@@ -122,52 +122,55 @@ const CprForm = ({ onFileStatusChange }: Props) => {
                 <BiUpload size={20} />
               </span>
             </div>
-            {showUpload.nationalId && (
-              <div className="ml-2">
-                <input
-                  type="file"
-                  className="hidden"
-                  accept="image/*,application/pdf"
-                  onChange={(e) => handleFileChange(e, 'nationalId')}
+            <div>
+              {showUpload.nationalId && (
+                <div className="ml-2">
+                  <input
+                    type="file"
+                    className="hidden"
+                    accept="image/*,application/pdf"
+                    onChange={(e) => handleFileChange(e, 'nationalId')}
+                  />
+                  <button
+                    type="button"
+                    className="text-[#0070f3] cursor-pointer"
+                    onClick={() => {
+                      const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+                      fileInput?.click();
+                    }}
+                  >
+                    Upload File
+                  </button>
+                </div>
+              )}
+              {formik.values.nationalId && (
+                <div className="text-sm text-gray-700 ml-4">
+                  {formik.values.nationalId.name}
+                  <span
+                    onClick={() => handleRemoveFile('nationalId')}
+                    className="ml-2 cursor-pointer text-red-600"
+                  >
+                    <BiX size={20} />
+                  </span>
+                </div>
+              )}
+              {previewUrl.nationalId && (
+                <img
+                  src={previewUrl.nationalId}
+                  alt="National ID Preview"
+                  className="w-24 h-24 object-cover mt-2"
                 />
-                <button
-                  type="button"
-                  className="text-[#0070f3] cursor-pointer"
-                  onClick={() => {
-                    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-                    fileInput?.click();
-                  }}
-                >
-                  Upload File
-                </button>
-              </div>
-            )}
-            {formik.values.nationalId && (
-              <div className="text-sm text-gray-700 ml-4">
-                {formik.values.nationalId.name}
-                <span
-                  onClick={() => handleRemoveFile('nationalId')}
-                  className="ml-2 cursor-pointer text-red-600"
-                >
-                  <BiX size={20} />
-                </span>
-              </div>
-            )}
-            {previewUrl.nationalId && (
-              <img
-                src={previewUrl.nationalId}
-                alt="National ID Preview"
-                className="w-24 h-24 object-cover mt-2"
-              />
-            )}
-            {formik.errors.nationalId && formik.touched.nationalId && (
-              <div className="text-red-600 text-sm">{formik.errors.nationalId}</div>
-            )}
+              )}
+              {formik.errors.nationalId && formik.touched.nationalId && (
+                <div className="text-red-600 text-sm">{formik.errors.nationalId}</div>
+              )}
+            </div>
+
           </div>
 
           {/* Driver License Section */}
-          <div className="relative">
-            <div className="border border-gray-300 w-[37%] flex items-center justify-between py-3 px-4 rounded-[5px] cursor-pointer">
+          <div className="flex gap-4 items-center">
+            <div className="border border-gray-300 w-[100%] sm:w-[37%] md:w-[37%] lg:w-[37%] xl:w-[37%] flex items-center justify-between py-3 px-4 rounded-[5px] cursor-pointer">
               <span className="text-[#b8b8b8]">Driver License - Photo</span>
               <span
                 className="text-[#b8b8b8]"
@@ -178,52 +181,55 @@ const CprForm = ({ onFileStatusChange }: Props) => {
                 <BiUpload size={20} />
               </span>
             </div>
-            {showUpload.driverLicense && (
-              <div className="ml-2">
-                <input
-                  type="file"
-                  className="hidden"
-                  accept="image/*,application/pdf"
-                  onChange={(e) => handleFileChange(e, 'driverLicense')}
+            <div>
+              {showUpload.driverLicense && (
+                <div className="ml-2">
+                  <input
+                    type="file"
+                    className="hidden"
+                    accept="image/*,application/pdf"
+                    onChange={(e) => handleFileChange(e, 'driverLicense')}
+                  />
+                  <button
+                    type="button"
+                    className="text-[#0070f3] cursor-pointer"
+                    onClick={() => {
+                      const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+                      fileInput?.click();
+                    }}
+                  >
+                    Upload File
+                  </button>
+                </div>
+              )}
+              {formik.values.driverLicense && (
+                <div className="text-sm text-gray-700 ml-4">
+                  {formik.values.driverLicense.name}
+                  <span
+                    onClick={() => handleRemoveFile('driverLicense')}
+                    className="ml-2 cursor-pointer text-red-600"
+                  >
+                    <BiX size={20} />
+                  </span>
+                </div>
+              )}
+              {previewUrl.driverLicense && (
+                <img
+                  src={previewUrl.driverLicense}
+                  alt="Driver License Preview"
+                  className="w-24 h-24 object-cover mt-2"
                 />
-                <button
-                  type="button"
-                  className="text-[#0070f3] cursor-pointer"
-                  onClick={() => {
-                    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-                    fileInput?.click();
-                  }}
-                >
-                  Upload File
-                </button>
-              </div>
-            )}
-            {formik.values.driverLicense && (
-              <div className="text-sm text-gray-700 ml-4">
-                {formik.values.driverLicense.name}
-                <span
-                  onClick={() => handleRemoveFile('driverLicense')}
-                  className="ml-2 cursor-pointer text-red-600"
-                >
-                  <BiX size={20} />
-                </span>
-              </div>
-            )}
-            {previewUrl.driverLicense && (
-              <img
-                src={previewUrl.driverLicense}
-                alt="Driver License Preview"
-                className="w-24 h-24 object-cover mt-2"
-              />
-            )}
-            {formik.errors.driverLicense && formik.touched.driverLicense && (
-              <div className="text-red-600 text-sm">{formik.errors.driverLicense}</div>
-            )}
+              )}
+              {formik.errors.driverLicense && formik.touched.driverLicense && (
+                <div className="text-red-600 text-sm">{formik.errors.driverLicense}</div>
+              )}
+            </div>
+
           </div>
 
           {/* Ownership Card Section */}
-          <div className="relative">
-            <div className="border border-gray-300 w-[37%] flex items-center justify-between py-3 px-4 rounded-[5px] cursor-pointer">
+          <div className="flex gap-4 items-center">
+            <div className="border border-gray-300 w-[100%] sm:w-[37%] md:w-[37%] lg:w-[37%] xl:w-[37%] flex items-center justify-between py-3 px-4 rounded-[5px] cursor-pointer">
               <span className="text-[#b8b8b8]">Ownership Card - Photo</span>
               <span
                 className="text-[#b8b8b8]"
@@ -234,49 +240,52 @@ const CprForm = ({ onFileStatusChange }: Props) => {
                 <BiUpload size={20} />
               </span>
             </div>
-            {showUpload.ownershipCard && (
-              <div className="ml-2">
-                <input
-                  type="file"
-                  className="hidden"
-                  accept="image/*,application/pdf"
-                  onChange={(e) => handleFileChange(e, 'ownershipCard')}
+            <div>
+              {showUpload.ownershipCard && (
+                <div className="ml-2">
+                  <input
+                    type="file"
+                    className="hidden"
+                    accept="image/*,application/pdf"
+                    onChange={(e) => handleFileChange(e, 'ownershipCard')}
+                  />
+                  <button
+                    type="button"
+                    className="text-[#0070f3] cursor-pointer"
+                    onClick={() => {
+                      const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+                      fileInput?.click();
+                    }}
+                  >
+                    Upload File
+                  </button>
+                </div>
+              )}
+              {formik.values.ownershipCard && (
+                <div className="text-sm text-gray-700 ml-4">
+                  {formik.values.ownershipCard.name}
+                  <span
+                    onClick={() => handleRemoveFile('ownershipCard')}
+                    className="ml-2 cursor-pointer text-red-600"
+                  >
+                    <BiX size={20} />
+                  </span>
+                </div>
+              )}
+              {previewUrl.ownershipCard && (
+                <img
+                  src={previewUrl.ownershipCard}
+                  alt="Ownership Card Preview"
+                  className="w-24 h-24 object-cover mt-2"
                 />
-                <button
-                  type="button"
-                  className="text-[#0070f3] cursor-pointer"
-                  onClick={() => {
-                    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-                    fileInput?.click();
-                  }}
-                >
-                  Upload File
-                </button>
-              </div>
-            )}
-            {formik.values.ownershipCard && (
-              <div className="text-sm text-gray-700 ml-4">
-                {formik.values.ownershipCard.name}
-                <span
-                  onClick={() => handleRemoveFile('ownershipCard')}
-                  className="ml-2 cursor-pointer text-red-600"
-                >
-                  <BiX size={20} />
-                </span>
-              </div>
-            )}
-            {previewUrl.ownershipCard && (
-              <img
-                src={previewUrl.ownershipCard}
-                alt="Ownership Card Preview"
-                className="w-24 h-24 object-cover mt-2"
-              />
-            )}
-            {formik.errors.ownershipCard && formik.touched.ownershipCard && (
-              <div className="text-red-600 text-sm">{formik.errors.ownershipCard}</div>
-            )}
+              )}
+              {formik.errors.ownershipCard && formik.touched.ownershipCard && (
+                <div className="text-red-600 text-sm">{formik.errors.ownershipCard}</div>
+              )}
+            </div>
+
           </div>
-{/* 
+          {/* 
           <button type="submit" className="mt-4 p-2 bg-blue-500 text-white rounded">
             Submit
           </button> */}

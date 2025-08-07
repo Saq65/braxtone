@@ -544,7 +544,7 @@ export default function MultipleFormPage() {
           </div>
 
           {/* this is main part */}
-          <div className="flex flex-col xl:flex-row gap-5 w-full  scrollbar-hide " style={{ height: '81vh' }}>
+          <div className="flex flex-col xl:flex-row gap-5 w-full  scrollbar-hide h-[91vh] sm:h-[81vh] md:h-[81vh] lg:h-[81vh] xl:h-[81vh] 2xl:h-[81vh]" >
             <aside className="w-full xl:w-1/4 hidden md:block mt-14">
               <SidebarSteps />
             </aside>
@@ -913,7 +913,6 @@ export default function MultipleFormPage() {
 
               </>
 
-
               {/*communication form */}
               <>
                 {showCommunication && !showPackages && !showPersonalDetails && (
@@ -1016,11 +1015,7 @@ export default function MultipleFormPage() {
                   <CprForm onFileStatusChange={handleFileStatusChange} />
 
                   <NextBtn
-                    disabled={
-                      !personalData.nationality?.trim() ||
-                      !personalData.nationalId?.trim() ||
-                      !personalData.numberPlate?.trim()
-                    }
+                    disabled={fileUploaded === null || !fileUploaded.nationalId || !fileUploaded.driverLicense || !fileUploaded.ownershipCard}
                     onClick={() => {
                       setPersonalDetails(false);
                       setshowPackageType(false);

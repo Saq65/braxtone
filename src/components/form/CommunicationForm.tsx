@@ -27,7 +27,7 @@ const CommunicationForm = ({ country, phone, email, onChange }: ConfirmationProp
 
   return (
     <div>
-      <div className="form-container w-75 ml-16">
+      <div className="form-container w-75 ml-0 sm:ml-16 md:ml-16 lg:ml-16 xl:ml-16">
         <form action="#">
           <div className="flex flex-col gap-y-4">
 
