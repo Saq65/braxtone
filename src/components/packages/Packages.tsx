@@ -18,6 +18,7 @@ type PackageType = {
   companyLogo: string;
   minimumPrice: string;
   benefits: Record<string, { addon: string }>;
+  addons: Record<string, { addon: string }>;
 };
 
 type PackagesProps = {

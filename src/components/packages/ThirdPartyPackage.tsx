@@ -14,17 +14,18 @@ import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 
 type PackageType = {
     _id: string;
-  packageName: string;
-  price: number;
-  features: string[];
-  type: string;
-  companyLogo: string;
-  minimumPrice: string;
-  benefits: Record<string, { addon: string }>;
+    packageName: string;
+    price: number;
+    features: string[];
+    type: string;
+    companyLogo: string;
+    minimumPrice: string;
+    benefits: Record<string, { addon: string }>;
+    addons: Record<string, { addon: string }>;
 };
 
 type PackagesProps = {
-  onSelect: (pkg: PackageType) => void;
+    onSelect: (pkg: PackageType) => void;
 };
 export type { PackageType };
 const ThirdPartyPackage = ({ onSelect }: PackagesProps) => {

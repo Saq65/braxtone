@@ -958,10 +958,10 @@ export default function MultipleFormPage() {
                     )}
 
                     {showThirdParty && <ThirdPartyPackage onSelect={(pkg: PackageType) => {
-                        setSelectedPackage(pkg);
-                        setshowPackages(false);
-                        setPersonalDetails(true);
-                      }}  />}
+                      setSelectedPackage(pkg);
+                      setshowPackages(false);
+                      setPersonalDetails(true);
+                    }} />}
 
                     <NextBtn
                       disabled={selectedPackage === null}
@@ -1011,46 +1011,42 @@ export default function MultipleFormPage() {
               </>
 
               {/* show cpr form */}
-                {showCPR && (
-                  <>
-                    <CprForm onFileStatusChange={handleFileStatusChange} />
+              {showCPR && (
+                <>
+                  <CprForm onFileStatusChange={handleFileStatusChange} />
 
-                    <NextBtn
-                      disabled={
-                        !personalData.nationality?.trim() ||
-                        !personalData.nationalId?.trim() ||
-                        !personalData.numberPlate?.trim()
-                      }
-                      onClick={() => {
-                        setPersonalDetails(false);
-                        setshowPackageType(false);
-                        setshowThirdParty(false);
-                        setshowCommunication(false);
-                        setshowPackages(false);
-                        setShowCPR(false);
+                  <NextBtn
+                    disabled={
+                      !personalData.nationality?.trim() ||
+                      !personalData.nationalId?.trim() ||
+                      !personalData.numberPlate?.trim()
+                    }
+                    onClick={() => {
+                      setPersonalDetails(false);
+                      setshowPackageType(false);
+                      setshowThirdParty(false);
+                      setshowCommunication(false);
+                      setshowPackages(false);
+                      setShowCPR(false);
+                      const addonsData = JSON.stringify(selectedPackage?.addons || []);
 
-                        const addonsData = JSON.stringify(selectedPackage?.benefits || []);
-
-                        // Manually create a query string
-                        const queryString = new URLSearchParams({
-                          packageName: selectedPackage?.packageName || '',
-                          addons: addonsData, // Send as a stringified JSON
-                        }).toString();
-
-                        const fullUrl = `/Addons?${queryString}`;
-
-                        router.push(`/Addons?packageName=${selectedPackage?.packageName}&addons=${addonsData}`);
-
-                        setshowAddOns(true);
-                      }}
-                      label="Next →"
-                    />
+                      const queryString = new URLSearchParams({
+                        packageName: selectedPackage?.packageName || '',
+                        addons: addonsData,
+                      }).toString();
 
 
-                  </>
-                )}
+                      const fullUrl = `/Addons?${queryString}`;
+                      router.push(fullUrl); // Redirect to Addons page
 
+                      router.push(fullUrl);
 
+                      setshowAddOns(true);
+                    }}
+                    label="Next →"
+                  />
+                </>
+              )}
 
               {/* add ons */}
               {/* <>
