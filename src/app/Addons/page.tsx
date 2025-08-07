@@ -78,17 +78,17 @@ const Addons = ({ selectedPackageName, addons }: AddonsProps) => {
                 ))
               )}
             </div>
-            <div className='card  p-5 rounded-[7px] w-[22%] mt-20' style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px' }}>
-              <div>
+            <div className='card  p-5 rounded-[7px] w-[20%] mt-20' style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px' }}>
+              <div className='py-3 border-b border-[#dcdcdc]'>
                 <p className="px-5 font-semibold">Insurance Summary</p>
               </div>
               <div>
                 <div className="py-4 border-b border-[#dcdcdc] flex items-center justify-between">
                   <span className="px-5 w-75">Premium</span>
-                  <span className="px-5 w-75"></span>
+                  <span className="px-5 w-75">BHD 11O</span>
                 </div>
                 <div className="py-4 border-b border-[#dcdcdc] flex items-center justify-between">
-                  <span className="px-5 w-75">Add-Ons</span>
+                  <span className="px-5 w-75">Add-Ons</span>  
                   <span className="px-5 w-75">BHD 0</span>
                 </div>
                 <div className="py-4 border-b border-[#dcdcdc] flex items-center justify-between">
