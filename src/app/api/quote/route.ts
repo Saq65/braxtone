@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     return NextResponse.json({
       success: true,
       message: 'Quote received.',
-      otp: externalData.otp, // May be undefined
+      otp: externalData.otp,
       data: body,
     });
   } catch (error) {

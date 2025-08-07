@@ -32,7 +32,7 @@ const PersonalDetails = ({ nationality, nationalId, numberPlate, selectedPackage
         <div>
             <div className="form-container w-75 ml-0 sm:ml-18 md:ml-18 lg:ml-18 xl:ml-18 mt-10">
 
-                <div className='w-[330px] py-3 border border-green-400 rounded-sm bg-[rgb(220,231,220)] mb-4 flex items-center'>
+                <div className='w-[330px] py-3 border border-green-400 rounded-sm bg-[rgb(220,231,220)] mb-4 flex items-center flex gap-2 items-center'>
                     <div className='w-4 h-4 rounded-full bg-green-500 flex items-center justify-center ml-2'>
                         <IoCheckmark color='white' size={12} />
                     </div>
@@ -95,6 +95,7 @@ const PersonalDetails = ({ nationality, nationalId, numberPlate, selectedPackage
                     </div>
                 </form>
             </div>
+            
         </div>
     );
 };

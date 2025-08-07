@@ -8,7 +8,6 @@ import Image from 'next/image';
 import { IoIosArrowForward } from 'react-icons/io';
 import { Button } from 'antd';
 import { Navigation } from 'swiper/modules';
-import { RiArrowLeftSLine } from 'react-icons/ri';
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 
 type PackageType = {
@@ -17,7 +16,7 @@ type PackageType = {
   features: string[];
   type: string;
   companyLogo: string;
-  minimumPrice:string;
+  minimumPrice: string;
   benefits: Record<string, { addon: string }>;
 };
 
@@ -37,9 +36,7 @@ const Packages = ({ onSelect }: PackagesProps) => {
         const res = await fetch('/api/packages');
         const data = await res.json();
 
-        const filtered = data.filter(
-          (pkg: PackageType) => pkg.type === 'Comprehensive'
-        );
+        const filtered = data.filter((pkg: PackageType) => pkg.type === 'Comprehensive');
         setPackages(filtered);
       } catch (err) {
         console.error('Failed to load packages:', err);
@@ -55,15 +52,13 @@ const Packages = ({ onSelect }: PackagesProps) => {
 
   return (
     <div>
-
-
       <div className="flex items-center justify-center w-full relative">
         <div className="flex justify-between items-center mb-4 px-2">
-          <button className="absolute top-50 right-[96%] z-99 swiper-button-prev-custom px-4 py-2  cursor-pointer">
-            <SlArrowLeft color='#3c89b5' size={22} style={{fontWeight:'bold'}}/>
+          <button className="absolute top-50 right-[96%] z-99 swiper-button-prev-custom px-4 py-2 cursor-pointer">
+            <SlArrowLeft color='#3c89b5' size={22} style={{ fontWeight: 'bold' }} />
           </button>
-          <button className="absolute top-50 left-[95%] z-99 swiper-button-next-custom px-4 py-2  cursor-pointer">
-              <SlArrowRight color='#3c89b5' size={22} />
+          <button className="absolute top-50 left-[95%] z-99 swiper-button-next-custom px-4 py-2 cursor-pointer">
+            <SlArrowRight color='#3c89b5' size={22} />
           </button>
         </div>
         <Swiper
@@ -86,8 +81,7 @@ const Packages = ({ onSelect }: PackagesProps) => {
             <SwiperSlide key={idx}>
               <div
                 style={{
-                  boxShadow:
-                    'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px',
+                  boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px',
                 }}
                 className="p-6 text-center w-[380px] h-[440px] rounded m-2 bg-white mb-4"
               >

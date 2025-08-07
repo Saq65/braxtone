@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
@@ -62,13 +62,22 @@ export default function BestDealForm() {
         body: JSON.stringify({ phone: fullPhoneNumber }),
       });
 
+      // Log the entire response to understand its structure
       const data = await response.json();
+      console.log('API Response:', data); 
 
       if (response.ok) {
-        console.log('OTP:', data.otp);
-        setOtpStatus({ message: 'OTP sent successfully!', success: true });
-        setTimer(30);
+        const otp = data?.data?.otp; 
+        if (otp) {
+          console.log('OTP:', otp);  // Log OTP here if it exists
+          setOtpStatus({ message: 'OTP sent successfully!', success: true });
+          setTimer(30);
+        } else {
+          console.log('OTP not found in the response');
+          setOtpStatus({ message: 'OTP not received. Try again later.', success: false });
+        }
       } else {
+        // Handle the error message if OTP was not sent
         setOtpStatus({ message: data.message || 'Failed to send OTP', success: false });
       }
     } catch (error) {
@@ -149,7 +158,6 @@ export default function BestDealForm() {
           className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none"
         />
       </form>
-
     </div>
   );
 }

@@ -76,9 +76,6 @@ const Addons = ({ selectedPackageName, addons }: AddonsProps) => {
                     </span>
                   </div>
                 ))
-
-
-                
               )}
             </div>
             <div className='card  p-5 rounded-[7px] w-[20%] mt-20' style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px' }}>
