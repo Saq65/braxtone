@@ -26,10 +26,10 @@ import CommunicationForm from '@/components/form/CommunicationForm';
 import Packages, { PackageType } from '@/components/packages/Packages';
 import ThirdPartyPackage from '@/components/packages/ThirdPartyPackage';
 import PersonalDetails from '@/components/form/PersonalDetails';
-import Vinnumber from '@/components/vinNumber/VinNumber';
 import CprForm from '@/components/form/CprForm';
 import { useRouter } from 'next/navigation';
 import Addons from '@/app/Addons/page';
+import Vinnumber from '@/components/vinNumber/VinNumber';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -86,8 +86,11 @@ export default function MultipleFormPage() {
 
   const [carMiles, setCarMiles] = useState<number | null>(null);
   const [showCarRunMiles, setShowCarRunMiles] = useState(false);
+  const [isCarMilesSelected, setIsCarMilesSelected] = useState(false);
+
   const [showBHD, setShowBHD] = useState(false);
   const [showYesNo, setShowYesNo] = useState(false);
+  const [isBHDSelected,setIsBHDSelected] = useState(false);
   const [showHowYoung, setShowHowYoung] = useState(false);
   const [trafficYesNo, setTrafficYesNo] = useState(false);
   const [showMartial, setMartial] = useState(false);
@@ -706,10 +709,17 @@ export default function MultipleFormPage() {
                       max={20000}
                       unitLabel="miles/year"
                       defaultValue={5500}
-                      onSelect={handleCarMilesChange}
+                      onSelect={(value, isUser) => {
+                        handleCarMilesChange(value);
+                        if (isUser) {
+                          setIsCarMilesSelected(true);
+                        }
+                      }}
+
                     />
                     <NextBtn
-                      disabled={carMiles === null}
+                      // disabled={carMiles === null}
+                      disabled={carMiles === null || !isCarMilesSelected}
                       onClick={handleCarMilesComplete}
                       label="Next →"
                     />
@@ -730,10 +740,16 @@ export default function MultipleFormPage() {
                       max={20000}
                       unitLabel="BHD"
                       defaultValue={5500}
-                      onSelect={handleBHDComponent}
+                      // onSelect={handleBHDComponent}
+                      onSelect={(value,isUser)=>{
+                        handleBHDComponent(value);
+                        if (isUser) {
+                          setIsBHDSelected(true);
+                        }
+                      }}
                     />
                     <NextBtn
-                      disabled={carMiles === null}
+                      disabled={carMiles === null||!isBHDSelected}
                       onClick={handleBHDComplete}
                       label="Next →"
                     />
