@@ -95,6 +95,7 @@ const PersonalDetails = ({ nationality, nationalId, numberPlate, selectedPackage
                     </div>
                 </form>
             </div>
+            
         </div>
     );
 };

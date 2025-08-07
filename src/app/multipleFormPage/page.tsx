@@ -28,6 +28,8 @@ import ThirdPartyPackage from '@/components/packages/ThirdPartyPackage';
 import PersonalDetails from '@/components/form/PersonalDetails';
 import Vinnumber from '@/components/vinNumber/VinNumber';
 import CprForm from '@/components/form/CprForm';
+import { useRouter } from 'next/navigation';
+import Addons from '@/app/Addons/page';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -105,8 +107,11 @@ export default function MultipleFormPage() {
   const [showThirdParty, setshowThirdParty] = useState(false);
   const [showPersonalDetails, setPersonalDetails] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState<PackageType | null>(null);
-  const [confirmPersonalData, setconfirmPersonalData] = useState('');
   const [showCPR, setShowCPR] = useState(false);
+  const [showAddOns, setshowAddOns] = useState(false);
+
+
+  const router = useRouter();
 
   const handleCarMilesChange = (val: number) => {
     setCarMiles(val);
@@ -517,9 +522,9 @@ export default function MultipleFormPage() {
 
             <div ref={addedCarsRef} className=''>
               {/* <MultiformHeading color="#8b8b8b" heading="your document uploaded" /> */}
-              <div className='flex items-start gap-2'>
+              <div className=''>
                 {Object.values(fileUploaded).some((status) => status) && (
-                  <div>
+                  <div className='flex items-start justify-start flex-col'>
                     <h3 className="text-lg font-semibold text-gray-700">National ID: {fileUploaded.nationalId ? '✅ Uploaded' : 'Not Uploaded'}</h3>
                     <h3 className="text-lg font-semibold text-gray-700">Driver License: {fileUploaded.driverLicense ? '✅ Uploaded' : 'Not Uploaded'}</h3>
                     <h3 className="text-lg font-semibold text-gray-700">Ownership Card: {fileUploaded.ownershipCard ? '✅ Uploaded' : 'Not Uploaded'}</h3>
@@ -945,14 +950,18 @@ export default function MultipleFormPage() {
                     />
 
                     {showPackageType && (
-                      <Packages onSelect={(pkg) => {
+                      <Packages onSelect={(pkg: PackageType) => {
                         setSelectedPackage(pkg);
                         setshowPackages(false);
                         setPersonalDetails(true);
                       }} />
                     )}
 
-                    {showThirdParty && <ThirdPartyPackage />}
+                    {showThirdParty && <ThirdPartyPackage onSelect={(pkg: PackageType) => {
+                        setSelectedPackage(pkg);
+                        setshowPackages(false);
+                        setPersonalDetails(true);
+                      }}  />}
 
                     <NextBtn
                       disabled={selectedPackage === null}
@@ -992,6 +1001,7 @@ export default function MultipleFormPage() {
                         setshowCommunication(false);
                         setshowPackages(false);
                         setShowCPR(true)
+                        setPersonalDetails(false)
                       }}
                       label="Next →"
                     />
@@ -1005,9 +1015,51 @@ export default function MultipleFormPage() {
                 {showCPR && (
                   <>
                     <CprForm onFileStatusChange={handleFileStatusChange} />
+
+                    <NextBtn
+                      disabled={
+                        !personalData.nationality?.trim() ||
+                        !personalData.nationalId?.trim() ||
+                        !personalData.numberPlate?.trim()
+                      }
+                      onClick={() => {
+                        setPersonalDetails(false);
+                        setshowPackageType(false);
+                        setshowThirdParty(false);
+                        setshowCommunication(false);
+                        setshowPackages(false);
+                        setShowCPR(false);
+
+                        const addonsData = JSON.stringify(selectedPackage?.benefits || []);
+
+                        // Manually create a query string
+                        const queryString = new URLSearchParams({
+                          packageName: selectedPackage?.packageName || '',
+                          addons: addonsData, // Send as a stringified JSON
+                        }).toString();
+
+                        const fullUrl = `/Addons?${queryString}`;
+
+                        router.push(`/Addons?packageName=${selectedPackage?.packageName}&addons=${addonsData}`);
+
+                        setshowAddOns(true);
+                      }}
+                      label="Next →"
+                    />
+
+
                   </>
                 )}
               </>
+
+              {/* add ons */}
+              {/* <>
+                {
+                  showAddOns && (
+                    <Addons />
+                  )
+                }
+              </> */}
             </main>
           </div>
         </div>
