@@ -84,7 +84,7 @@ const Addons = ({ selectedPackageName, addons }: AddonsProps) => {
 
       <div className="flex justify-center items-center flex-col w-full">
 
-        <div className="flex justify-center items-start flex-row gap-10 w-[96%] mt-30">
+        <div className="flex justify-center items-start flex-row gap-10 w-[86%] mt-30 ml-auto">
           <div className='flex flex-row gap-5 items-center justify-center'>
             <div className='w-100% '>
 
@@ -141,15 +141,15 @@ const Addons = ({ selectedPackageName, addons }: AddonsProps) => {
                   </div>
                   <div className="py-4 border-b border-[#dcdcdc] flex items-center justify-between">
                     <span className="px-5 w-75">Add-Ons</span>
-                    <span className="px-5 w-75">BHD {totalAddonPrice.toFixed(2)}</span> {/* Display total add-on price */}
+                    <span className="px-5 w-75">BHD {totalAddonPrice.toFixed(2)}</span> 
                   </div>
                   <div className="py-4 border-b border-[#dcdcdc] flex items-center justify-between">
                     <span className="px-5 w-75">VAT (10%)</span>
-                    <span className="px-5 w-75">BHD {vatAmount.toFixed(2)}</span> {/* Display VAT */}
+                    <span className="px-5 w-75">BHD {vatAmount.toFixed(2)}</span> 
                   </div>
-                  <div className="py-4 border-b border-[#dcdcdc] flex items-center justify-between">
+                  <div className="py-4 bg-[#0068a2] text-[#fff] flex items-center justify-between rounded-bl-[6px] rounded-br-[6px]">
                     <span className="px-5 w-75 font-semibold">Total Payable</span>
-                    <span className="px-5 w-75 font-semibold">BHD {totalPayable.toFixed(2)}</span> {/* Display total payable */}
+                    <span className="px-5 w-75 font-semibold">BHD {totalPayable.toFixed(2)}</span> 
                   </div>
                 </div>
               </div>
@@ -158,7 +158,7 @@ const Addons = ({ selectedPackageName, addons }: AddonsProps) => {
 
         </div>
 
-        <div className="mt-6 flex justify-center items-center">
+        <div className="mt-6 flex justify-center items-center mb-10">
           <Buttons onFirstClick={() => router.push('/multipleFormPage')} onSecondClick={() => setShowPayment(true)} />
         </div>
       </div>

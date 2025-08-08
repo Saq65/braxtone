@@ -20,7 +20,7 @@ const Payment = ({ selectedPackageName }: PaymentProps) => {
 
                 <div className="flex justify-center items-center ">
                     <div className="flex justify-center items-center flex-row gap-20">
-                        <div className="card mt-10 w-full p-5 rounded-[7px] bg-[#fff]" style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px' }}>
+                        <div className="card mt-10 w-full p-5 rounded-[7px] bg-[#fff] w-[100%]" style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px' }}>
                             <div className="py-3 border-b border-[#dcdcdc]">
                                 <p className="px-5 font-semibold">Checkout</p>
                             </div>
@@ -36,14 +36,14 @@ const Payment = ({ selectedPackageName }: PaymentProps) => {
                             <div className="mt-4 px-5">
                                 <span>Card Type</span>
                                 <div className="flex items-center justify-between w-full mt-3">
-                                    <div className="p-4 w-[48%]"> {/* Adjusted width */}
+                                    <div className="p-4 w-[48%]">
                                         <div className="flex items-center justify-between py-4 border p-2 border-[#f1f1f1] mt-1">
                                             <CiCreditCard1 size={30} className="text-gray-500" />
                                             <span className="text-[#b8b8b8]">Credit card</span>
                                             <Checkbox />
                                         </div>
                                     </div>
-                                    <div className="p-4 w-[48%]"> {/* Adjusted width */}
+                                    <div className="p-4 w-[48%]">
                                         <div className="flex items-center justify-between py-4 border p-2 border-[#f1f1f1] mt-1">
                                             <CiCreditCard1 size={30} className="text-gray-500" />
                                             <span className="text-[#b8b8b8]">Debit card</span>
@@ -57,12 +57,13 @@ const Payment = ({ selectedPackageName }: PaymentProps) => {
                                 <span>Card Details</span>
                                 <div className="flex items-center justify-around w-full flex-col">
                                     <div className="p-4 w-full">
-                                        <div className="flex items-center justify-between py-4 border p-2 border-[#f1f1f1] mt-1">
-                                            <Input className="border-0 border-none" placeholder="Card holder name" />
+                                        <div className="flex items-center justify-between py-1 border p-2 border-[#f1f1f1] mt-1">
+                                            <input className="w-[100%] p-1 px-1 border-none outline-none focus:outline-gray-500" placeholder="Card holder name" />
+
                                         </div>
 
-                                        <div className="flex items-center justify-between py-4 border p-2 border-[#f1f1f1] mt-3">
-                                            <Input className="border-0 border-none" placeholder="Card number" />
+                                        <div className="flex items-center justify-between py-1 border border-[#f1f1f1] mt-4">
+                                            <input className="w-[100%] p-1 px-1 border-none outline-none focus:outline-gray-500" placeholder="Card number" />
                                         </div>
                                     </div>
 

@@ -22,7 +22,7 @@ export default function HomeLandscape() {
     const router = useRouter();
     return (
         <div className=" bg-[#fefefe] overflow-hidden relative">
-            <div className="bg-[linear-gradient(to_bottom,_#FFF2E2_0%,_white_30%,_white_70%,_#FFF2E2_100%)] w-full xl:p-unset lg:p-unset min-h-[91.3vh] sm:p-unset scollbar-hide">
+            <div className="bg-[linear-gradient(to_bottom,_#FFF2E2_0%,_white_30%,_white_70%,_#FFF2E2_100%)] w-full xl:p-unset lg:p-unset min-h-[91.5vh] sm:p-unset scollbar-hide">
 
                 <div className="flex justify-between items-center overflow-hidden">
 

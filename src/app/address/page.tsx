@@ -13,7 +13,7 @@ const Page = () => {
     const [inputValue, setInputValue] = useState('');
 
     return (
-        <main className="min-h-screen bg-[linear-gradient(to_bottom,_#ceedfe_0%,_white_30%,_white_70%,_#ceedfe_100%)]  px-4 py-8 sm:px-8 lg:px-16 flex flex-col items-center overflow-x-hidden">
+        <main className="min-h-[91.5vh] bg-[linear-gradient(to_bottom,_#FFF2E2_0%,_white_30%,_white_70%,_#FFF2E2_100%)]px-4 py-8 sm:px-8 lg:px-16 flex flex-col items-center overflow-x-hidden">
             <ServiceHeader image={image} heading={heading} paragraph={paragraph} />
 
 

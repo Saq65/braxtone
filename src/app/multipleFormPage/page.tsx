@@ -1031,7 +1031,8 @@ export default function MultipleFormPage() {
                   <CprForm onFileStatusChange={handleFileStatusChange} />
 
                   <NextBtn
-                    disabled={fileUploaded === null || !fileUploaded.nationalId || !fileUploaded.driverLicense || !fileUploaded.ownershipCard}
+                    // disabled={fileUploaded === null || !fileUploaded.nationalId || !fileUploaded.driverLicense || !fileUploaded.ownershipCard}
+                    disabled={fileUploaded === null}
                     onClick={() => {
                       setPersonalDetails(false);
                       setshowPackageType(false);
@@ -1048,7 +1049,7 @@ export default function MultipleFormPage() {
 
 
                       const fullUrl = `/Addons?${queryString}`;
-                      router.push(fullUrl); // Redirect to Addons page
+                      router.push(fullUrl)
 
                       router.push(fullUrl);
 
