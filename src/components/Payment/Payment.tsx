@@ -57,25 +57,24 @@ const Payment = ({ selectedPackageName }: PaymentProps) => {
                                 <span>Card Details</span>
                                 <div className="flex items-center justify-around w-full flex-col">
                                     <div className="p-4 w-full">
-                                        <div className="flex items-center justify-between py-1 border p-2 border-[#f1f1f1] mt-1">
+                                        <div className="flex items-center justify-between py-1 border px-2 border-[#f1f1f1] mt-1">
                                             <input className="w-[100%] p-1 px-1 border-none outline-none focus:outline-gray-500" placeholder="Card holder name" />
-
                                         </div>
 
-                                        <div className="flex items-center justify-between py-1 border border-[#f1f1f1] mt-4">
+                                        <div className="flex items-center justify-between py-1 px-2 border border-[#f1f1f1] mt-4">
                                             <input className="w-[100%] p-1 px-1 border-none outline-none focus:outline-gray-500" placeholder="Card number" />
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center justify-between w-full">
-                                        <div className="p-4 w-[48%]">
-                                            <div className="flex items-center justify-between py-4 border p-2 border-[#f1f1f1] mt-1">
-                                                <Input className="border-0 border-none" placeholder="Expiry date (MM/YY)" />
+                                    <div className="flex items-center justify-around w-full">
+                                        <div className="p-2 w-[46%]">
+                                            <div className="flex items-center justify-between py-2 border p-2 border-[#f1f1f1] mt-1">
+                                                <input className="p-1 px-1 border-none outline-none focus:outline-gray-500" placeholder="Expiry date (MM/YY)" />
                                             </div>
                                         </div>
-                                        <div className="p-4 w-[48%]">
-                                            <div className="flex items-center justify-between py-4 border p-2 border-[#f1f1f1] mt-1">
-                                                <Input className="border-0 border-none" placeholder="CVV" />
+                                        <div className="p-2 w-[46%]">
+                                               <div className="flex items-center justify-between py-2 border p-2 border-[#f1f1f1] mt-1">
+                                                <input className="p-1 px-1 border-none outline-none focus:outline-gray-500" placeholder="CVV"/>
                                             </div>
                                         </div>
                                     </div>

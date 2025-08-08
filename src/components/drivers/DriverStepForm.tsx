@@ -153,7 +153,7 @@ export default function DriverStepForm({
   const totalSteps = 4;
 
   const handleSubmitDriver = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    e.preventDefault();
     const payload = {
       name,
       nationality,
@@ -200,8 +200,12 @@ export default function DriverStepForm({
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Full Name"
-                  className="mb-4"
+                  className="mb-4 outline-none focus:border-gray-600"
                   size="large"
+                  style={{
+                    outline: 'none',
+                    borderColor: '#d9d9d9',
+                  }}
                 />
               </div>
               <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
@@ -260,6 +264,10 @@ export default function DriverStepForm({
                 placeholder="National Id"
                 className="mb-4"
                 size="large"
+                    style={{
+                    outline: 'none',
+                    borderColor: '#d9d9d9',
+                  }}
               />
 
               <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">

@@ -8,6 +8,7 @@ import MultiformHeader from "@/components/MultiformHeader";
 import MultiformHeading from "@/components/cars/MultiformHeading";
 import { MultiFormheader } from "@/data/multiformheading";
 import CarStepForm from "@/components/cars/CarStepForm";
+import * as Yup from 'yup';
 import DriverStepForm from '@/components/drivers/DriverStepForm';
 import {
   ClaimYesNoData, finance, HowYoungData, InsuranceYesNoData, MartialStatus, packagesData,
@@ -29,7 +30,8 @@ import PersonalDetails from '@/components/form/PersonalDetails';
 import CprForm from '@/components/form/CprForm';
 import { useRouter } from 'next/navigation';
 import Addons from '@/app/Addons/page';
-import Vinnumber from '@/components/vinNumber/VinNumber';
+import Vinnumber from '@/components/VinNumber/VinNumber';
+import { useFormik } from 'formik';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -90,7 +92,7 @@ export default function MultipleFormPage() {
 
   const [showBHD, setShowBHD] = useState(false);
   const [showYesNo, setShowYesNo] = useState(false);
-  const [isBHDSelected,setIsBHDSelected] = useState(false);
+  const [isBHDSelected, setIsBHDSelected] = useState(false);
   const [showHowYoung, setShowHowYoung] = useState(false);
   const [trafficYesNo, setTrafficYesNo] = useState(false);
   const [showMartial, setMartial] = useState(false);
@@ -170,6 +172,22 @@ export default function MultipleFormPage() {
       setDriverConfirmed(true)
     }, 500);
   };
+
+   const formik = useFormik({
+    initialValues: {
+      vinnumber: '',
+    },
+    validationSchema: Yup.object({
+      vinnumber: Yup.string()
+        .required('VIN number is required')
+        .min(17, 'VIN number must be exactly 17 characters')
+        .max(17, 'VIN number cannot exceed 17 characters')
+        .matches(/^[A-Z0-9]*$/, 'VIN number must be uppercase letters and digits only'),
+    }),
+    onSubmit: (values) => {
+      console.log('Form Submitted:', values.vinnumber);
+    },
+  });
 
   const handleVinNumberChange = (value: string) => {
     setVinnumber(value);
@@ -669,7 +687,8 @@ export default function MultipleFormPage() {
               {/* this is vin number */}
               <>
                 {financeConfirmed && showVinNumber && (
-                  <motion.div className="ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10  mt-6"
+                  <motion.div
+                    className="ml-0 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10 mt-6"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 50 }}
@@ -679,16 +698,14 @@ export default function MultipleFormPage() {
                       data={[]}
                       onSelect={handleVinNumberChange}
                       onNextClick={handleVinNumberComplete}
+                      formik={formik}
                     />
                     <NextButton
-                      disabled={!vinnumber}
-
+                      disabled={!formik.values.vinnumber || !formik.isValid}
                       onClick={() => {
-
                         handleVinNumberComplete();
-
                         if (addedCarsRef.current) {
-                          addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+                          addedCarsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }
                       }}
                     />
@@ -741,7 +758,7 @@ export default function MultipleFormPage() {
                       unitLabel="BHD"
                       defaultValue={5500}
                       // onSelect={handleBHDComponent}
-                      onSelect={(value,isUser)=>{
+                      onSelect={(value, isUser) => {
                         handleBHDComponent(value);
                         if (isUser) {
                           setIsBHDSelected(true);
@@ -749,7 +766,7 @@ export default function MultipleFormPage() {
                       }}
                     />
                     <NextBtn
-                      disabled={carMiles === null||!isBHDSelected}
+                      disabled={carMiles === null || !isBHDSelected}
                       onClick={handleBHDComplete}
                       label="Next →"
                     />
