@@ -36,17 +36,31 @@
 }
 
 
+* {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+*::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
 .ant-checkbox-checked .ant-checkbox-inner {
   background-color: var(--primary);
   border-color: var(--primary);
 }
 
 .ant-checkbox-checked .ant-checkbox-inner::after {
-  border-color: white; /* you can change this too */
+  border-color: white; 
 }
 
 .ant-checkbox-input:focus + .ant-checkbox-inner {
-  box-shadow: 0 0 0 2px rgba(255, 103, 0, 0.2); /* soft orange glow */
+  box-shadow: 0 0 0 2px rgba(255, 103, 0, 0.2); 
 }
 
 .ant-checkbox-inner {

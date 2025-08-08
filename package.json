@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
+    "@tailwindcss/postcss": "^4.1.11",
     "antd": "^5.26.5",
     "axios": "^1.11.0",
     "formik": "^2.4.6",
@@ -23,12 +24,10 @@
     "react-select": "^5.10.2",
     "swiper": "^11.2.10",
     "tailwind-scrollbar-hide": "^4.0.0",
-    "tailwindcss": "^4.1.11",
     "yup": "^1.7.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

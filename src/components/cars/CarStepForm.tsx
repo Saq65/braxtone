@@ -116,7 +116,7 @@ export default function CarStepForm({
       banksValue
     };
 
-  console.log("📤 Sending payload to API:", payload); 
+    console.log("📤 Sending payload to API:", payload);
 
     try {
       const response = await axios.post('/api/quote', payload);
@@ -173,12 +173,20 @@ export default function CarStepForm({
                 setSelectedBrand(option);
                 setSelectedBrandId(option.value);
               }}
-              style={{ width: '100%', borderRadius: 8, height: 40 }}
+
+
+              style={{ width: '100%', borderRadius: 8, height: 40, outline: 'none', borderColor: '#d9d9d9', }}
               placeholder="Select Brand"
             >
-              <Option value="" disabled>Select</Option>
+              <Option value="" disabled    style={{
+                  outline: 'none',
+                  borderColor: '#d9d9d9',
+                }}>Select</Option>
               {Object.entries(brandsMap).map(([key, brand]: [string, any]) => (
-                <Option key={key} value={key}>
+                <Option key={key} value={key} style={{
+                  outline: 'none',
+                  borderColor: '#d9d9d9',
+                }}>
                   <div className="flex items-center gap-2">
                     <img src={brand.brandImage} alt={brand.brandName} className="w-6 h-6 object-contain" />
                     {brand.brandName}
@@ -323,7 +331,7 @@ export default function CarStepForm({
               value={banksValue}
               onChange={(value) => {
                 setBankValue(value);
-                setBankSelected(true); 
+                setBankSelected(true);
               }}
               style={{ width: '100%', borderRadius: 8, height: 40 }}
               placeholder="Select car trim"

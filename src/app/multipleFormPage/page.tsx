@@ -173,7 +173,7 @@ export default function MultipleFormPage() {
     }, 500);
   };
 
-   const formik = useFormik({
+  const formik = useFormik({
     initialValues: {
       vinnumber: '',
     },
@@ -565,7 +565,7 @@ export default function MultipleFormPage() {
           </div>
 
           {/* this is main part */}
-          <div className="flex flex-col xl:flex-row gap-5 w-full  scrollbar-hide h-[91vh] sm:h-[81vh] md:h-[81vh] lg:h-[81vh] xl:h-[81vh] 2xl:h-[81vh]" >
+          <div id='main-part' className="flex flex-col xl:flex-row gap-5 w-full h-[91vh] sm:h-[81vh] md:h-[81vh] lg:h-[81vh] xl:h-[81vh] 2xl:h-[81vh] overflow-auto scrollbar-hide">
             <aside className="w-full xl:w-1/4 hidden md:block mt-14">
               <SidebarSteps />
             </aside>
@@ -995,7 +995,7 @@ export default function MultipleFormPage() {
                       setPersonalDetails(true);
                     }} />}
 
-                    <NextBtn
+                    {/* <NextBtn
                       disabled={selectedPackage === null}
                       onClick={() => {
                         setPersonalDetails(true);
@@ -1005,7 +1005,7 @@ export default function MultipleFormPage() {
                         setshowPackages(false);
                       }}
                       label="Next →"
-                    />
+                    /> */}
                   </div>
                 )}
 

@@ -91,7 +91,7 @@ export default function BestDealForm() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white px-4">
       <div className="flex flex-col items-center">
-        <img src="/profile.jpg" alt="Profile" className="w-20 h-20 rounded-full object-cover" />
+        <img src="..\asesst\images\dania.png" alt="Profile" className="w-20 h-20 rounded-full object-cover" />
         <h2 className="text-xl font-semibold mt-4 text-center">
           Grab It! We've Struck You Our Best Deal
         </h2>

@@ -45,7 +45,7 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
             <div
               className="bg-[var(--primary2)] flex items-center justify-center text-white font-medium
                  h-[26px] sm:h-[28px] md:h-[32px] 
-                 w-36 sm:w-52 md:w-64 
+                 w-35 sm:w-54 md:w-66
                  text-[10px] sm:text-xs md:text-sm "
             >
               {item.Name}
@@ -80,7 +80,7 @@ const ServiceCard = ({ item, isSelected, onSelect }: ServiceCardProps) => {
           height={80}
         />
 
-        <h3 className="text-xs sm:text-sm md:text-base lg:text-lg font-medium text-gray-800 mt-3">
+        <h3 className="text-[11.2px] sm:text-sm md:text-base lg:text-lg font-medium text-gray-800 mt-3">
           {item.Name}
         </h3>
 
