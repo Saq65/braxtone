@@ -109,8 +109,8 @@ export default function HomeLandscape() {
                         </motion.div>
                     </div>
 
-                    <div className="mt-36 w-full flex flex-col xl:flex-row items-center justify-between gap-6">
-                        <div className="w-full xl:w-[75%] sm:w-full bg-[#dbedf8] shadow px-4 py-4 overflow-hidden relative">
+                    <div className="mt-36 w-full flex flex-col xl:flex-row md:flex-row lg:flex-row sm:flex-row items-center justify-between gap-6">
+                        <div className="w-full xl:w-[75%] lg:w-[72%] md:w-[70%] sm:w-full bg-[#dbedf8] shadow px-4 py-4 overflow-hidden relative">
                             <div className="flex w-max gap-10 space-x-10 px-10 ">
                                 {['ex4', 'ex3', 'ex2', 'ex1'].map((img, index) => (
                                     <div key={index} className="flex justify-center items-center h-10 p-2">

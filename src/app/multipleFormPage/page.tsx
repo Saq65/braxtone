@@ -569,7 +569,7 @@
             </div>
 
             {/* this is main part */}
-            <div id='main-part' className="flex flex-col lg:flex-row xl:flex-row gap-5 w-full h-[91vh] sm:h-[81vh] md:h-[81vh] lg:h-[81vh] xl:h-[81vh] 2xl:h-[81vh] overflow-auto scrollbar-hide ">
+            <div id='main-part' className="flex flex-col md:flex-row lg:flex-row xl:flex-row gap-5 w-full h-[91vh] sm:h-[81vh] md:h-[81vh] lg:h-[81vh] xl:h-[81vh] 2xl:h-[81vh] overflow-auto scrollbar-hide ">
               <aside className="w-full xl:w-1/4 hidden md:block mt-14">
                 <SidebarSteps />
               </aside>
@@ -638,7 +638,6 @@
                       />
                     </motion.div>
                   )}
-
                 </>
 
 
