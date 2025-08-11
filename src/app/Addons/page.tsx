@@ -17,8 +17,8 @@ interface Addon {
 }
 
 type AddonsProps = {
-  selectedPackageName?: string;
-  addons: Addon[];
+  selectedPackageName?: string | null;
+    addons: Addon[];
 };
 
 const Addons = ({ selectedPackageName, addons }: AddonsProps) => {
