@@ -30,7 +30,7 @@
   import CprForm from '@/components/form/CprForm';
   import { useRouter } from 'next/navigation';
   import Addons from '@/app/Addons/page';
-  import Vinnumber from '@/components/VinNumber/VinNumber';
+  import Vinnumber from '@/components/vinNumber/vinnumber';
   import { useFormik } from 'formik';
 
   export default function MultipleFormPage() {

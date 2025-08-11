@@ -18,7 +18,7 @@ export default function Vinnumber({ data, onSelect, onNextClick, formik }: Props
             type="text"
             name="vinnumber"
             id="vinnumber"
-            className="border p-4 rounded border-gray-300 w-[350px] focus:outline-none focus:border-gray-600"
+            className="border p-4 rounded border-gray-300 w-full max-w-[370px] min-w-0 shrink focus:outline-none focus:border-gray-600"
             placeholder="Enter VIN Number"
             value={formik.values.vinnumber}
             onChange={formik.handleChange}
