@@ -574,7 +574,7 @@
                 <SidebarSteps />
               </aside>
 
-              <main className="w-full xl:w-3/4 space-y-6 ">
+              <main className="w-full xl:w-3/4 space-y-6 overflow-x-hidden">
                 {/* this is heading */}
                 <div className='flex flex-col items-start sm:items-center xl:items-center sm:flex-row sm:flex md:flex lg:flex xl:flex mt-14 gap-5 sm:gap-0 lg:gap-0 xl:gap-0'>
                   <div className=''>
