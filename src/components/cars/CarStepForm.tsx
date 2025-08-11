@@ -14,8 +14,7 @@ type Car = {
   brands: string;
   owner: string;
   banksValue: string;
-};
-
+}
 
 export default function CarStepForm({
   onComplete,
@@ -55,7 +54,7 @@ export default function CarStepForm({
         const allBrandsObj = res.data?.[0]?.brands || {};
 
         const brandList = Object.entries(allBrandsObj).map(([key, brand]: [string, any]) => ({
-          _id: key, // use key like "toyota", "bmw"
+          _id: key, 
           ...brand,
         }));
         setBrandsMap(allBrandsObj);
@@ -77,7 +76,6 @@ export default function CarStepForm({
 
         const data = res.data;
         const modelsList = Object.keys(data.models || {});
-
 
         setModels(modelsList);
       } catch (error) {
@@ -116,7 +114,7 @@ export default function CarStepForm({
       banksValue
     };
 
-    console.log("📤 Sending payload to API:", payload);
+    console.log("Sending payload to API:", payload);
 
     try {
       const response = await axios.post('/api/quote', payload);
@@ -173,7 +171,6 @@ export default function CarStepForm({
                 setSelectedBrand(option);
                 setSelectedBrandId(option.value);
               }}
-
 
               style={{ width: '100%', borderRadius: 8, height: 40, outline: 'none', borderColor: '#d9d9d9', }}
               placeholder="Select Brand"
