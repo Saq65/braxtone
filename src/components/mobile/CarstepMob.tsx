@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Drawer } from 'antd';
 import CarStepForm from '../cars/CarStepForm';
+import { Grid } from 'antd';
+const { useBreakpoint } = Grid;
 
 type Props = {
   onComplete: (car: { [key: string]: string }) => void;
@@ -10,9 +12,13 @@ type Props = {
 
 export default function CarstepMob({ onComplete }: Props) {
   const [open, setOpen] = useState(false);
+  const screens = useBreakpoint();
+  const isMobile = !screens.lg;
+
+  if (!isMobile) return null;
 
   return (
-    <>
+    <div className='block lg:hidden'>
       <button
         onClick={() => setOpen(true)}
         className="ml-0 border border-dashed p-6 rounded text-center text-gray-800 font-semibold hover:bg-gray-50 cursor-pointer w-full"
@@ -23,7 +29,7 @@ export default function CarstepMob({ onComplete }: Props) {
       <Drawer
         placement="bottom"
         closable={false}
-        open={open}
+        open={open && isMobile}
         height="98.6%"
         style={{
           borderTopLeftRadius: '4px',
@@ -43,6 +49,6 @@ export default function CarstepMob({ onComplete }: Props) {
           }}
         />
       </Drawer>
-    </>
+    </div>
   );
 }

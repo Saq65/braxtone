@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Drawer } from 'antd';
 import DriverStepForm from '../drivers/DriverStepForm';
+import { Grid } from 'antd';
+const { useBreakpoint } = Grid;
 
 type Props = {
   onComplete: (driver: { [key: string]: string }) => void;
@@ -12,6 +14,10 @@ type Props = {
 
 export default function CarstepMob({ onComplete }: Props) {
   const [open, setOpen] = useState(false);
+    const screens = useBreakpoint();
+  const isMobile = !screens.lg;
+
+  if (!isMobile) return null;
 
   return (
     <>
@@ -25,7 +31,7 @@ export default function CarstepMob({ onComplete }: Props) {
       <Drawer
         placement="bottom"
         closable={false}
-        open={open}
+        open={open && isMobile}
         height="98.6%"
         style={{
           borderTopLeftRadius: '4px',
