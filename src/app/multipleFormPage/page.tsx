@@ -194,7 +194,11 @@
     };
 
     const handleVinNumberComplete = () => {
-      setAddedVinNumber(vinnumber);
+        const vin = formik.values.vinnumber?.trim();
+  if (!vin) return; // optional guard
+  setAddedVinNumber(vin);
+
+      // setAddedVinNumber(vinnumber);
       setShowVinNumber(false);
       setShowCarRunMiles(true);
       setVinnumberconfirm(true)

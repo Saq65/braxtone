@@ -24,8 +24,8 @@ const Payment = ({ selectedPackageName }: PaymentProps) => {
                             <div className="py-3 border-b border-[#dcdcdc]">
                                 <p className="px-5 font-semibold">Checkout</p>
                             </div>
-                            <div className="py-4 border-b border-[#f1f1f1] flex items-center justify-around w-full">
-                                <div className="w-[330px] py-3 border border-green-400 rounded-sm bg-[rgb(220,231,220)] flex items-center gap-2">
+                            <div className="py-4 border-b border-[#f1f1f1] flex items-center justify-around w-full ">
+                                <div className="w-[330px] py-3 border border-green-400 rounded-sm bg-[rgb(220,231,220)] flex items-center gap-2 mr-[auto]">
                                     <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center ml-2">
                                         <IoCheckmark color="white" size={12} />
                                     </div>
@@ -33,7 +33,7 @@ const Payment = ({ selectedPackageName }: PaymentProps) => {
                                 </div>
                             </div>
 
-                            <div className="mt-4 px-5">
+                            <div className="mt-4">
                                 <span>Card Type</span>
                                 <div className="flex items-center justify-between w-full mt-3">
                                     <div className="p-4 w-[48%]">
@@ -53,7 +53,7 @@ const Payment = ({ selectedPackageName }: PaymentProps) => {
                                 </div>
                             </div>
 
-                            <div className="mt-4 px-5">
+                            <div className="mt-4 ">
                                 <span>Card Details</span>
                                 <div className="flex items-center justify-around w-full flex-col">
                                     <div className="p-4 w-full">
