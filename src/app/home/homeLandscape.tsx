@@ -7,6 +7,7 @@ import 'swiper/css';
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Noto_Naskh_Arabic } from 'next/font/google';
+import Link from "next/link";
 
 const nunito = Nunito({
     subsets: ['latin'],
@@ -56,7 +57,7 @@ export default function HomeLandscape() {
                             transition={{ duration: 1.8, ease: "easeOut", delay: 0.6 }}
                             viewport={{ once: true, amount: 0.2 }}
                         >
-                            <p className={`${nunito.className} text-[22px] sm:text-[26px] md:text-[30px] lg:text-[36px] xl:text-[44px] 2xl:text-[56px] font-bold leading-tight text-[#1a1a1a]`}>
+                            <p className={`${nunito.className} text-[22px] sm:text-[26px] md:text-[30px] lg:text-[36px] xl:text-[44px] 2xl:text-[53 px] font-bold leading-tight text-[#1a1a1a]`}>
                                 <span className="text-[var(--primary)]">Compare, Choose, Save </span><br />
                                 & Get Fast Affordable <br />
                                 Car Insurance
@@ -68,12 +69,21 @@ export default function HomeLandscape() {
                             </p>
 
                             <div className="w-full flex justify-center md:justify-start">
-                                <div
+                                {/* <div
                                     onClick={() => router.push('/servicePage')}
                                     className="w-auto mt-10 py-3 px-6 lg:py-4 lg:px-8 bg-[var(--secondary)] opacity-90 text-white rounded-md text-sm sm:text-base lg:text-lg font-semibold hover:bg-[#005584] transition cursor-pointer text-center"
                                 >
                                     Explore Our Pricing
-                                </div>
+                                </div> */}
+
+                                <Link
+                                    href="/servicePage"
+                                    className="inline-flex items-center bg-[#003DA5] text-white font-medium px-6 py-2 relative overflow-hidden mt-10 py-3 px-6 lg:py-4 lg:px-8 text-white rounded-[6px] text-sm sm:text-base lg:text-lg font-semibold hover:bg-[#005584] transition cursor-pointer text-center"
+                                >
+                                    <span className="absolute left-0 top-0 bottom-0 w-6 bg-[#E5C8A0] clip-path-arrow"></span>
+
+                                    <span className="ml-4">Explore Our Pricing</span>
+                                </Link>
                             </div>
                         </motion.div>
 
@@ -99,7 +109,7 @@ export default function HomeLandscape() {
                         </motion.div>
                     </div>
 
-                    <div className="mt-30 w-full flex flex-col xl:flex-row items-center justify-between gap-6">
+                    <div className="mt-36 w-full flex flex-col xl:flex-row items-center justify-between gap-6">
                         <div className="w-full xl:w-[75%] sm:w-full bg-[#dbedf8] shadow px-4 py-4 overflow-hidden relative">
                             <div className="flex w-max gap-10 space-x-10 px-10 ">
                                 {['ex4', 'ex3', 'ex2', 'ex1'].map((img, index) => (

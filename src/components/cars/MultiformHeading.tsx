@@ -26,7 +26,7 @@ export default function MultiformHeading({  heading ,color}: MultiformHeaderProp
         <div className="flex items-start gap-4 flex-col sm:flex-row md:flex-row lg:flex-row sm:items-center md:items-center lg:items-center">
             
 
-            <div className="text-lg font-semibold w-5/6 sm:w-[500px]"
+            <div className="text-lg font-semibold w-5/6 sm:w-[500px] lg:w-[620px]"
              style={{ color: color || 'inherit' }} 
             >
                 {animationDone ? (

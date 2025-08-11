@@ -4,10 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --primary: #ff6700;
-  --primary2: #FF6700;
+  --primary2: #ff6700;
   --secondary: #002d97;
   --gradient: #fff2e2;
   --color-background: #fff2e2;
@@ -16,7 +15,7 @@
   --warning-color: #fbbf24;
   --text-color: #2a2a2a;
   --icon-color: #9b9999;
-  --font-family: 'GM Global Arabic';
+  --font-family: "GM Global Arabic";
   --border-color: #ff6700;
 }
 
@@ -35,10 +34,9 @@
   }
 }
 
-
 * {
-  -ms-overflow-style: none; 
-  scrollbar-width: none; 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 *::-webkit-scrollbar {
@@ -56,13 +54,17 @@
 }
 
 .ant-checkbox-checked .ant-checkbox-inner::after {
-  border-color: white; 
+  border-color: white;
 }
 
 .ant-checkbox-input:focus + .ant-checkbox-inner {
-  box-shadow: 0 0 0 2px rgba(255, 103, 0, 0.2); 
+  box-shadow: 0 0 0 2px rgba(255, 103, 0, 0.2);
 }
 
 .ant-checkbox-inner {
   border-color: var(--primary);
+}
+
+.clip-path-arrow {
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
 }
