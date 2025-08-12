@@ -29,9 +29,8 @@
   import PersonalDetails from '@/components/form/PersonalDetails';
   import CprForm from '@/components/form/CprForm';
   import { useRouter } from 'next/navigation';
-  import Addons from '@/app/Addons/page';
-  import Vinnumber from '@/components/vinNumber/vinnumber';
   import { useFormik } from 'formik';
+import Vinnumber from '@/components/VinNumber/vinnumber';
 
   export default function MultipleFormPage() {
     const [cars, setCars] = useState([
@@ -928,7 +927,7 @@
                 <>
                   {
                     showSoundGood && (
-                      <div className='mt-14 ml-18'>
+                      <div className='ml-5 mt-5 sm:mt-14 sm:ml-18 md:mt-14 md:ml-18 lg:mt-14 lg:ml-18 xl:mt-14 xl:ml-18'>
                         <button
                           onClick={() => {
                             setsoundsGoodvalue("sounds good");
