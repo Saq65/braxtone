@@ -347,7 +347,7 @@
           <div className="w-full max-w-7xl mx-auto px-3 md:px-10 sm:px-10 lg:px-10 xl:px-10 ">
             {/* here all data showing after added */}
             <div className='flex justify-center flex-col sm:items-center md:items-center lg:items-center xl:items-center items-start cursor-pointer
-            mt-30 sm:mt-10 md:mt-10 lg:mt-20 xl:mt-20 lg:mb-25 sm:mb-25 xl:mb-25 mb-0 gap-10'>
+            mt-30 sm:mt-10 md:mt-10 lg:mt-20 xl:mt-20 lg:mb-25 sm:mb-25 xl:mb-2 mb-0 gap-10 ml-6'>
               {addedCars.length > 0 && (
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
@@ -570,7 +570,7 @@
 
             {/* this is main part */}
             <div id='main-part' className="flex flex-col md:flex-row lg:flex-row xl:flex-row gap-5 w-full h-[91vh] sm:h-[81vh] md:h-[81vh] lg:h-[81vh] xl:h-[81vh] 2xl:h-[81vh] overflow-auto scrollbar-hide ">
-              <aside className="w-full xl:w-1/4 hidden md:block mt-14">
+              <aside className="w-full xl:w-1/4 lg:w-1/4 md:w-2/5 hidden md:block mt-14">
                 <SidebarSteps />
               </aside>
 
