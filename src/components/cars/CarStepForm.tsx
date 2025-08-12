@@ -267,7 +267,6 @@ export default function CarStepForm({
           </>
         )}
 
-
         {step === 5 && (
           <>
             <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's registration month</h2>
