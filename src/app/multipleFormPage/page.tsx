@@ -574,7 +574,7 @@ export default function MultipleFormPage() {
                     className="rounded-full object-cover h-auto border-2 border-white shadow"
                   />
                 </div>
-                <div className='ml-4 w-[100%]  sm:w-[42%] xl:w-[42%] md:w-[42%] lg:w-[42%]'>
+                <div className='ml-0 sm:ml-4 md:ml-4 lg:ml-4 xl:ml-4 w-[100%]  sm:w-[42%] xl:w-[42%] md:w-[42%] lg:w-[42%]'>
                   <MultiformHeading heading={activeHeader.heading} />
                 </div>
               </div>
@@ -638,7 +638,7 @@ export default function MultipleFormPage() {
                       onChange={formik.handleChange}
 
                       placeholder="Enter your car value"
-                      formik={formik} 
+                      formik={formik}
                     />
 
                     <NextButton
@@ -719,13 +719,13 @@ export default function MultipleFormPage() {
                   <MultiOption data={finance} onSelect={handleOptionSelectInFinanace} />
                   <NextBtn
                     disabled={!selectedFinanceOption}
-                    onClick={handleFinanceOnNext}  
+                    onClick={handleFinanceOnNext}
                     label="Next →"
                   />
                 </div>
               )}
               <>
-             
+
 
                 {showHowYoung && (
                   <div className="ml-0 sm:ml-10">
@@ -1013,6 +1013,24 @@ export default function MultipleFormPage() {
               {showOtpValidation && (
                 <>
                   <OtpValidation />
+
+                  <NextBtn
+                    // disabled={
+                    //   !personalData.nationality?.trim() ||
+                    //   !personalData.nationalId?.trim() ||
+                    //   !personalData.numberPlate?.trim()
+                    // }
+                    // onClick={() => {
+                    //   setPersonalDetails(false);
+                    //   setshowPackageType(false);
+                    //   setshowThirdParty(false);
+                    //   setshowCommunication(false);
+                    //   setshowPackages(false);
+                    //   setShowCPR(true)
+                    //   setPersonalDetails(false)
+                    // }}
+                    label="Next →"
+                  />
                 </>
               )}
 
