@@ -4,9 +4,8 @@ export interface FinanceData {
 }
 
 const finance: FinanceData[] = [
-    { id: 1, value: "Financed" },
-    { id: 2, value: "Leased" },
-    { id: 3, value: "It's paid in full" }
+    { id: 1, value: "Fully owned" },
+    { id: 2, value: "Mortgage" },
 ];
 
 const yesNoData: FinanceData[] = [

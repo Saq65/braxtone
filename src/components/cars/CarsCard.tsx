@@ -11,16 +11,16 @@ export default function CarCard({
 }) {
   return (
     <div
-      className={`sm:ml-7 md:ml-7 lg:ml-7 xl:ml-7 ml-0 flex items-center justify-between p-5 rounded-lg shadow-sm w-auto hover:shadow-md cursor-pointer
-        transition-colors duration-300 border sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px]
-        ${selected ? 'border-[#0068a2]' : 'border-gray-300'}`}
+      // className={`sm:ml-7 md:ml-7 lg:ml-7 xl:ml-7 ml-0 flex items-center justify-between p-5 rounded-lg shadow-sm w-auto hover:shadow-md cursor-pointer
+      //   transition-colors duration-300 border sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px]
+      //   ${selected ? 'border-[#0068a2]' : 'border-gray-300'}`}
     >
-      <div className="flex items-center gap-3">
+      {/* <div className="flex items-center gap-3">
         <img src="/asesst/images/car-1.png" alt="car" />
         <span>{name}</span>
-      </div>
+      </div> */}
 
-      <div className="ml-10">
+      {/* <div className="ml-10">
         <Switch
           checked={selected}
           onChange={onToggle}
@@ -29,7 +29,7 @@ export default function CarCard({
             backgroundColor: selected ? '#0068a2' : '#d9d9d9',
           }}
         />
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -6,7 +6,7 @@ type Props = {
   data: { id: number; value: string }[];
   onSelect: (selectedValue: string) => void;
   onNextClick: () => void;
-  formik: FormikProps<{ vinnumber: string }>; // Receive formik object from parent
+  formik: FormikProps<{ vinnumber: string }>;
 };
 
 export default function Vinnumber({ data, onSelect, onNextClick, formik }: Props) {

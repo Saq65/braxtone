@@ -52,7 +52,7 @@ export default function AddCarCard({ onClick, onComplete }: AddCarCardProps) {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4 }}
             >
-              + Add cars
+              + Add info.
             </motion.button>
           )}
         </AnimatePresence>

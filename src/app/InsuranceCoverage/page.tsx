@@ -34,8 +34,8 @@ const Page = () => {
       <div className='mt-8'>
         <Buttons
           onFirstClick={() => router.push('/servicePage')}
-          onSecondClick={() => router.push('/address')}
-          secondDisabled={selectedCard !== cardData2[1].id} 
+          onSecondClick={() => router.push('/multipleFormPage')}
+          secondDisabled={selectedCard !== cardData2[1].id}
         />
       </div>
 

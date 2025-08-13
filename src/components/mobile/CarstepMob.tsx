@@ -23,7 +23,7 @@ export default function CarstepMob({ onComplete }: Props) {
         onClick={() => setOpen(true)}
         className="ml-0 border border-dashed p-6 rounded text-center text-gray-800 font-semibold hover:bg-gray-50 cursor-pointer w-full"
       >
-        + Add cars
+        + Add info
       </button>
 
       <Drawer

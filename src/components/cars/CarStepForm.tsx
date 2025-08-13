@@ -2,6 +2,7 @@
 
 import { Select } from 'antd';
 import axios from 'axios';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
 const { Option } = Select;
@@ -31,14 +32,11 @@ export default function CarStepForm({
 
   const years = Array.from({ length: 8 }, (_, i) => `${2026 - i}`);
   const [selectedBrandId, setSelectedBrandId] = useState<string>('');
-  const carTrim = ['NAVIGATION', 'ROADSTER', 'STD'];
-  const registationMonth = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'];
-  const Ownership = ['Cash / Fully owned', 'Installment'];
   const [owner, setOwner] = useState('');
   const [registationMon, setregistationMon] = useState('');
   const [trim, setCarTrim] = useState('');
 
-  const totalSteps = owner === "Installment" ? 7 : 6;
+  // const totalSteps = owner === "Installment" ? 7 : 6;
   const [brands, setBrands] = useState<string[]>([]); useState([]);
   const [selectedBrand, setSelectedBrand] = useState<{ value: string; label: React.ReactNode } | undefined>(undefined);
   const [models, setModels] = useState<string[]>([]);
@@ -54,7 +52,7 @@ export default function CarStepForm({
         const allBrandsObj = res.data?.[0]?.brands || {};
 
         const brandList = Object.entries(allBrandsObj).map(([key, brand]: [string, any]) => ({
-          _id: key, 
+          _id: key,
           ...brand,
         }));
         setBrandsMap(allBrandsObj);
@@ -132,6 +130,12 @@ export default function CarStepForm({
     }
   };
 
+  const displayFormat = "MMMM";
+  const allowedMonths = Array.from({ length: 3 }, (_, i) =>
+    dayjs().add(i, "month").format(displayFormat)
+  );
+
+  const totalSteps= 4;
 
   return (
     <div className="relative mx-end w-[100%] sm:w-[380px] md:w-[380px] lg:w-[380px] 
@@ -175,10 +179,10 @@ export default function CarStepForm({
               style={{ width: '100%', borderRadius: 8, height: 40, outline: 'none', borderColor: '#d9d9d9', }}
               placeholder="Select Brand"
             >
-              <Option value="" disabled    style={{
-                  outline: 'none',
-                  borderColor: '#d9d9d9',
-                }}>Select</Option>
+              <Option value="" disabled style={{
+                outline: 'none',
+                borderColor: '#d9d9d9',
+              }}>Select</Option>
               {Object.entries(brandsMap).map(([key, brand]: [string, any]) => (
                 <Option key={key} value={key} style={{
                   outline: 'none',
@@ -203,7 +207,7 @@ export default function CarStepForm({
 
         {step === 2 && (
           <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">Select the production year</h2>
+            <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's year make</h2>
             <Select
               value={year}
               onChange={setYear}
@@ -245,103 +249,32 @@ export default function CarStepForm({
             </div>
           </>
         )}
-
+     
         {step === 4 && (
           <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's trim</h2>
-            <Select
-              value={trim}
-              onChange={setCarTrim}
-              style={{ width: '100%', borderRadius: 8, height: 40 }}
-              placeholder="Select car trim"
-            >
-              <Option value="">Select</Option>
-              {carTrim.map((m) => (
-                <Option key={m} value={m}>{m}</Option>
-              ))}
-            </Select>
-            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
-              <ProgressBar step={step} totalSteps={totalSteps} />
-              <StepNavigation canContinue={!!trim} onBack={() => setStep(3)} onNext={() => setStep(5)} />
-            </div>
-          </>
-        )}
+            <h2 className="text-md font-medium mb-3 text-gray-800">
+              Select the car's registration month
+            </h2>
 
-        {step === 5 && (
-          <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's registration month</h2>
             <Select
               value={registationMon}
               onChange={setregistationMon}
-              style={{ width: '100%', borderRadius: 8, height: 40 }}
+              style={{ width: "100%", borderRadius: 8, height: 40 }}
               placeholder="Select car trim"
             >
               <Option value="">Select</Option>
-              {registationMonth.map((m) => (
-                <Option key={m} value={m}>{m}</Option>
+              {allowedMonths.map((m) => (
+                <Option key={m} value={m}>
+                  {m}
+                </Option>
               ))}
             </Select>
-            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
-              <ProgressBar step={step} totalSteps={totalSteps} />
-              <StepNavigation canContinue={!!registationMon} onBack={() => setStep(4)} onNext={() => setStep(6)} />
-            </div>
-          </>
-        )}
 
-        {step === 6 && (
-          <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's ownership types</h2>
-            <Select
-              value={owner}
-              onChange={setOwner}
-              style={{ width: '100%', borderRadius: 8, height: 40 }}
-              placeholder="Select Manufacturer"
-            >
-              <Option value="">Select</Option>
-              {Ownership.map((m) => (
-                <Option key={m} value={m}>{m}</Option>
-              ))}
-            </Select>
-            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
-              <ProgressBar step={step} totalSteps={totalSteps} />
-              <StepNavigation
-                canContinue={!!owner}
-                onBack={() => setStep(5)}
-                onNext={() => {
-                  if (owner === "Installment") {
-                    setStep(7);
-                  } else {
-                    setStep(6);
-                  }
-                }}
-              />
-
-            </div>
-          </>
-        )}
-
-        {step === 7 && (
-          <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">Select your bank</h2>
-            <Select
-              value={banksValue}
-              onChange={(value) => {
-                setBankValue(value);
-                setBankSelected(true);
-              }}
-              style={{ width: '100%', borderRadius: 8, height: 40 }}
-              placeholder="Select car trim"
-            >
-              <Option value="">Select</Option>
-              {banks.map((m) => (
-                <Option key={m} value={m}>{m}</Option>
-              ))}
-            </Select>
             <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
               <ProgressBar step={step} totalSteps={totalSteps} />
               <div className="flex justify-between mt-4">
                 <button
-                  onClick={() => setStep(5)}
+                  onClick={() => setStep(3)}
                   className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100"
                 >
                   Back
@@ -357,9 +290,9 @@ export default function CarStepForm({
                   // })}
                   // onClick={handleSubmit}
                   type='submit'
-                  disabled={!banksValue}
+                  disabled={!registationMon}
                   className={`rounded-md w-[140px] py-4 mt-3 text-sm border border-gray-100 transition-colors duration-200
-                ${banksValue ? 'bg-[#0067a1] text-white hover:bg-[#005780]' : 'bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
+                ${registationMon ? 'bg-[#0067a1] text-white hover:bg-[#005780]' : 'bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
               `}
                 >
                   Add
@@ -369,6 +302,7 @@ export default function CarStepForm({
           </>
         )}
 
+    
       </form>
     </div>
   );
