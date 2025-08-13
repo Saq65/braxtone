@@ -30,6 +30,7 @@ import { useRouter } from 'next/navigation';
 import { FormikValues, useFormik } from 'formik';
 import Vinnumber from '@/components/VinNumber/vinnumber';
 import Input from '@/components/ui/Input';
+import OtpValidation from '@/components/auth/OtpValidation';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -111,7 +112,7 @@ export default function MultipleFormPage() {
   const [selectedPackage, setSelectedPackage] = useState<PackageType | null>(null);
   const [showCPR, setShowCPR] = useState(false);
   const [showAddOns, setshowAddOns] = useState(false);
-
+  const [showOtpValidation, setShowOtpValidation] = useState(false);
 
   const router = useRouter();
 
@@ -191,7 +192,7 @@ export default function MultipleFormPage() {
     setShowHowYoung(true)
     setVinnumberconfirm(false);
     setShowVinNumber(false);
-    const vin = formik.values.vinnumber?.trim();
+    const vin = formik.values.carValue?.trim();
     if (!vin) return;
     setAddedVinNumber(vin);
 
@@ -633,11 +634,11 @@ export default function MultipleFormPage() {
                 {showVinNumber && (
                   <motion.div>
                     <Input
-                      value={formik.values.vinnumber}
+                      value={formik.values.carValue}
                       onChange={formik.handleChange}
 
-                      placeholder="Enter your car's VIN number"
-                      formik={formik} // Ensure formik is passed down here
+                      placeholder="Enter your car value"
+                      formik={formik} 
                     />
 
                     <NextButton
@@ -737,7 +738,8 @@ export default function MultipleFormPage() {
                       onClick={() => {
                         setAgeConformed(true);
                         setShowHowYoung(false);
-                        setTrafficYesNo(true)
+                        setTrafficYesNo(false)
+                        setShowOtpValidation(true)
                       }}
                       label="Next →"
                     />
@@ -1004,6 +1006,13 @@ export default function MultipleFormPage() {
                     }}
                     label="Next →"
                   />
+                </>
+              )}
+
+              {/* OTP Validation */}
+              {showOtpValidation && (
+                <>
+                  <OtpValidation />
                 </>
               )}
 
