@@ -188,10 +188,9 @@ export default function MultipleFormPage() {
   };
 
   const handleVinNumberComplete = () => {
-    setShowCarRunMiles(true);
-    setShowVinNumber(true);
-    setShowCarRunMiles(true);
+    setShowHowYoung(true)
     setVinnumberconfirm(false);
+    setShowVinNumber(false);
     const vin = formik.values.vinnumber?.trim();
     if (!vin) return;
     setAddedVinNumber(vin);
@@ -225,8 +224,9 @@ export default function MultipleFormPage() {
   };
 
   const handleFinanceOnNext = () => {
-    setShowHowYoung(true);
+    // setShowHowYoung(true);
     setFinanceConfirmed(true);
+    setShowVinNumber(true);
     setShowFinance(false);
   };
   const handleOptionSelectInFinanace = (value: string) => {
@@ -374,25 +374,6 @@ export default function MultipleFormPage() {
               </motion.div>
             )}
 
-            {/* {addedDrivers.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[1]?.heading} />
-                {addedDrivers.slice(0, 1).map((entry, index) => (
-                  <div key={index} className="transition-all duration-700 transform">
-                    <div className='flex items-center gap-2'>
-                      <h3 className="text-lg font-semibold text-gray-700">
-                        {Object.values(entry).filter(Boolean).join(" ")}
-                      </h3>
-                      <BiPencil className='mt-1' onClick={() => setShowDriverForm(true)} />
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-            )} */}
 
             {selectedFinanceOption && financeConfirmed && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
@@ -737,7 +718,7 @@ export default function MultipleFormPage() {
                   <MultiOption data={finance} onSelect={handleOptionSelectInFinanace} />
                   <NextBtn
                     disabled={!selectedFinanceOption}
-                    onClick={handleFinanceOnNext}   // sets showVinNumber + financeConfirmed
+                    onClick={handleFinanceOnNext}  
                     label="Next →"
                   />
                 </div>

@@ -40,7 +40,6 @@ export default function BestDealForm() {
       return;
     }
 
-    // Sanitize phone number: remove any non-digit characters
     const sanitizedPhone = phone.replace(/\D/g, '');
 
     if (sanitizedPhone.length < 10) {
@@ -53,7 +52,7 @@ export default function BestDealForm() {
 
     const fullPhoneNumber = `${selectedCode.value}${sanitizedPhone}`;
 
-    console.log('Sending OTP to:', fullPhoneNumber); // Debugging line
+    console.log('Sending OTP to:', fullPhoneNumber); 
 
     try {
       const response = await fetch('/api/quote', {
@@ -62,14 +61,13 @@ export default function BestDealForm() {
         body: JSON.stringify({ phone: fullPhoneNumber }),
       });
 
-      // Log the entire response to understand its structure
       const data = await response.json();
       console.log('API Response:', data); 
 
       if (response.ok) {
         const otp = data?.data?.otp; 
         if (otp) {
-          console.log('OTP:', otp);  // Log OTP here if it exists
+          console.log('OTP:', otp); 
           setOtpStatus({ message: 'OTP sent successfully!', success: true });
           setTimer(30);
         } else {
@@ -77,7 +75,6 @@ export default function BestDealForm() {
           setOtpStatus({ message: 'OTP not received. Try again later.', success: false });
         }
       } else {
-        // Handle the error message if OTP was not sent
         setOtpStatus({ message: data.message || 'Failed to send OTP', success: false });
       }
     } catch (error) {
