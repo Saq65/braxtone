@@ -20,7 +20,7 @@ const MultiformHeader = () => {
 
     return (
         <div>
-            <div className="header px-6 lg:px-12 py-6 sticky top-0 z-50 bg-[#ff6700] sm:bg-transparent lg:bg-transparent xl:bg-transparent">
+            <div className="header px-6 lg:px-12 py-6 sticky top-0 z-50 bg-[#fff2e2] sm:bg-transparent lg:bg-transparent xl:bg-transparent">
                 <div className="flex justify-between items-center">
                     <div>
                         <Link href="/">
@@ -40,8 +40,6 @@ const MultiformHeader = () => {
                             {isOpen ? <IoClose size={28} color="white" /> : <HiOutlineMenuAlt3 size={28} className='text-[#0068a2] sm:[#fff]' />}
                         </button>
                     </div>
-
-
 
                     <div
                         className={`${montserrat.className} hidden lg:flex items-center text-black text-md font-medium gap-1 hover:underline cursor-pointer text-base/8 underline-offset-4`}

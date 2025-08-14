@@ -31,6 +31,8 @@ import { FormikValues, useFormik } from 'formik';
 import Vinnumber from '@/components/VinNumber/vinnumber';
 import Input from '@/components/ui/Input';
 import OtpValidation from '@/components/auth/OtpValidation';
+import BankList from '@/components/banklist/BankList';
+import Price from '@/components/price/Price';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -113,6 +115,17 @@ export default function MultipleFormPage() {
   const [showCPR, setShowCPR] = useState(false);
   const [showAddOns, setshowAddOns] = useState(false);
   const [showOtpValidation, setShowOtpValidation] = useState(false);
+  const [otpData, setOtpData] = useState(null);
+  const [showBankList, setShowBankList] = useState(false);
+  const [showPrice, setShowPrice] = useState(false);
+
+  const [selectedBank, setSelectedBank] = useState<string | null>(null);
+
+  const handleOtpData = (data) => {
+    setOtpData(data);
+    console.log("OTP Data received:", data);
+  };
+
 
   const router = useRouter();
 
@@ -199,7 +212,6 @@ export default function MultipleFormPage() {
     console.log("Vin Number completed: ", vin);
 
 
-
     console.log("Transitioning to Car Run Miles...");
   };
 
@@ -223,13 +235,20 @@ export default function MultipleFormPage() {
   const handlePersonalDataChange = (field: string, value: string) => {
     setpersonalData(prev => ({ ...prev, [field]: value }));
   };
-
   const handleFinanceOnNext = () => {
-    // setShowHowYoung(true);
     setFinanceConfirmed(true);
-    setShowVinNumber(true);
-    setShowFinance(false);
+
+    // If Mortgage is selected, show BankList
+    if (selectedFinanceOption === 'Mortgage') {
+      setShowBankList(true);
+      setShowFinance(false); // Hide finance options after selection
+    } else {
+      // Continue the normal flow if not Mortgage
+      setShowVinNumber(true);
+      setShowFinance(false);
+    }
   };
+
   const handleOptionSelectInFinanace = (value: string) => {
     setSelectedFinanceOption(value);
   };
@@ -266,18 +285,19 @@ export default function MultipleFormPage() {
   const handleOptionSelectPackage = (value: string) => {
     if (value === "Comprehensive") {
       setselectPackage(value);
-      setshowThirdParty(false)
-      setshowPackageType(true)
-    } else if (value = "Third-Party") {
-      setselectPackage(value)
-      setshowThirdParty(true)
-      setshowPackageType(false)
+      setshowThirdParty(false);
+      setshowPackageType(true);
+    } else if (value === "Third-Party") {
+
+      setselectPackage(value);
+      setshowThirdParty(true);
+      setshowPackageType(false);
+    } else {
+      setshowPackageType(false);
+      setshowThirdParty(false);
     }
-    else {
-      setshowPackageType(false)
-      setshowThirdParty(false)
-    }
-  }
+  };
+
 
   const [fileUploaded, setFileUploaded] = useState({
     nationalId: false,
@@ -344,17 +364,21 @@ export default function MultipleFormPage() {
     window.scrollTo(0, 0);
   }, []);
 
+  const handleBankSelect = (selectedBank: string) => {
+    setSelectedBank(selectedBank);
+    setShowBankList(false);
+  };
 
   return (
     <div className="min-h-screen bg-[linear-gradient(to_bottom,_#FFF2E2_0%,_white_30%,_white_70%,_#FFF2E2_100%)]   overflow-hidden scrollbar-hide">
-      <div className='fixed w-full bg-[#d3f0ff] sm:bg-transparent xl:bg-transparent lg:bg-transparent'>
+      <div className='fixed w-full bg-transparent sm:bg-transparent xl:bg-transparent lg:bg-transparent'>
         <MultiformHeader />
       </div>
       <div className=''>
         <div className="w-full max-w-7xl mx-auto px-3 md:px-10 sm:px-10 lg:px-10 xl:px-10 ">
           {/* here all data showing after added */}
           <div className='flex justify-center flex-col sm:items-center md:items-center lg:items-center xl:items-center items-start cursor-pointer
-            mt-30 sm:mt-10 md:mt-10 lg:mt-20 xl:mt-20 lg:mb-25 sm:mb-25 xl:mb-2 mb-0 gap-10 ml-6'>
+            mt-30 sm:mt-10 md:mt-10 lg:mt-20 xl:mt-20 lg:mb-25 sm:mb-25 xl:mb-20 mb-0 gap-10 ml-6'>
             {addedCars.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -551,6 +575,16 @@ export default function MultipleFormPage() {
               </div>
 
             </div>
+            <div ref={addedCarsRef}>
+              {selectedBank && !showBankList && (
+                <div className="flex items-center">
+                  <h3 className="text-lg font-semibold text-gray-700">
+                    Selected Bank: {selectedBank}
+                  </h3>
+                  <BiPencil className='mt-1' />
+                </div>
+              )}
+            </div>
 
 
 
@@ -713,17 +747,29 @@ export default function MultipleFormPage() {
 
               </>
 
-              {/* this is all multi option */}
-              {showFinance && (
-                <div className="ml-0 sm:ml-10">
-                  <MultiOption data={finance} onSelect={handleOptionSelectInFinanace} />
-                  <NextBtn
-                    disabled={!selectedFinanceOption}
-                    onClick={handleFinanceOnNext}
-                    label="Next →"
-                  />
-                </div>
-              )}
+              <div>
+                {/* Show finance options and Next button */}
+                {showFinance && (
+                  <div className="ml-0 sm:ml-10">
+                    <MultiOption data={finance} onSelect={handleOptionSelectInFinanace} />
+                    <NextBtn
+                      disabled={!selectedFinanceOption}
+                      onClick={handleFinanceOnNext}
+                      label="Next →"
+                    />
+                  </div>
+                )}
+
+                {showBankList && (
+                  <>
+                    <BankList onBankSelect={handleBankSelect} />
+                    <NextBtn onClick={() => {
+                      setShowVinNumber(true)
+                      setShowBankList(false);
+                    }} />
+                  </>
+                )}
+              </div>
               <>
 
 
@@ -907,7 +953,7 @@ export default function MultipleFormPage() {
                 )}
 
                 {/* Show Package Step ONLY when not showing personal details */}
-                {showPackages && !showPersonalDetails && (
+                {showPackages && (
                   <div className="ml-0 sm:ml-10 xl:ml-10 lg:ml-10 md:ml-10">
                     <MultiOption
                       data={packagesData}
@@ -1012,27 +1058,34 @@ export default function MultipleFormPage() {
               {/* OTP Validation */}
               {showOtpValidation && (
                 <>
-                  <OtpValidation />
-
+                  <OtpValidation onSubmitData={handleOtpData} />
                   <NextBtn
-                    // disabled={
-                    //   !personalData.nationality?.trim() ||
-                    //   !personalData.nationalId?.trim() ||
-                    //   !personalData.numberPlate?.trim()
-                    // }
-                    // onClick={() => {
-                    //   setPersonalDetails(false);
-                    //   setshowPackageType(false);
-                    //   setshowThirdParty(false);
-                    //   setshowCommunication(false);
-                    //   setshowPackages(false);
-                    //   setShowCPR(true)
-                    //   setPersonalDetails(false)
-                    // }}
+                    // disabled={!otpData}
+                    onClick={() => {
+                      setShowOtpValidation(false);
+                      setShowPrice(true);
+                    }}
                     label="Next →"
                   />
                 </>
               )}
+
+              {
+                showPrice && (
+                  <>
+                    <Price />
+                    <NextBtn
+                      onClick={() => {
+                        setShowPrice(false);
+                        setshowPackageType(true);
+                        setshowPackages(true)
+
+                      }}
+                      label="Next →"
+                    />
+                  </>
+                )}
+
 
               {/* add ons */}
               {/* <>

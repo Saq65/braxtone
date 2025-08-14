@@ -84,7 +84,7 @@ const Packages = ({ onSelect }: PackagesProps) => {
                 style={{
                   boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px',
                 }}
-                className="p-6 text-center w-[380px] h-[440px] rounded m-2 bg-white mb-4"
+                className="p-6 text-center w-auto sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px] h-[440px] rounded m-2 bg-white mb-4"
               >
                 <div className="flex flex-col items-start">
                   <h2 className="text-futura font-medium text-[16px]">

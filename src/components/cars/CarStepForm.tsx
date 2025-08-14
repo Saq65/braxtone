@@ -1,9 +1,8 @@
-'use client'
-
 import { Select } from 'antd';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
+import { IoIosArrowBack } from 'react-icons/io';
 
 const { Option } = Select;
 
@@ -36,8 +35,7 @@ export default function CarStepForm({
   const [registationMon, setregistationMon] = useState('');
   const [trim, setCarTrim] = useState('');
 
-  // const totalSteps = owner === "Installment" ? 7 : 6;
-  const [brands, setBrands] = useState<string[]>([]); useState([]);
+  const [brands, setBrands] = useState<string[]>([]);
   const [selectedBrand, setSelectedBrand] = useState<{ value: string; label: React.ReactNode } | undefined>(undefined);
   const [models, setModels] = useState<string[]>([]);
   const [brandsMap, setBrandsMap] = useState<Record<string, any>>({});
@@ -71,10 +69,8 @@ export default function CarStepForm({
     const fetchModels = async () => {
       try {
         const res = await axios.get(`/api/car/model?brandID=${selectedBrandId}`);
-
         const data = res.data;
         const modelsList = Object.keys(data.models || {});
-
         setModels(modelsList);
       } catch (error) {
         console.error('Failed to fetch models:', error);
@@ -98,7 +94,6 @@ export default function CarStepForm({
 
     fetchBrands();
   }, []);
-
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -135,142 +130,156 @@ export default function CarStepForm({
     dayjs().add(i, "month").format(displayFormat)
   );
 
-  const totalSteps= 4;
+  const totalSteps = 4;
+
+  useEffect(() => {
+    if (step === 1 && selectedBrandId) {
+      setStep(2);
+    }
+    if (step === 2 && year) {
+      setStep(3);
+    }
+    if (step === 3 && model) {
+      setStep(4);
+    }
+  }, [step, selectedBrandId, year, model]);
 
   return (
-    <div className="relative mx-end w-[100%] sm:w-[380px] md:w-[380px] lg:w-[380px] 
-      xl:w-[380px] ml-0 sm:ml-16 md:ml-16 lg:ml-16 xl:ml-16 pt-6 pb-2 
-      border border-0 sm:!border sm:!border-[#d2d0d0]  p-4 h-[260px] rounded-md mt-8">
+    <div className="relative mx-end w-[100%] sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px] ml-0 sm:ml-16 md:ml-16 lg:ml-16 xl:ml-16 pt-6 pb-2 border
+     border-0 sm:!border sm:!border-[#d2d0d0] p-4 h-[260px] rounded-md ">
+      <div className='flex justify-between items-start'>
+        <div>
+          <IoIosArrowBack
+            className="text-md cursor-pointer"
+            onClick={() => setStep((prev) => Math.max(prev - 1, 1))}
+          />
 
-      <button
-        onClick={onCancel}
-        className="absolute top-2 right-3 text-2xl text-gray-400 hover:text-gray-600 cursor-pointer"
-      >
-        ×
-      </button>
-      <form method='post' onSubmit={handleSubmit}>
-        {step === 1 && (
-          <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's Brand</h2>
-            <Select
-              labelInValue
-              value={
-                selectedBrand
-                  ? {
-                    value: selectedBrand.value,
-                    label: (
-                      <div className="flex items-center gap-2">
-                        <img
-                          src={brandsMap[selectedBrand.value]?.brandImage}
-                          alt={brandsMap[selectedBrand.value]?.brandName}
-                          className="w-6 h-6 object-contain"
-                        />
-                        {brandsMap[selectedBrand.value]?.brandName}
-                      </div>
-                    ),
-                  }
-                  : undefined
-              }
-              onChange={(option) => {
-                setSelectedBrand(option);
-                setSelectedBrandId(option.value);
-              }}
 
-              style={{ width: '100%', borderRadius: 8, height: 40, outline: 'none', borderColor: '#d9d9d9', }}
-              placeholder="Select Brand"
-            >
-              <Option value="" disabled style={{
-                outline: 'none',
-                borderColor: '#d9d9d9',
-              }}>Select</Option>
-              {Object.entries(brandsMap).map(([key, brand]: [string, any]) => (
-                <Option key={key} value={key} style={{
+        </div>
+        <button
+          onClick={onCancel}
+          className="absolute top-2 right-3 text-2xl text-gray-400 hover:text-gray-600 cursor-pointer"
+        >
+          ×
+        </button>
+      </div>
+
+      <div className='mt-6'>
+        <form method='post' onSubmit={handleSubmit}>
+          {step === 1 && (
+            <>
+              <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's Brand</h2>
+              <Select
+                labelInValue
+                value={
+                  selectedBrand
+                    ? {
+                      value: selectedBrand.value,
+                      label: (
+                        <div className="flex items-center gap-2">
+                          <img
+                            src={brandsMap[selectedBrand.value]?.brandImage}
+                            alt={brandsMap[selectedBrand.value]?.brandName}
+                            className="w-6 h-6 object-contain"
+                          />
+                          {brandsMap[selectedBrand.value]?.brandName}
+                        </div>
+                      ),
+                    }
+                    : undefined
+                }
+                onChange={(option) => {
+                  setSelectedBrand(option);
+                  setSelectedBrandId(option.value);
+                  setStep(2);
+                }}
+
+                style={{ width: '100%', borderRadius: 8, height: 40, outline: 'none', borderColor: '#d9d9d9', }}
+                placeholder="Select Brand"
+              >
+                <Option value="" disabled style={{
                   outline: 'none',
                   borderColor: '#d9d9d9',
-                }}>
-                  <div className="flex items-center gap-2">
-                    <img src={brand.brandImage} alt={brand.brandName} className="w-6 h-6 object-contain" />
-                    {brand.brandName}
-                  </div>
-                </Option>
-              ))}
-            </Select>
-
-
-            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+                }}>Select</Option>
+                {Object.entries(brandsMap).map(([key, brand]: [string, any]) => (
+                  <Option key={key} value={key} style={{
+                    outline: 'none',
+                    borderColor: '#d9d9d9',
+                  }}>
+                    <div className="flex items-center gap-2">
+                      <img src={brand.brandImage} alt={brand.brandName} className="w-6 h-6 object-contain" />
+                      {brand.brandName}
+                    </div>
+                  </Option>
+                ))}
+              </Select>
 
               <ProgressBar step={step} totalSteps={totalSteps} />
-              <StepNavigation canContinue={!!selectedBrandId} onBack={onCancel} onNext={() => setStep(2)} />
-            </div>
-          </>
-        )}
+            </>
+          )}
 
-        {step === 2 && (
-          <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's year make</h2>
-            <Select
-              value={year}
-              onChange={setYear}
-              style={{ width: '100%', borderRadius: 8, height: 40 }}
-              placeholder="Select Year"
-            >
-              <Option value="">Select</Option>
-              {years.map((y) => (
-                <Option key={y} value={y}>{y}</Option>
-              ))}
-            </Select>
-            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+          {step === 2 && (
+            <>
+              <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's year make</h2>
+              <Select
+                value={year}
+                onChange={(val) => {
+                  setYear(val);
+                  setStep(3);
+                }}
+
+                style={{ width: '100%', borderRadius: 8, height: 40 }}
+                placeholder="Select Year"
+              >
+                <Option value="">Select</Option>
+                {years.map((y) => (
+                  <Option key={y} value={y}>{y}</Option>
+                ))}
+              </Select>
               <ProgressBar step={step} totalSteps={totalSteps} />
-              <StepNavigation canContinue={!!year} onBack={() => setStep(1)} onNext={() => setStep(3)} />
-            </div>
+            </>
+          )}
 
-          </>
-        )}
-
-        {step === 3 && (
-          <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">Select the car model</h2>
-            <Select
-              value={model}
-              onChange={setModel}
-              style={{ width: '100%', borderRadius: 8, height: 40 }}
-              placeholder="Select Model"
-            >
-              <Option value="">Select</Option>
-              {models.map((m) => (
-                <Option key={m} value={m}>{m}</Option>
-              ))}
-            </Select>
-
-            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
+          {step === 3 && (
+            <>
+              <h2 className="text-md font-medium mb-3 text-gray-800">Select the car model</h2>
+              <Select
+                value={model}
+                onChange={(val) => {
+                  setModel(val);
+                  setStep(4);
+                }} style={{ width: '100%', borderRadius: 8, height: 40 }}
+                placeholder="Select Model"
+              >
+                <Option value="">Select</Option>
+                {models.map((m) => (
+                  <Option key={m} value={m}>{m}</Option>
+                ))}
+              </Select>
               <ProgressBar step={step} totalSteps={totalSteps} />
-              <StepNavigation canContinue={!!model} onBack={() => setStep(2)} onNext={() => setStep(4)} />
+            </>
+          )}
 
-            </div>
-          </>
-        )}
-     
-        {step === 4 && (
-          <>
-            <h2 className="text-md font-medium mb-3 text-gray-800">
-              Select the car's registration month
-            </h2>
+          {step === 4 && (
+            <>
+              <h2 className="text-md font-medium mb-3 text-gray-800">
+                Select the car's registration month
+              </h2>
 
-            <Select
-              value={registationMon}
-              onChange={setregistationMon}
-              style={{ width: "100%", borderRadius: 8, height: 40 }}
-              placeholder="Select car trim"
-            >
-              <Option value="">Select</Option>
-              {allowedMonths.map((m) => (
-                <Option key={m} value={m}>
-                  {m}
-                </Option>
-              ))}
-            </Select>
+              <Select
+                value={registationMon}
+                onChange={setregistationMon}
+                style={{ width: "100%", borderRadius: 8, height: 40 }}
+                placeholder="Select car trim"
+              >
+                <Option value="">Select</Option>
+                {allowedMonths.map((m) => (
+                  <Option key={m} value={m}>
+                    {m}
+                  </Option>
+                ))}
+              </Select>
 
-            <div className="fixed top-[81%] w-[90%] sm:static sm:w-auto sm:block">
               <ProgressBar step={step} totalSteps={totalSteps} />
               <div className="flex justify-between mt-4">
                 <button
@@ -280,72 +289,31 @@ export default function CarStepForm({
                   Back
                 </button>
                 <button
-                  // onClick={() => onComplete({
-                  //   year,
-                  //   company,
-                  //   manufacturer,
-                  //   model,
-                  //   brands: selectedBrandId,
-                  //   owner,
-                  // })}
-                  // onClick={handleSubmit}
                   type='submit'
                   disabled={!registationMon}
                   className={`rounded-md w-[140px] py-4 mt-3 text-sm border border-gray-100 transition-colors duration-200
-                ${registationMon ? 'bg-[#0067a1] text-white hover:bg-[#005780]' : 'bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
-              `}
+                  ${registationMon ? 'bg-[#0067a1] text-white hover:bg-[#005780]' : 'bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}`}
                 >
                   Add
                 </button>
               </div>
-            </div>
-          </>
-        )}
+            </>
+          )}
 
-    
-      </form>
+        </form>
+      </div>
+
     </div>
   );
 }
 
 function ProgressBar({ step, totalSteps }: { step: number; totalSteps: number }) {
   return (
-    <div className="h-[6px] w-full bg-gray-200 rounded my-4">
+    <div className="h-[6px] w-full bg-gray-200 rounded my-4 mt-[50%]">
       <div
         className="h-full bg-[#0068a2] rounded transition-all duration-300"
         style={{ width: `${(step / totalSteps) * 100}%` }}
       />
-    </div>
-  );
-}
-
-function StepNavigation({
-  onBack,
-  onNext,
-  canContinue,
-}: {
-  onBack: () => void;
-  onNext: () => void;
-  canContinue: boolean;
-
-}) {
-  return (
-    <div className="flex justify-between mt-4">
-      <button
-        onClick={onBack}
-        className="rounded-md w-[140px] py-4 mt-3 text-sm text-gray-600 hover:bg-gray-100 border border-gray-100"
-      >
-        Back
-      </button>
-      <button
-        onClick={onNext}
-        disabled={!canContinue}
-        className={`rounded-md w-[140px] py-4 mt-3 text-sm border border-gray-100 transition-colors duration-200
-          ${canContinue ? 'bg-[#0067a1] text-white hover:bg-[#005780]' : 'bg-[#d0d0d0] text-gray-800 hover:bg-gray-300'}
-        `}
-      >
-        Next
-      </button>
     </div>
   );
 }
