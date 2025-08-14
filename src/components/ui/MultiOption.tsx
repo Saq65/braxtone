@@ -23,7 +23,7 @@ function MultiOption({ data, onSelect }: Props) {
         <div
           key={item.id}
           onClick={() => handleOptionClick(item.value)}
-          className={`max-w-[370px] min-w-auto border border-gray-300 py-4 gap-3 mt-5 rounded-md text-center font-semibold cursor-pointer hover:bg-gray-200 ${
+          className={`max-w-[370px] min-w-auto border border-gray-300 py-4 gap-3 mt-5 rounded-md text-center font-[600] cursor-pointer hover:bg-gray-200 ${
             selectedOption === item.value ? 'bg-gray-200' : 'bg-white text-gray-700'
           }`}
         >

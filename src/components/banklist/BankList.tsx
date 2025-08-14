@@ -31,9 +31,9 @@ const BankList = (props: Props) => {
     };
 
     return (
-        <div className='w-[100%] sm:w-[50%] md:w-[50%] lg:w-[50%] xl:w-[50%]'>
-            <h2 className="text-lg font-semibold">Bank List</h2>
-            <Select className='w-[100%]' onChange={handleBankChange}>
+        <div className='w-[100%] sm:w-[50%] md:w-[50%] lg:w-[45%] xl:w-[38%] ml-1 sm:ml-16 md:ml-16 lg:ml-16 xl:ml-16 '>
+            {/* <h2 className="text-lg font-semibold">Bank List</h2> */}
+            <Select placeholder="Select a bank" className='w-[100%]' onChange={handleBankChange}>
                 {banks.map((bank, index) => (
                     <Option  value={bank}>
                         {bank}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Select } from 'antd';
 import { FaPhoneAlt } from 'react-icons/fa';
 import { IoPerson } from 'react-icons/io5';
@@ -28,6 +28,8 @@ const OtpValidation = (props: Props) => {
     const [filteredCountries, setFilteredCountries] = useState(countries);
     const [showOtp, setShowOtp] = useState(false);
 
+    const inputs = useRef<(HTMLInputElement | null)[]>([]); // Reference to all OTP input fields
+
     const handleSearch = (value: string) => {
         setSearchTerm(value);
         const filtered = countries.filter((country) =>
@@ -40,13 +42,29 @@ const OtpValidation = (props: Props) => {
         setSelectedCountry(value);
     };
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+        if (e.target.value) {
+            // Focus on the next input if it's not the last one
+            if (index < 5) {
+                inputs.current[index + 1]?.focus();
+            }
+        }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+        // If backspace is pressed, move to the previous input
+        if (e.key === "Backspace" && index > 0 && !inputs.current[index]?.value) {
+            inputs.current[index - 1]?.focus();
+        }
+    };
+
     useEffect(() => {
         axios.post('/api/quote', { /* request body */ })
             .then(response => {
                 console.log('OTP Data:', response.data);
             })
             .catch(error => {
-                // handle error
+                console.log('Error fetching OTP Data:', error);
             });
     }, []);
 
@@ -61,17 +79,16 @@ const OtpValidation = (props: Props) => {
                             value={selectedCountry}
                             onChange={handleCountryChange}
                             filterOption={false}
-                            style={{height:'50px'}}
+                            style={{ height: '50px' }}
                             className='w-[100%] sm:w-[48.7%] md:w-[48.7%] lg:w-[46%] xl:w-[46%] h-[50px] ml-0 sm:ml-12 xl:ml-12 lg:ml-12 outline-none'
                         >
                             {filteredCountries.map((country, index) => (
-                                <Option className='p-10 outline-none' value={country.name}  >
+                                <Option className='p-10 outline-none' value={country.name} key={index}>
                                     {`${country.name} (${country.code})`}
                                 </Option>
                             ))}
                         </Select>
                     </div>
-
 
                     <div className="flex items-center justify-between py-3 px-2 gap-2 border border-gray-300 focus-within:outline-none focus-within:ring-1 focus-within:ring-[#002d97] 
                     sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17 shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] rounded-[6px] hover:shadow-md transition-shadow duration-200 w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
@@ -80,29 +97,23 @@ const OtpValidation = (props: Props) => {
                         <span className="w-[38%] text-gray-400 font-normal" onClick={() => setShowOtp(true)} >Send OTP</span>
                     </div>
 
-
-                    {
-                        showOtp && (
-                            <div className="flex items-center justify-between py-3 gap-2 sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17 rounded-[6px] w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
-                                {[...Array(6)].map((_, index) => (
-                                    <span key={index} className="border border-gray-300 focus-within:outline-none focus-within:ring-1 focus-within:ring-[#002d97] shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] hover:shadow-md transition-shadow duration-200">
-                                        <input
-                                            type="text"
-                                            maxLength={1}
-                                            className="w-12 h-12 outline-none text-center"
-                                            inputMode="numeric"
-                                            onKeyPress={(e) => {
-                                                if (!/^[0-9]$/i.test(e.key)) {
-                                                    e.preventDefault();
-                                                }
-                                            }}
-                                        />
-
-                                    </span>
-                                ))}
-                            </div>
-                        )
-                    }
+                    {showOtp && (
+                        <div className="flex items-center justify-between py-3 gap-2 sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17 rounded-[6px] w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
+                            {[...Array(6)].map((_, index) => (
+                                <span key={index} className="border border-gray-300 focus-within:outline-none focus-within:ring-1 focus-within:ring-[#002d97] shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] hover:shadow-md transition-shadow duration-200">
+                                    <input
+                                        ref={(el) => (inputs.current[index] = el)} // Reference each input
+                                        type="text"
+                                        maxLength={1}
+                                        className="w-12 h-12 outline-none text-center"
+                                        inputMode="numeric"
+                                        onChange={(e) => handleChange(e, index)} // Move focus on input change
+                                        onKeyDown={(e) => handleKeyDown(e, index)} // Handle backspace behavior
+                                    />
+                                </span>
+                            ))}
+                        </div>
+                    )}
 
                     <div className="flex items-center py-3 px-2 gap-2 border border-gray-300 focus-within:outline-none focus-within:ring-1 focus-within:ring-[#002d97]
                      sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17 shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] rounded-[6px] hover:shadow-md transition-shadow duration-200 w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
@@ -118,7 +129,6 @@ const OtpValidation = (props: Props) => {
                 </div>
             </form>
         </div>
-
     );
 };
 

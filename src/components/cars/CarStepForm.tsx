@@ -42,13 +42,13 @@ export default function CarStepForm({
   const [banks, setbanks] = useState<string[]>([]);
   const [banksValue, setBankValue] = useState('');
   const [bankSelected, setBankSelected] = useState(false);
+const [formCompleted, setFormCompleted] = useState(false);
 
   useEffect(() => {
     const fetchBrands = async () => {
       try {
         const res = await axios.get('/api/brands');
         const allBrandsObj = res.data?.[0]?.brands || {};
-
         const brandList = Object.entries(allBrandsObj).map(([key, brand]: [string, any]) => ({
           _id: key,
           ...brand,
@@ -85,7 +85,7 @@ export default function CarStepForm({
       try {
         const res = await axios.get('/api/banks');
         const data = res.data;
-        const bankList = Object.keys(data.banks || {})
+        const bankList = Object.keys(data.banks || {});
         setbanks(bankList);
       } catch (error) {
         console.error('Client fetch error:', error);
@@ -95,35 +95,34 @@ export default function CarStepForm({
     fetchBrands();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const payload = {
-      year,
-      company,
-      manufacturer,
-      model,
-      brands: selectedBrandId,
-      owner,
-      banksValue
-    };
+ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    console.log("Sending payload to API:", payload);
-
-    try {
-      const response = await axios.post('/api/quote', payload);
-      console.log(" Quote created successfully:", response.data);
-
-      if (response.data && response.data.id) {
-        console.log("Saved to DB with ID:", response.data.id);
-      } else {
-        console.warn(" API response did not return a valid ID.");
-      }
-
-      onComplete(response.data.data);
-    } catch (error: any) {
-      console.error(" Error while creating quote:", error.response?.data || error.message);
-    }
+  // Your existing code for preparing the payload
+  const payload = {
+    year,
+    company,
+    manufacturer,
+    model,
+    brands: selectedBrandId,
+    owner,
+    banksValue,
   };
+
+  try {
+    const response = await axios.post('/api/quote', payload);
+    console.log("Quote created successfully:", response.data);
+
+    // Set form completed once the last step is done
+    if (response.data && response.data.id) {
+      setFormCompleted(true); // Mark the form as completed
+    }
+    onComplete(response.data.data);
+  } catch (error) {
+    console.error("Error while creating quote:", error);
+  }
+};
+
 
   const displayFormat = "MMMM";
   const allowedMonths = Array.from({ length: 3 }, (_, i) =>
@@ -132,29 +131,21 @@ export default function CarStepForm({
 
   const totalSteps = 4;
 
-  useEffect(() => {
-    if (step === 1 && selectedBrandId) {
-      setStep(2);
-    }
-    if (step === 2 && year) {
-      setStep(3);
-    }
-    if (step === 3 && model) {
-      setStep(4);
-    }
-  }, [step, selectedBrandId, year, model]);
+  // Handling the back step
+  const handleBackClick = () => {
+    setStep(prev => Math.max(prev - 1, 1));
+  };
 
   return (
-    <div className="relative mx-end w-[100%] sm:w-[380px] md:w-[380px] lg:w-[380px] xl:w-[380px] ml-0 sm:ml-16 md:ml-16 lg:ml-16 xl:ml-16 pt-6 pb-2 border
-     border-0 sm:!border sm:!border-[#d2d0d0] p-4 h-[260px] rounded-md ">
+    <div className="relative mx-end w-[100%] sm:w-[380px] md:w-[380px] lg:w-[380px] 
+     xl:w-[380px] ml-0 sm:ml-16 md:ml-16 lg:ml-16 xl:ml-16 pt-6 pb-2 border border-0 sm:!border sm:!border-[#d2d0d0]
+      p-5 h-[260px] rounded-md">
       <div className='flex justify-between items-start'>
         <div>
           <IoIosArrowBack
             className="text-md cursor-pointer"
-            onClick={() => setStep((prev) => Math.max(prev - 1, 1))}
+            onClick={handleBackClick}
           />
-
-
         </div>
         <button
           onClick={onCancel}
@@ -168,7 +159,7 @@ export default function CarStepForm({
         <form method='post' onSubmit={handleSubmit}>
           {step === 1 && (
             <>
-              <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's Brand</h2>
+              <h2 className="text-[17px] font-[500] mb-3 text-gray-800 ">Select the car's Brand</h2>
               <Select
                 labelInValue
                 value={
@@ -191,9 +182,8 @@ export default function CarStepForm({
                 onChange={(option) => {
                   setSelectedBrand(option);
                   setSelectedBrandId(option.value);
-                  setStep(2);
+                  setStep(2); // Manually advance to next step
                 }}
-
                 style={{ width: '100%', borderRadius: 8, height: 40, outline: 'none', borderColor: '#d9d9d9', }}
                 placeholder="Select Brand"
               >
@@ -220,14 +210,13 @@ export default function CarStepForm({
 
           {step === 2 && (
             <>
-              <h2 className="text-md font-medium mb-3 text-gray-800">Select the car's year make</h2>
+              <h2 className="text-[16px] font-[500] mb-3 text-gray-800">Select the car's year make</h2>
               <Select
                 value={year}
                 onChange={(val) => {
                   setYear(val);
                   setStep(3);
                 }}
-
                 style={{ width: '100%', borderRadius: 8, height: 40 }}
                 placeholder="Select Year"
               >
@@ -242,7 +231,7 @@ export default function CarStepForm({
 
           {step === 3 && (
             <>
-              <h2 className="text-md font-medium mb-3 text-gray-800">Select the car model</h2>
+              <h2 className="text-[16px] font-[500] mb-3 text-gray-800">Select the car model</h2>
               <Select
                 value={model}
                 onChange={(val) => {
@@ -262,7 +251,7 @@ export default function CarStepForm({
 
           {step === 4 && (
             <>
-              <h2 className="text-md font-medium mb-3 text-gray-800">
+              <h2 className="text-[16px] font-[500] mb-3 text-gray-800">
                 Select the car's registration month
               </h2>
 
@@ -299,19 +288,17 @@ export default function CarStepForm({
               </div>
             </>
           )}
-
         </form>
       </div>
-
     </div>
   );
 }
 
 function ProgressBar({ step, totalSteps }: { step: number; totalSteps: number }) {
   return (
-    <div className="h-[6px] w-full bg-gray-200 rounded my-4 mt-[50%]">
+    <div className="h-[9px] w-full bg-gray-200 rounded mt-4">
       <div
-        className="h-full bg-[#0068a2] rounded transition-all duration-300"
+        className="h-full bg-[#0068a2]  rounded transition-all duration-300 mt-[170%] sm:mt-6 md:mt-12 lg:mt-12 xl:mt-12"
         style={{ width: `${(step / totalSteps) * 100}%` }}
       />
     </div>

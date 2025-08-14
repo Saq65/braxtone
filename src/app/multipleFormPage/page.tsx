@@ -197,10 +197,6 @@ export default function MultipleFormPage() {
   });
 
 
-  const handleVinNumberChange = (value: string) => {
-    setVinnumber(value);
-  };
-
   const handleVinNumberComplete = () => {
     setShowHowYoung(true)
     setVinnumberconfirm(false);
@@ -237,14 +233,12 @@ export default function MultipleFormPage() {
   };
   const handleFinanceOnNext = () => {
     setFinanceConfirmed(true);
-
-    // If Mortgage is selected, show BankList
     if (selectedFinanceOption === 'Mortgage') {
       setShowBankList(true);
-      setShowFinance(false); // Hide finance options after selection
-    } else {
-      // Continue the normal flow if not Mortgage
+      setShowFinance(false);
+      setShowVinNumber(false);
       setShowVinNumber(true);
+    } else {
       setShowFinance(false);
     }
   };
@@ -298,7 +292,6 @@ export default function MultipleFormPage() {
     }
   };
 
-
   const [fileUploaded, setFileUploaded] = useState({
     nationalId: false,
     driverLicense: false,
@@ -309,6 +302,16 @@ export default function MultipleFormPage() {
   const handleFileStatusChange = (type: string, status: boolean) => {
     setFileUploaded((prev) => ({ ...prev, [type]: status }));
   };
+
+  const handleBankSelect = (selectedBank: string) => {
+    setSelectedBank(selectedBank);
+    setShowBankList(false);
+  };
+
+  const handleBankClick = () => {
+    setShowVinNumber(true);
+  };
+
   useEffect(() => {
     if (addedVinNumber && addedCarsRef.current) {
       addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -364,10 +367,8 @@ export default function MultipleFormPage() {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleBankSelect = (selectedBank: string) => {
-    setSelectedBank(selectedBank);
-    setShowBankList(false);
-  };
+
+
 
   return (
     <div className="min-h-screen bg-[linear-gradient(to_bottom,_#FFF2E2_0%,_white_30%,_white_70%,_#FFF2E2_100%)]   overflow-hidden scrollbar-hide">
@@ -763,10 +764,12 @@ export default function MultipleFormPage() {
                 {showBankList && (
                   <>
                     <BankList onBankSelect={handleBankSelect} />
-                    <NextBtn onClick={() => {
-                      setShowVinNumber(true)
-                      setShowBankList(false);
-                    }} />
+                    <NextBtn
+                      disabled={!selectedBank}
+                      onClick={handleBankClick}
+                      label="Next →"
+                    />
+
                   </>
                 )}
               </div>
