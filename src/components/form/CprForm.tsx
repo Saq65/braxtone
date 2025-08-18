@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 type Props = {
-  onFileStatusChange: (type: string, status: boolean) => void; // Prop to handle file status change
+  onFileStatusChange: (type: string, status: boolean) => void;
 };
 
 type FormValues = {
@@ -35,7 +35,7 @@ const CprForm = ({ onFileStatusChange }: Props) => {
     validationSchema: Yup.object({
       nationalId: Yup.mixed()
         .test('fileFormat', 'Invalid file format. Only JPG, PNG, JPEG, or PDF files are allowed.', (value) => {
-          if (value) {
+          if (value && value instanceof File) {
             const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
             return allowedTypes.includes(value.type);
           }
@@ -44,7 +44,7 @@ const CprForm = ({ onFileStatusChange }: Props) => {
         .nullable(),
       driverLicense: Yup.mixed()
         .test('fileFormat', 'Invalid file format. Only JPG, PNG, JPEG, or PDF files are allowed.', (value) => {
-          if (value) {
+          if (value && value instanceof File) {
             const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
             return allowedTypes.includes(value.type);
           }
@@ -53,7 +53,7 @@ const CprForm = ({ onFileStatusChange }: Props) => {
         .nullable(),
       ownershipCard: Yup.mixed()
         .test('fileFormat', 'Invalid file format. Only JPG, PNG, JPEG, or PDF files are allowed.', (value) => {
-          if (value) {
+          if (value && value instanceof File) {
             const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
             return allowedTypes.includes(value.type);
           }

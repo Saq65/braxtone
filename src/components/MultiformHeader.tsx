@@ -29,7 +29,7 @@ const MultiformHeader = () => {
                                 alt="BRAXTONE"
                                 width={120}
                                 height={32}
-                                className="object-cover h-5 w-auto"
+                                className="object-cover h-5 w-auto" 
                                 priority
                             />
                         </Link>
@@ -37,7 +37,7 @@ const MultiformHeader = () => {
 
                     <div className="lg:hidden">
                         <button onClick={() => setIsOpen(!isOpen)}>
-                            {isOpen ? <IoClose size={28} color="white" /> : <HiOutlineMenuAlt3 size={28} className='text-[#0068a2] sm:[#fff]' />}
+                            {isOpen ? <IoClose size={28} color="#0158ab" /> : <HiOutlineMenuAlt3 size={28} className='text-[#0068a2] sm:[#fff]' />}
                         </button>
                     </div>
 

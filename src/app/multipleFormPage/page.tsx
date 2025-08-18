@@ -30,7 +30,7 @@ import { useRouter } from 'next/navigation';
 import { FormikValues, useFormik } from 'formik';
 import Vinnumber from '@/components/VinNumber/vinnumber';
 import Input from '@/components/ui/Input';
-import OtpValidation from '@/components/auth/OtpValidation';
+import OtpValidation, { OtpValidationHandle } from '@/components/auth/OtpValidation';
 import BankList from '@/components/banklist/BankList';
 import Price from '@/components/price/Price';
 
@@ -118,15 +118,33 @@ export default function MultipleFormPage() {
   const [otpData, setOtpData] = useState(null);
   const [showBankList, setShowBankList] = useState(false);
   const [showPrice, setShowPrice] = useState(false);
-
+  const [showCarValueSummary, setShowCarValueSummary] = useState(false);
   const [selectedBank, setSelectedBank] = useState<string | null>(null);
+  const [addedCarValue, setAddedCarValue] = useState<string | null>(null);
 
-  const handleOtpData = (data) => {
+  const otpRef = useRef<OtpValidationHandle>(null);
+
+  const handleOtpData = (data: {
+    country: string;
+    phone: string;
+    name: string;
+    email: string;
+    otp: string;
+  }) => {
     setOtpData(data);
+    setShowOtpValidation(false);
+    setShowPrice(true);
     console.log("OTP Data received:", data);
   };
 
-
+  const formattedCarValue =
+    addedCarValue
+      ? new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 0,
+      }).format(Number(addedCarValue))
+      : "";
   const router = useRouter();
 
   const handleCarMilesChange = (val: number) => {
@@ -196,8 +214,23 @@ export default function MultipleFormPage() {
     },
   });
 
+  const toNumber = (val: unknown) => {
+    if (val == null) return null;
+    const s = String(val).replace(/[^\d.]/g, "");
+    if (s === "" || s === ".") return null;
+    const n = parseFloat(s);
+    return Number.isFinite(n) ? n : null;
+  };
 
   const handleVinNumberComplete = () => {
+    const value = formik.values.carValue?.trim();
+    if (!value) return;
+    const raw = formik.values.carValue;
+    const n = toNumber(raw);
+    if (n == null) return;
+
+    setAddedCarValue(String(n));
+    setShowCarValueSummary(true);
     setShowHowYoung(true)
     setVinnumberconfirm(false);
     setShowVinNumber(false);
@@ -233,11 +266,12 @@ export default function MultipleFormPage() {
   };
   const handleFinanceOnNext = () => {
     setFinanceConfirmed(true);
+    setShowVinNumber(true)
     if (selectedFinanceOption === 'Mortgage') {
       setShowBankList(true);
       setShowFinance(false);
       setShowVinNumber(false);
-      setShowVinNumber(true);
+      setShowVinNumber(false);
     } else {
       setShowFinance(false);
     }
@@ -306,6 +340,7 @@ export default function MultipleFormPage() {
   const handleBankSelect = (selectedBank: string) => {
     setSelectedBank(selectedBank);
     setShowBankList(false);
+    setShowVinNumber(true)
   };
 
   const handleBankClick = () => {
@@ -443,26 +478,6 @@ export default function MultipleFormPage() {
             )}
 
 
-            {useCarYesNoConfermed && selectUseCar && (
-              <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[6]?.heading} />
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-semibold text-gray-700">{selectUseCar}</h3>
-                  <BiPencil className="mt-1" />
-                </div>
-              </div>
-            )}
-
-            {ageConfermed && selectAge && (
-              <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[7]?.heading} />
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-semibold text-gray-700">{selectAge}</h3>
-                  <BiPencil className="mt-1" />
-                </div>
-              </div>
-            )}
-
             {confirmselectTraffic && selectTraffic && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
                 <MultiformHeading color="#8b8b8b" heading={MultiFormheader[8]?.heading} />
@@ -546,18 +561,6 @@ export default function MultipleFormPage() {
               )
             }
 
-            {selectedPackage && (
-              <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading="Selected Package" />
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-semibold text-gray-700">
-                    {selectedPackage.packageName}
-                  </h3>
-
-                </div>
-              </div>
-            )}
-
             <div ref={addedCarsRef} className=''>
               {/* <MultiformHeading color="#8b8b8b" heading="your document uploaded" /> */}
               <div className=''>
@@ -576,20 +579,64 @@ export default function MultipleFormPage() {
               </div>
 
             </div>
-            <div ref={addedCarsRef}>
-              {selectedBank && !showBankList && (
-                <div className="flex items-center">
+
+
+            {selectedBank && !showBankList && (
+              <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading="Selected Bank is" />
+                <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold text-gray-700">
-                    Selected Bank: {selectedBank}
+                    {selectedBank}
                   </h3>
                   <BiPencil className='mt-1' />
                 </div>
-              )}
-            </div>
+              </div>
+            )}
 
 
+            {showCarValueSummary && !showVinNumber && (
+              <motion.div
+                ref={addedCarsRef}
+                className="ml-10 space-y-2"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <MultiformHeading color="#8b8b8b" heading="Car Value" />
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-gray-700">
+                    {formattedCarValue || addedCarValue}
+                  </h3>
+                  <BiPencil className="mt-1 cursor-pointer" />
+                </div>
+              </motion.div>
+            )}
+
+
+            {ageConfermed && selectAge && (
+              <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[7]?.heading} />
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-gray-700">{selectAge}</h3>
+                  <BiPencil className="mt-1" />
+                </div>
+              </div>
+            )}
+
+                        {selectedPackage && (
+              <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading="Selected Package" />
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-gray-700">
+                    {selectedPackage.packageName}
+                  </h3>
+
+                </div>
+              </div>
+            )}
 
           </div>
+
+
 
           {/* this is main part */}
           <div id='main-part' className="flex flex-col md:flex-row lg:flex-row xl:flex-row gap-5 w-full h-[91vh] sm:h-[81vh] md:h-[81vh] lg:h-[81vh] xl:h-[81vh] 2xl:h-[81vh] overflow-auto scrollbar-hide ">
@@ -671,7 +718,7 @@ export default function MultipleFormPage() {
                     <Input
                       value={formik.values.carValue}
                       onChange={formik.handleChange}
-
+                      name="carValue"
                       placeholder="Enter your car value"
                       formik={formik}
                     />
@@ -1060,11 +1107,13 @@ export default function MultipleFormPage() {
 
               {/* OTP Validation */}
               {showOtpValidation && (
+
                 <>
-                  <OtpValidation onSubmitData={handleOtpData} />
+                  <OtpValidation ref={otpRef} onSubmitData={handleOtpData} />
                   <NextBtn
-                    // disabled={!otpData}
+                    disabled={otpData === ""}
                     onClick={() => {
+                      otpRef.current?.submit()
                       setShowOtpValidation(false);
                       setShowPrice(true);
                     }}
@@ -1073,11 +1122,13 @@ export default function MultipleFormPage() {
                 </>
               )}
 
+              {/* here is the price show */}
               {
                 showPrice && (
                   <>
                     <Price />
                     <NextBtn
+                      disabled=""
                       onClick={() => {
                         setShowPrice(false);
                         setshowPackageType(true);

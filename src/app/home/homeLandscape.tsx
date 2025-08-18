@@ -113,7 +113,7 @@ export default function HomeLandscape() {
                         <div className="w-full xl:w-[75%] lg:w-[72%] md:w-[70%] sm:w-full bg-[#dbedf8] shadow px-4 py-4 overflow-hidden relative">
                             <div className="flex w-max gap-10 space-x-10 px-10 animate-marquee">
                                 {['ex4', 'ex3', 'ex2', 'ex1'].map((img, index) => (
-                                    <div key={index} className="flex justify-center items-center h-10 p-2">
+                                    <div key={index} className="flex justify-center items-center h-10 p-2 gap-[20px]">
                                         <Image
                                             src={`/asesst/images/${img}.png`}
                                             alt={img}
