@@ -23,7 +23,7 @@ export default function MultiformHeading({  heading ,color}: MultiformHeaderProp
     }, [totalAnimationTime])
 
     return (
-        <div className="flex items-start gap-4 flex-col sm:flex-row md:flex-row lg:flex-row sm:items-center md:items-center lg:items-center">
+        <div className="flex items-start gap-4 flex-col sm:flex-row md:flex-row lg:flex-row sm:items-center md:items-center lg:items-center ">
             
 
             <div className="text-lg font-medium w-[100%] sm:w-[500px] lg:w-[620px]"
@@ -32,35 +32,19 @@ export default function MultiformHeading({  heading ,color}: MultiformHeaderProp
                 {animationDone ? (
                     heading
                 ) : (
-                    <motion.div
-                        className="flex flex-wrap"
-                        initial="hidden"
-                        animate="visible"
-                        variants={{
-                            visible: {
-                                transition: {
-                                    staggerChildren: 0.03, 
-                                },
-                            },
-                        }}
+                    <div
+               
                     >
                         {letters.map((char, idx) => (
-                            <motion.span
+                            <span
                                 key={idx}
                                 className="inline-block"
-                                variants={{
-                                    hidden: { opacity: 0, x: -10 },
-                                    visible: { opacity: 1, x: 0 },
-                                }}
-                                transition={{
-                                    duration: 0.3,
-                                    ease: 'easeOut',
-                                }}
+                             
                             >
                                 {char === ' ' ? '\u00A0' : char}
-                            </motion.span>
+                            </span>
                         ))}
-                    </motion.div>
+                    </div>
 
 
                 )}

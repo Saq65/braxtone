@@ -27,7 +27,7 @@ type FormValues = {
   name: string;
   email: string;
   otpRequested: boolean;
-  otpDigits: string[]; // exactly 6
+  otpDigits: string[];
 };
 
 export type OtpValidationHandle = { submit: () => void };
@@ -86,7 +86,6 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(({ onSubmitData }, 
   };
 
   const handleSendOtp = async () => {
-    // require minimal info before OTP
     await formik.validateForm();
     if (formik.errors.country || formik.errors.mobileNumber) return;
     formik.setFieldValue('otpRequested', true, false);
@@ -167,7 +166,7 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(({ onSubmitData }, 
             {Array.from({ length: 6 }).map((_, i) => (
               <span key={i} className="border border-gray-300 focus-within:outline-none focus-within:ring-1 focus-within:ring-[#002d97] shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] hover:shadow-md transition-shadow duration-200">
                 <input
-                  ref={(el) => (inputsRef.current[i] = el)}
+                  ref={(el) => { inputsRef.current[i] = el; }}
                   type="text"
                   maxLength={1}
                   className="w-12 h-12 outline-none text-center"
@@ -213,6 +212,7 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(({ onSubmitData }, 
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            required
           />
         </div>
         {formik.touched.email && formik.errors.email && (

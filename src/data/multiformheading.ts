@@ -9,7 +9,7 @@ export const MultiFormheader: MultiFormheader[] = [
     {
         id: '1',
         image: '/asesst/images/dania-smile.png',
-        heading: 'Alright. These are the cars that I found. Which would you like to insure?',
+        heading: 'Ready to begin? Enter your car details to get started with your insurance.',
     },
     {
         id: '2',
