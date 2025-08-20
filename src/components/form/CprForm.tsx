@@ -110,7 +110,13 @@ const CprForm = ({ onFileStatusChange }: Props) => {
       <form onSubmit={formik.handleSubmit}>
         <div className="flex flex-col gap-y-4 ml-0 sm:ml-17 md:ml-17 lg:ml-17 xl:ml-17">
           {/* National ID Section */}
+          <div>
+            <div className="border border-[#002d97] w-[100%] sm:w-[37%] md:w-[37%] lg:w-[37%] xl:w-[37%] flex items-center justify-between py-3 px-4 rounded-[5px] cursor-pointer">
+              <span className="text-[#000]">01/09/2025</span>
+            </div>
+          </div>
           <div className="flex gap-4 items-center">
+
             <div className="border border-gray-300 w-[100%] sm:w-[37%] md:w-[37%] lg:w-[37%] xl:w-[37%] flex items-center justify-between py-3 px-4 rounded-[5px] cursor-pointer">
               <span className="text-[#b8b8b8]">National ID (CPR) - Photo</span>
               <span

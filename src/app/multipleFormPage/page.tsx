@@ -28,11 +28,12 @@ import PersonalDetails from '@/components/form/PersonalDetails';
 import CprForm from '@/components/form/CprForm';
 import { useRouter } from 'next/navigation';
 import { FormikValues, useFormik } from 'formik';
-import Vinnumber from '@/components/VinNumber/vinnumber';
 import Input from '@/components/ui/Input';
 import OtpValidation, { OtpValidationHandle } from '@/components/auth/OtpValidation';
 import BankList from '@/components/banklist/BankList';
 import Price from '@/components/price/Price';
+import AddOns from '@/components/AddOns/AddOns';
+import Vinnumber from '@/components/VinNumber/vinnumber';
 
 export default function MultipleFormPage() {
   const [cars, setCars] = useState([
@@ -42,11 +43,9 @@ export default function MultipleFormPage() {
   const [showForm, setShowForm] = useState(false);
   const [addedCars, setAddedCars] = useState<{ [key: string]: string }[]>([]);
   const [carConfirmed, setCarConfirmed] = useState(false);
-  const [addedDrivers, setAddedDrivers] = useState<{ [key: string]: string }[]>([]);
-  const [driverConfirmed, setDriverConfirmed] = useState(false);
   const [financeConfirmed, setFinanceConfirmed] = useState(false);
   const [showFinance, setShowFinance] = useState(false);
-  const [showVinNumber, setShowVinNumber] = useState(false);
+  const [showCarValue, setshowCarValue] = useState(false);
   const [vinNumberConfirm, setVinnumberconfirm] = useState(false);
   const [selectedFinanceOption, setSelectedFinanceOption] = useState<string | null>(null);
 
@@ -79,9 +78,6 @@ export default function MultipleFormPage() {
   const [confirmselectClaim, setconfirmselectClaim] = useState(false);
   const [showConfirmselectClaim, setShowConfirmselectClaim] = useState(false);
   const [confirmselectSound, setconfirmselectSound] = useState(false);
-
-
-  const [vinnumber, setVinnumber] = useState<string>('');
   const [addedVinNumber, setAddedVinNumber] = useState<string | null>(null);
   const [addedCarMiles, setAddedCarMiles] = useState<number | null>(null);
   const [addedBhdValue, setAddedBhdValue] = useState<number | null>(null);
@@ -115,14 +111,20 @@ export default function MultipleFormPage() {
   const [showCPR, setShowCPR] = useState(false);
   const [showAddOns, setshowAddOns] = useState(false);
   const [showOtpValidation, setShowOtpValidation] = useState(false);
-  const [otpData, setOtpData] = useState(null);
   const [showBankList, setShowBankList] = useState(false);
   const [showPrice, setShowPrice] = useState(false);
   const [showCarValueSummary, setShowCarValueSummary] = useState(false);
   const [selectedBank, setSelectedBank] = useState<string | null>(null);
   const [addedCarValue, setAddedCarValue] = useState<string | null>(null);
-
+  const [OtpformData, setOtpFormData] = useState<any>(null);
+  const [showVinNumber, setShowVinNumber] = useState(false);
+  const [showPriceSelected, setShowPriceSelected] = useState(false);
+  const [priceBHD, setPriceBHD] = useState<number | null>(null);
   const otpRef = useRef<OtpValidationHandle>(null);
+
+  const handleFormSubmit = (data: { country: string, phone: string, name: string, email: string, otp: string }) => {
+    setOtpFormData(data);
+  };
 
   const handleOtpData = (data: {
     country: string;
@@ -131,10 +133,7 @@ export default function MultipleFormPage() {
     email: string;
     otp: string;
   }) => {
-    setOtpData(data);
-    setShowOtpValidation(false);
-    setShowPrice(true);
-    console.log("OTP Data received:", data);
+    setOtpFormData(data);
   };
 
   const formattedCarValue =
@@ -195,15 +194,9 @@ export default function MultipleFormPage() {
 
   const formik = useFormik({
     initialValues: {
-      vinNumber: '',
       carValue: '',
     },
     validationSchema: Yup.object({
-      vinNumber: Yup.string()
-        .required('VIN number is required')
-        .min(17, 'VIN number must be exactly 17 characters')
-        .max(17, 'VIN number cannot exceed 17 characters')
-        .matches(/^[A-Z0-9]*$/, 'VIN number must be uppercase letters and digits only'),
 
       carValue: Yup.string()
         .required('Car value is required')
@@ -233,7 +226,7 @@ export default function MultipleFormPage() {
     setShowCarValueSummary(true);
     setShowHowYoung(true)
     setVinnumberconfirm(false);
-    setShowVinNumber(false);
+    setshowCarValue(false);
     const vin = formik.values.carValue?.trim();
     if (!vin) return;
     setAddedVinNumber(vin);
@@ -243,7 +236,6 @@ export default function MultipleFormPage() {
 
     console.log("Transitioning to Car Run Miles...");
   };
-
 
   const [communicationData, setCommunicationData] = useState({
     country: '',
@@ -255,6 +247,7 @@ export default function MultipleFormPage() {
     nationality: '',
     nationalId: '',
     numberPlate: '',
+    selectedPackage: selectedPackage?.packageName
   });
 
   const handleCommunicationChange = (field: string, value: string) => {
@@ -264,14 +257,15 @@ export default function MultipleFormPage() {
   const handlePersonalDataChange = (field: string, value: string) => {
     setpersonalData(prev => ({ ...prev, [field]: value }));
   };
+
   const handleFinanceOnNext = () => {
     setFinanceConfirmed(true);
-    setShowVinNumber(true)
+    setshowCarValue(true)
     if (selectedFinanceOption === 'Mortgage') {
       setShowBankList(true);
       setShowFinance(false);
-      setShowVinNumber(false);
-      setShowVinNumber(false);
+      setshowCarValue(false);
+      setshowCarValue(false);
     } else {
       setShowFinance(false);
     }
@@ -279,10 +273,6 @@ export default function MultipleFormPage() {
 
   const handleOptionSelectInFinanace = (value: string) => {
     setSelectedFinanceOption(value);
-  };
-
-  const handleOptionSelectInCarUse = (value: string) => {
-    setSelectUseCar(value);
   };
 
   const handleOptionSelectInHowMuchAge = (value: string) => {
@@ -340,11 +330,11 @@ export default function MultipleFormPage() {
   const handleBankSelect = (selectedBank: string) => {
     setSelectedBank(selectedBank);
     setShowBankList(false);
-    setShowVinNumber(true)
+    setshowCarValue(true)
   };
 
   const handleBankClick = () => {
-    setShowVinNumber(true);
+    setshowCarValue(true);
   };
 
   useEffect(() => {
@@ -358,9 +348,10 @@ export default function MultipleFormPage() {
     if (addedCars.length > 0 && addedCarsRef.current) {
       addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  }, [addedCars, financeConfirmed, showVinNumber, showCarRunMiles,
+  }, [addedCars, financeConfirmed, showCarValue, showCarRunMiles,
     showBHD, showYesNo, showHowYoung, trafficYesNo, showMartial, showRegisterd,
-    showInsurenceYesNo, showClaim, confirmselectSound, comminicationFormData, selectedPackage
+    showInsurenceYesNo, showClaim, confirmselectSound, comminicationFormData, selectedPackage,
+    OtpformData, personalData, showPriceSelected
   ]);
 
   let activeHeader = MultiFormheader[0];
@@ -390,7 +381,7 @@ export default function MultipleFormPage() {
     activeHeader = MultiFormheader[5];
   } else if (carMiles) {
     activeHeader = MultiFormheader[4];
-  } else if (showVinNumber) {
+  } else if (showCarValue) {
     activeHeader = MultiFormheader[3];
   } else if (showFinance) {
     activeHeader = MultiFormheader[2];
@@ -399,10 +390,14 @@ export default function MultipleFormPage() {
   }
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    setTimeout(() => {
+      setPriceBHD(12.345);
+    }, 1000);
   }, []);
 
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
 
   return (
@@ -561,25 +556,6 @@ export default function MultipleFormPage() {
               )
             }
 
-            <div ref={addedCarsRef} className=''>
-              {/* <MultiformHeading color="#8b8b8b" heading="your document uploaded" /> */}
-              <div className=''>
-                {Object.values(fileUploaded).some((status) => status) && (
-                  <div className='flex items-start justify-start flex-col'>
-                    <h3 className="text-lg font-semibold text-gray-700">National ID: {fileUploaded.nationalId ? '✅ Uploaded' : 'Not Uploaded'}</h3>
-                    <h3 className="text-lg font-semibold text-gray-700">Driver License: {fileUploaded.driverLicense ? '✅ Uploaded' : 'Not Uploaded'}</h3>
-                    <h3 className="text-lg font-semibold text-gray-700">Ownership Card: {fileUploaded.ownershipCard ? '✅ Uploaded' : 'Not Uploaded'}</h3>
-                  </div>
-                )}
-                {/* <BiPencil className="mt-1 cursor-pointer" onClick={() => {
-                    // Allow editing or reselecting the package
-                    setshowPackages(true);
-                    setPersonalDetails(false);
-                  }} /> */}
-              </div>
-
-            </div>
-
 
             {selectedBank && !showBankList && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
@@ -594,7 +570,7 @@ export default function MultipleFormPage() {
             )}
 
 
-            {showCarValueSummary && !showVinNumber && (
+            {showCarValueSummary && !showCarValue && (
               <motion.div
                 ref={addedCarsRef}
                 className="ml-10 space-y-2"
@@ -622,24 +598,99 @@ export default function MultipleFormPage() {
               </div>
             )}
 
-                        {selectedPackage && (
+            {OtpformData && (
+              <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <MultiformHeading color="#8b8b8b" heading="Selected Package" />
+                <div className="flex items-center gap-2">
+                  <div className='flex gap-2 items-center'>
+                    <p><>Country:</> {OtpformData.country}</p>
+                    <p><>Phone:</> {OtpformData.phone}</p>
+                    <p><>Name:</> {OtpformData.name}</p>
+                    <p><>Email:</> {OtpformData.email}</p>
+                  </div>
+
+                  <div>
+                    <BiPencil />
+                  </div>
+                </div>
+              </div>
+            )}
+                   {/* added price */}
+            <div ref={addedCarsRef}>
+              {showPriceSelected && priceBHD !== null && (
+                <div ref={addedCarsRef} className="ml-10 space-y-2">
+                  <MultiformHeading color="#8b8b8b" heading="Selected Price" />
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-semibold text-gray-700">
+                      {priceBHD.toFixed(3)} BHD
+                    </h3>
+                    <BiPencil className="mt-1" />
+                  </div>
+                </div>
+              )}
+
+            </div>
+
+            {selectedPackage && (
               <div ref={addedCarsRef} className="ml-10 space-y-2">
                 <MultiformHeading color="#8b8b8b" heading="Selected Package" />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold text-gray-700">
                     {selectedPackage.packageName}
                   </h3>
-
+                  <div>
+                    <BiPencil />
+                  </div>
                 </div>
               </div>
             )}
 
+
+            <div ref={addedCarsRef}>
+              {personalData.nationalId && personalData.numberPlate && (
+                <div className="ml-10 space-y-2">
+                  <MultiformHeading color="#8b8b8b" heading="Personal Details" />
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-semibold text-gray-700">
+                      <>National ID:</> {personalData.nationalId}
+                    </h3>
+                    <div>
+                      {/* <BiPencil onClick={() => setShowPersonalDetails(true)} /> */}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-semibold text-gray-700">
+                      <>Plate Number:</> {personalData.numberPlate}
+                    </h3>
+                    <div>
+                      {/* <BiPencil onClick={() => setShowPersonalDetails(true)} /> */}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+     
+
+            {/*    <div ref={addedCarsRef} className=''>
+             <MultiformHeading color="#8b8b8b" heading="your document uploaded" /> */}
+            {/* <div className=''>
+                  {Object.values(fileUploaded).some((status) => status) && (
+                    <div className='flex items-start justify-start flex-col'>
+                      <h3 className="text-lg font-semibold text-gray-700">National ID: {fileUploaded.nationalId ? ' Uploaded' : 'Not Uploaded'}</h3>
+                      <h3 className="text-lg font-semibold text-gray-700">Driver License: {fileUploaded.driverLicense ? ' Uploaded' : 'Not Uploaded'}</h3>
+                      <h3 className="text-lg font-semibold text-gray-700">Ownership Card: {fileUploaded.ownershipCard ? ' Uploaded' : 'Not Uploaded'}</h3>
+                    </div>
+                  )}
+            
+                </div> 
+
+            </div>*/}
+
           </div>
 
-
-
           {/* this is main part */}
-          <div id='main-part' className="flex flex-col md:flex-row lg:flex-row xl:flex-row gap-5 w-full h-[91vh] sm:h-[81vh] md:h-[81vh] lg:h-[81vh] xl:h-[81vh] 2xl:h-[81vh] overflow-auto scrollbar-hide ">
+          <div id='main-part' className="flex flex-col md:flex-row lg:flex-row xl:flex-row  w-full h-[91vh] sm:h-[81vh] md:h-[81vh] lg:h-[81vh] xl:h-[81vh] 2xl:h-[81vh] overflow-auto scrollbar-hide ">
             <aside className="w-full xl:w-1/4 lg:w-1/4 md:w-2/5 hidden md:block mt-14">
               <SidebarSteps />
             </aside>
@@ -684,16 +735,6 @@ export default function MultipleFormPage() {
                   </div>
                 )}
 
-                {/* {showForm && (
-                    <div className="mt-6">
-                      <CarStepForm
-                        onCancel={() => setShowForm(false)}
-                        onComplete={handleCarFormComplete}
-                      />
-                    </div>
-                  )} */}
-
-
                 {showForm && (
                   <motion.div
                     className="mt-6"
@@ -713,7 +754,7 @@ export default function MultipleFormPage() {
 
               {/* this is vin number */}
               <>
-                {showVinNumber && (
+                {showCarValue && (
                   <motion.div>
                     <Input
                       value={formik.values.carValue}
@@ -721,6 +762,7 @@ export default function MultipleFormPage() {
                       name="carValue"
                       placeholder="Enter your car value"
                       formik={formik}
+
                     />
 
                     <NextButton
@@ -1024,17 +1066,7 @@ export default function MultipleFormPage() {
                       setPersonalDetails(true);
                     }} />}
 
-                    {/* <NextBtn
-                        disabled={selectedPackage === null}
-                        onClick={() => {
-                          setPersonalDetails(true);
-                          setshowPackageType(false);
-                          setshowThirdParty(false);
-                          setshowCommunication(false);
-                          setshowPackages(false);
-                        }}
-                        label="Next →"
-                      /> */}
+
                   </div>
                 )}
 
@@ -1042,7 +1074,6 @@ export default function MultipleFormPage() {
                 {showPersonalDetails && (
                   <>
                     <PersonalDetails
-                      nationality={personalData.nationality}
                       nationalId={personalData.nationalId}
                       numberPlate={personalData.numberPlate}
                       onChange={handlePersonalDataChange}
@@ -1050,11 +1081,8 @@ export default function MultipleFormPage() {
                     />
 
                     <NextBtn
-                      disabled={
-                        !personalData.nationality?.trim() ||
-                        !personalData.nationalId?.trim() ||
-                        !personalData.numberPlate?.trim()
-                      }
+                      disabled={!personalData.nationalId?.trim() || !personalData.numberPlate?.trim()}
+
                       onClick={() => {
                         setPersonalDetails(false);
                         setshowPackageType(false);
@@ -1086,19 +1114,7 @@ export default function MultipleFormPage() {
                       setshowCommunication(false);
                       setshowPackages(false);
                       setShowCPR(false);
-                      const addonsData = JSON.stringify(selectedPackage?.addons || []);
-
-                      const queryString = new URLSearchParams({
-                        packageName: selectedPackage?.packageName || '',
-                        addons: addonsData,
-                      }).toString();
-
-
-                      const fullUrl = `/Addons?${queryString}`;
-
-                      router.push(fullUrl);
-
-                      setshowAddOns(true);
+                      setShowVinNumber(true)
                     }}
                     label="Next →"
                   />
@@ -1111,10 +1127,11 @@ export default function MultipleFormPage() {
                 <>
                   <OtpValidation ref={otpRef} onSubmitData={handleOtpData} />
                   <NextBtn
-                    disabled={otpData === ""}
+                    disabled={!showOtpValidation}
                     onClick={() => {
                       otpRef.current?.submit()
                       setShowOtpValidation(false);
+                      handleFormSubmit
                       setShowPrice(true);
                     }}
                     label="Next →"
@@ -1126,13 +1143,17 @@ export default function MultipleFormPage() {
               {
                 showPrice && (
                   <>
-                    <Price />
+                    <Price
+                      price={12.345}
+                      onPriceSet={(price) => setPriceBHD(price)}
+                    />
                     <NextBtn
-                      disabled=""
+                      disabled={!priceBHD}
                       onClick={() => {
                         setShowPrice(false);
                         setshowPackageType(true);
                         setshowPackages(true)
+                        setShowPriceSelected(true);
 
                       }}
                       label="Next →"
@@ -1140,15 +1161,37 @@ export default function MultipleFormPage() {
                   </>
                 )}
 
-
               {/* add ons */}
-              {/* <>
-                  {
-                    showAddOns && (
-                      <Addons />
-                    )
-                  }
-                </> */}
+              {
+                showAddOns && (
+                  <>
+                    <AddOns />
+                    <NextBtn
+                      disabled=""
+                      onClick={() => {
+                        setshowAddOns(false)
+                        router.push('/payment')
+                      }}
+                    />
+                  </>
+                )
+              }
+
+              {
+                showVinNumber && (
+                  <>
+                    <Vinnumber />
+
+                    <NextBtn
+                      onClick={() => {
+                        setShowVinNumber(false)
+                        setshowAddOns(true)
+                      }}
+                    />
+                  </>
+                )
+              }
+
             </main>
           </div>
         </div>

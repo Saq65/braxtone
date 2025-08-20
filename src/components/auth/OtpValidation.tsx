@@ -134,8 +134,7 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(({ onSubmitData }, 
             filterOption={false}
             style={{ height: 50 }}
             className="w-[100%] sm:w-[48.7%] md:w-[48.7%] lg:w-[46%] xl:w-[46%] h-[50px] ml-0 sm:ml-12 xl:ml-12 lg:ml-12 outline-none"
-            options={filtered.map(c => ({ label: `${c.name} (${c.code})`, value: c.name }))}
-          />
+            options={filtered.map(c => ({ label: `${c.name} (${c.code})`, value: c.name }))} />
           {formik.touched.country && formik.errors.country && (
             <p className="text-red-500 text-sm ml-0 sm:ml-12">{formik.errors.country}</p>
           )}

@@ -1,32 +1,16 @@
-'use client';
 import React, { useState } from 'react';
-import { IoCheckmark } from "react-icons/io5";
+import { Checkbox } from 'antd';
+import { IoCheckmark } from 'react-icons/io5';
 
 type ConfirmationProps = {
-    nationality: string;
     nationalId: string;
     numberPlate: string;
     onChange: (field: string, value: string) => void;
     selectedPackageName?: string;
 };
 
-const nationalities = [
-  'Indian', 'American', 'British', 'Bahraini',
-  'Saudi', 'Emirati', 'Qatari', 'Kuwaiti'
-];
-
-
-const PersonalDetails = ({ nationality, nationalId, numberPlate, selectedPackageName, onChange }: ConfirmationProps) => {
-    const [showOptions, setShowOptions] = useState(false);
-    const filtered = nationalities.filter(c =>
-        c.toLowerCase().includes(nationality.toLowerCase())
-    );
-
-    const handleSelect = (selectedCountry: string) => {
-        onChange('nationality', selectedCountry);
-        setShowOptions(false);
-    };
-
+const PersonalDetails = ({ nationalId, numberPlate, selectedPackageName, onChange }: ConfirmationProps) => {
+    const [showExpiryDate, setShowExpiryDate] = useState(false);
 
     return (
         <div>
@@ -41,35 +25,6 @@ const PersonalDetails = ({ nationality, nationalId, numberPlate, selectedPackage
 
                 <form action="#">
                     <div className="flex flex-col gap-y-4">
-
-                        <div className="relative">
-                            <input
-                                type="text"
-                                value={nationality}
-                                onChange={(e) => {
-                                    onChange('nationality', e.target.value);
-                                    setShowOptions(true);
-                                }}
-                                onFocus={() => setShowOptions(true)}
-                                placeholder="Enter your nationality"
-                                className="py-3 px-5 w-[330px] border bg-white border-[#d2d0d0] placeholder-gray-400 focus:outline-none focus:border-black rounded-sm"
-                            />
-                            {showOptions && filtered.length > 0 && (
-                                <ul className="absolute z-10 w-[330px] bg-white border border-gray-200 rounded-md mt-1 shadow-md max-h-60 overflow-y-auto">
-                                    {filtered.map((c, idx) => (
-                                        <li
-                                            key={idx}
-                                            onClick={() => handleSelect(c)}
-                                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
-                                        >
-                                            {c}
-                                        </li>
-
-                                    ))}
-                                </ul>
-                            )}
-                        </div>
-
                         <div className="">
                             <input
                                 type="text"
@@ -86,16 +41,39 @@ const PersonalDetails = ({ nationality, nationalId, numberPlate, selectedPackage
                                 type="text"
                                 required
                                 value={numberPlate}
-                                onChange={(e) => onChange('numberPlate', e.target.value)}
+                                onChange={(e) => {
+                                    onChange('numberPlate', e.target.value);
+                                    setShowExpiryDate(true);
+                                }}
                                 placeholder="Plate Number"
                                 className="py-3 px-5 w-[330px] border bg-white border-[#d2d0d0] placeholder-gray-400 focus:outline-none focus:border-black rounded-sm"
                             />
                         </div>
 
+                        <div>
+                            {showExpiryDate && (
+                                <>
+                                    <input
+                                        type="text"
+                                        required
+                                        value={"31/08/2025"} // you can replace this with dynamic expiry date if needed
+                                        onChange={(e) => onChange('numberPlate', e.target.value)} // Adjust if needed
+                                        placeholder="Current policy expiry date"
+                                        className="py-3 px-5 w-[330px] border bg-white border-[#d2d0d0] placeholder-gray-400 focus:outline-none focus:border-black rounded-sm"
+                                    />
+                                </>
+                            )}
+                        </div>
+
+                        <div className='flex items-start gap-4'>
+                            <span>
+                                <Checkbox />
+                            </span>
+                            <span className='font-[400]'>I confirm the CPR and Plate Number are correct and authorized for use</span>
+                        </div>
                     </div>
                 </form>
             </div>
-            
         </div>
     );
 };

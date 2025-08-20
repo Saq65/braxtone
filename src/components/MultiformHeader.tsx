@@ -20,7 +20,7 @@ const MultiformHeader = () => {
 
     return (
         <div>
-            <div className="header px-6 lg:px-12 py-6 sticky top-0 z-50 bg-[#fff2e2] sm:bg-transparent lg:bg-transparent xl:bg-transparent">
+            <div className="header px-6 lg:px-12 py-6 sticky top-0 z-50 bg-[#fff2e2] sm:bg-[#fff2e2] lg:bg-[#fff2e2] xl:bg-[#fff2e2]">
                 <div className="flex justify-between items-center">
                     <div>
                         <Link href="/">
