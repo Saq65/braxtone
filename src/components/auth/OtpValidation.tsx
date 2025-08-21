@@ -123,7 +123,7 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(({ onSubmitData }, 
       <div className="p-1 flex flex-col gap-y-[14px]">
 
         {/* Country */}
-        <div className="ml-0 sm:ml-17 md:ml-17 lg:ml-17 xl:ml-17">
+        <div className="ml-0 sm:ml-17 md:ml-17 lg:ml-17 xl:ml-17 overflow-hidden ">
           <Select
             showSearch
             placeholder="Select your country"
@@ -132,7 +132,8 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(({ onSubmitData }, 
             onSearch={handleSearch}
             filterOption={false}
             style={{ height: 50 }}
-            className="w-[100%] sm:w-[48.7%] md:w-[48.7%] lg:w-[46%] xl:w-[46%] h-[50px] ml-0 sm:ml-12 xl:ml-12 lg:ml-12 outline-none"
+            className="w-[100%] sm:w-[48.7%] md:w-[48.7%] lg:w-[46%] xl:w-[46%] h-[50px] ml-0 sm:ml-12 xl:ml-12 lg:ml-12 outline-none
+           shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)]"
             options={filtered.map(c => ({ label: `${c.name} (${c.code})`, value: c.name }))} />
           {formik.touched.country && formik.errors.country && (
             <p className="text-red-500 text-sm ml-0 sm:ml-12">{formik.errors.country}</p>

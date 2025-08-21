@@ -29,6 +29,7 @@ import BankList from '@/components/banklist/BankList';
 import Price from '@/components/price/Price';
 import AddOns from '@/components/AddOns/AddOns';
 import Vinnumber from '@/components/VinNumber/vinnumber';
+// import { useInView } from 'react-intersection-observer';
 
 export default function MultipleFormPage() {
 
@@ -153,11 +154,6 @@ export default function MultipleFormPage() {
     const vin = formik.values.carValue?.trim();
     if (!vin) return;
     setAddedVinNumber(vin);
-
-    console.log("Vin Number completed: ", vin);
-
-
-    console.log("Transitioning to Car Run Miles...");
   };
 
   const [personalData, setpersonalData] = useState({
@@ -165,7 +161,6 @@ export default function MultipleFormPage() {
     numberPlate: '',
     selectedPackage: selectedPackage?.packageName
   });
-
 
   const handlePersonalDataChange = (field: string, value: string) => {
     setpersonalData(prev => ({ ...prev, [field]: value }));
@@ -218,7 +213,6 @@ export default function MultipleFormPage() {
     ownershipCard: false,
   });
 
-
   const handleFileStatusChange = (type: string, status: boolean) => {
     setFileUploaded((prev) => ({ ...prev, [type]: status }));
   };
@@ -239,17 +233,17 @@ export default function MultipleFormPage() {
     }
   }, [addedVinNumber]);
 
-
   useEffect(() => {
     if (addedCars.length > 0 && addedCarsRef.current) {
       addedCarsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [addedCars, financeConfirmed, showCarValue,
-     showHowYoung, showRegisterd,
+    showHowYoung, showRegisterd,
     showInsurenceYesNo, selectedPackage,
     OtpformData, personalData, showPriceSelected,
-     showPersonalSummary, showFileStatus
+    showPersonalSummary, showFileStatus
   ]);
+
   const canGoNext = Boolean(vinNumber?.trim());
   let activeHeader = MultiFormheader[0];
   if (showPersonalDetails) {
@@ -282,7 +276,7 @@ export default function MultipleFormPage() {
     activeHeader = MultiFormheader[3];
   } else if (showFinance) {
     activeHeader = MultiFormheader[2];
-  } else if (carConfirmed) {
+  } else if (showFinance) {
     activeHeader = MultiFormheader[1];
   }
 
@@ -342,7 +336,7 @@ export default function MultipleFormPage() {
       case 'carValue': setshowCarValue(true); break;
       case 'registered': setshowRegisterd(true); break;
       case 'bank': setShowBankList(true); break;
-      case 'packages': setshowPackages(true);  break;
+      case 'packages': setshowPackages(true); break;
       case 'personal': setPersonalDetails(true); break;
       case 'price': setShowPrice(true); break;
       case 'cpr': setShowCPR(true); break;
@@ -356,10 +350,9 @@ export default function MultipleFormPage() {
     setConfirmOpen(false);
   };
 
-  // When you finish/cancel an edit, call this:
   const exitEdit = () => {
     setEditTarget(null);
-    resetAllSteps(); // optional: or keep the editor visible if you want
+    resetAllSteps();
   };
 
   useEffect(() => {
@@ -372,67 +365,98 @@ export default function MultipleFormPage() {
     window.scrollTo(0, 0);
   }, []);
 
-
   return (
-    <div className="min-h-screen bg-[linear-gradient(to_bottom,_#FFF2E2_0%,_white_30%,_white_70%,_#FFF2E2_100%)]   overflow-hidden scrollbar-hide">
+    <div className="min-h-screen bg-[linear-gradient(to_bottom,_#FFF2E2_0%,_white_30%,_white_70%,_#FFF2E2_100%)] overflow-hidden scrollbar-hide">
       <div className='fixed w-full bg-transparent sm:bg-transparent xl:bg-transparent lg:bg-transparent'>
         <MultiformHeader />
       </div>
       <div className=''>
         <div className="w-full max-w-7xl mx-auto px-3 md:px-10 sm:px-10 lg:px-10 xl:px-10 ">
           {/* here all data showing after added */}
-          <div className='flex justify-center flex-col sm:items-center md:items-center lg:items-center xl:items-center items-start cursor-pointer
-            mt-30 sm:mt-10 md:mt-10 lg:mt-28 xl:mt-36 lg:mb-2 sm:mb-0 xl:mb-0 mb-0 gap-10 ml-6 xl:ml-22'>
+          <div className='flex justify-center flex-col  sm:items-center md:items-center lg:items-center xl:items-center items-start cursor-pointer
+            mt-30 sm:mt-10 md:mt-10 lg:mt-28 xl:mt-14 lg:mb-2  sm:mb-0 xl:mb-0 mb-0 gap-10 ml-6 xl:ml-22 xl:justify-end' >
             {addedCars.length > 0 && (
-              <div
-
-                ref={addedCarsRef} className="ml-10 space-y-2">
+              <motion.div
+                ref={addedCarsRef}
+                className="ml-10 space-y-2 h-[100px]  flex justify-center items-start flex-col"
+                initial={{ opacity: 0, y: '100%' }}
+                animate={{ opacity: 1, y: '60%' }}
+                exit={{ opacity: 0, y: '100%' }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.1,
+                  ease: 'easeOut',
+                }}
+              >
                 <MultiformHeading color="#8b8b8b" heading={MultiFormheader[0]?.heading} />
                 {addedCars.slice(0, 1).map((entry, index) => (
                   <div key={index} className="transition-all duration-700 transform">
-                    <div className='flex items-center gap-2'>
-                      <h3 className="text-lg font-medium text-gray-900">
-                        {Object.values(entry).filter(Boolean).join(" ")}
-                      </h3>
-                      <BiPencil onClick={() => openEditConfirm('car')} className='mt-1' />
-                    </div>
+                    <motion.div
+                      initial={{ opacity: 0, y: '100%' }}
+                      animate={{ opacity: 1, y: '0%' }}
+                      exit={{ opacity: 0, y: '100%' }}
+                      transition={{
+                        duration: 0.9,
+                        ease: 'easeOut',
+                      }}
+                    >
+                      <div className='flex items-center gap-2'>
+                        <h3 className="text-lg font-medium text-gray-900">
+                          {Object.values(entry).filter(Boolean).join(" ")}
+                        </h3>
+                        <BiPencil onClick={() => openEditConfirm('car')} className='mt-1' />
+                      </div>
+                    </motion.div>
                   </div>
                 ))}
-              </div>
+              </motion.div>
             )}
 
             {selectedFinanceOption && financeConfirmed && (
-              <div ref={addedCarsRef} className="ml-10 space-y-2">
+              <motion.div
+                ref={addedCarsRef}
+                className="ml-10 space-y-2 h-[100px] flex justify-center items-start flex-col"
+                initial={{ opacity: 0, y: '100%' }}
+                animate={{ opacity: 1, y: '60%' }}
+                exit={{ opacity: 0, y: '100%' }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.1,
+                  ease: 'easeOut',
+                }}
+              >
                 <MultiformHeading color="#8b8b8b" heading={MultiFormheader[2]?.heading} />
-                <div className='flex items-center gap-2'>
-                  <h3 className="text-lg font-medium text-gray-700">{selectedFinanceOption}</h3>
-                  <BiPencil onClick={() => openEditConfirm('finance')} className='mt-1' />
-                </div>
-              </div>
+                <motion.div
+                  initial={{ opacity: 0, y: '100%' }}
+                  animate={{ opacity: 1, y: '0%' }}
+                  exit={{ opacity: 0, y: '100%' }}
+                  transition={{
+                    duration: 0.6,
+                    ease: 'easeOut',
+                  }}
+                >
+                  <div className='flex items-center gap-2'>
+                    <h3 className="text-lg font-medium text-gray-700">
+                      {selectedFinanceOption}
+                    </h3>
+                    <BiPencil onClick={() => openEditConfirm('finance')} className='mt-1' />
+                  </div>
+                </motion.div>
+              </motion.div>
             )}
 
-            {addedVinNumber && (
-              <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[3]?.heading} />
-                <div className='flex items-center gap-2'>
-                  <h3 className="text-lg font-medium text-gray-700">{addedVinNumber}</h3>
-                  <BiPencil className='mt-1' />
-                </div>
-              </div>
-            )}
-
-            {confirmselectRegistered && selectRegistered && (
-              <div ref={addedCarsRef} className="ml-10 space-y-2">
-                <MultiformHeading color="#8b8b8b" heading={MultiFormheader[10]?.heading} />
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-medium text-gray-700">{selectRegistered}</h3>
-                  <BiPencil className="mt-1" />
-                </div>
-              </div>
-            )}
 
             {selectedBank && !showBankList && (
-              <div ref={addedCarsRef} className="ml-10 space-y-2">
+              <motion.div
+                initial={{ opacity: 0, y: '100%' }}
+                animate={{ opacity: 1, y: '60%' }}
+                exit={{ opacity: 0, y: '100%' }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.1,
+                  ease: 'easeOut',
+                }}
+                ref={addedCarsRef} className="ml-10 space-y-2 h-[100px] flex justify-center items-start flex-col">
                 <MultiformHeading color="#8b8b8b" heading="Selected Bank is" />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-medium text-gray-700">
@@ -440,16 +464,22 @@ export default function MultipleFormPage() {
                   </h3>
                   <BiPencil onClick={() => openEditConfirm('bank')} className='mt-1' />
                 </div>
-              </div>
+              </motion.div>
             )}
 
 
             {showCarValueSummary && !showCarValue && (
               <motion.div
                 ref={addedCarsRef}
-                className="ml-10 space-y-2"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
+                className="ml-10 space-y-2 h-[100px] flex justify-center items-start flex-col"
+                initial={{ opacity: 0, y: '100%' }}
+                animate={{ opacity: 1, y: '60%' }}
+                exit={{ opacity: 0, y: '100%' }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.1,
+                  ease: 'easeOut',
+                }}
               >
                 <MultiformHeading color="#8b8b8b" heading="Car Value" />
                 <div className="flex items-center gap-2">
@@ -461,19 +491,33 @@ export default function MultipleFormPage() {
               </motion.div>
             )}
 
-
             {ageConfermed && selectAge && (
-              <div ref={addedCarsRef} className="ml-10 space-y-2">
+              <motion.div initial={{ opacity: 0, y: '100%' }}
+                animate={{ opacity: 1, y: '60%' }}
+                exit={{ opacity: 0, y: '100%' }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.1,
+                  ease: 'easeOut',
+                }}
+                ref={addedCarsRef} className="ml-10 space-y-2 h-[100px] flex justify-center items-start flex-col">
                 <MultiformHeading color="#8b8b8b" heading={MultiFormheader[7]?.heading} />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-medium text-gray-700">{selectAge}</h3>
                   <BiPencil className="mt-1" />
                 </div>
-              </div>
+              </motion.div>
             )}
 
             {OtpformData && (
-              <div ref={addedCarsRef} className="ml-10 space-y-2">
+              <motion.div initial={{ opacity: 0, y: '100%' }}
+                animate={{ opacity: 1, y: '60%' }}
+                exit={{ opacity: 0, y: '100%' }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.1,
+                  ease: 'easeOut',
+                }} ref={addedCarsRef} className="ml-10 space-y-2 h-[100px] flex justify-center items-start flex-col">
                 <MultiformHeading color="#8b8b8b" heading="Selected Package" />
                 <div className="flex items-center gap-2">
                   <div className='flex gap-2 items-center font-medium'>
@@ -487,13 +531,21 @@ export default function MultipleFormPage() {
                     <BiPencil />
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )}
 
             {/* added price */}
             <div ref={addedCarsRef}>
               {showPriceSelected && priceBHD !== null && (
-                <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <motion.div
+                  initial={{ opacity: 0, y: '100%' }}
+                  animate={{ opacity: 1, y: '60%' }}
+                  exit={{ opacity: 0, y: '100%' }}
+                  transition={{
+                    duration: 0.9,
+                    delay: 0.1,
+                    ease: 'easeOut',
+                  }} ref={addedCarsRef} className="ml-10 space-y-2 h-[100px] flex justify-center items-start flex-col">
                   <MultiformHeading color="#8b8b8b" heading="Selected Price" />
                   <div className="flex items-center gap-2">
                     <h3 className="text-lg font-medium text-gray-700">
@@ -501,13 +553,19 @@ export default function MultipleFormPage() {
                     </h3>
                     <BiPencil className="mt-1" />
                   </div>
-                </div>
+                </motion.div>
               )}
-
             </div>
 
             {selectedPackage && (
-              <div ref={addedCarsRef} className="ml-10 space-y-2">
+              <motion.div initial={{ opacity: 0, y: '100%' }}
+                animate={{ opacity: 1, y: '60%' }}
+                exit={{ opacity: 0, y: '100%' }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.1,
+                  ease: 'easeOut',
+                }} ref={addedCarsRef} className="ml-10 space-y-2">
                 <MultiformHeading color="#8b8b8b" heading="Selected Package" />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-medium text-gray-700">
@@ -517,13 +575,19 @@ export default function MultipleFormPage() {
                     <BiPencil onClick={() => openEditConfirm('packages')} />
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )}
 
-
-            <div ref={addedCarsRef}>
+            <div >
               {showPersonalSummary && (
-                <div className="ml-10 space-y-2">
+                <motion.div ref={addedCarsRef} initial={{ opacity: 0, y: '100%' }}
+                  animate={{ opacity: 1, y: '60%' }}
+                  exit={{ opacity: 0, y: '100%' }}
+                  transition={{
+                    duration: 0.9,
+                    delay: 0.1,
+                    ease: 'easeOut',
+                  }} className="ml-10 space-y-2">
                   <MultiformHeading color="#8b8b8b" heading="Personal Details" />
                   <div className="flex items-center gap-4 font-medium text-lg font-medium text-gray-700">
                     <p>National ID: {personalData.nationalId}</p>
@@ -532,58 +596,70 @@ export default function MultipleFormPage() {
                       <BiPencil onClick={() => openEditConfirm('personal')} />
                     </div>
                   </div>
-                </div>
+                </motion.div>
               )}
 
             </div>
 
             {/* national id */}
-            <div ref={addedCarsRef} className=" space-y-2= ml-10">
-
+            <div>
               {showFileStatus && (
-                <div ref={addedCarsRef} className='flex items-center justify-start w-auto'>
-                  <div>
-                    <div>
-                      <p className='text-lg font-semibold text-[#8b8b8b]'>All docuuments</p>
-                    </div>
-                    <div className='flex gap-3 flex-wrap w-[45%]  items-start justify-start mt-4'>
-                      <p className="text-lg font-medium text-gray-700">
-                        National ID: {fileUploaded.nationalId ? 'Uploaded' : 'Not Uploaded'}
-                      </p>
-                      <p className="text-lg font-medium text-gray-700">
-                        Driver License: {fileUploaded.driverLicense ? 'Uploaded' : 'Not Uploaded'}
-                      </p>
-                      <p className="text-lg font-medium text-gray-700">
-                        Ownership Card: {fileUploaded.ownershipCard ? 'Uploaded' : 'Not Uploaded'}
-                      </p>
+                <motion.div
+                  ref={addedCarsRef}
+                  initial={{ opacity: 0, y: '100%' }}
+                  animate={{ opacity: 1, y: '60%' }}
+                  exit={{ opacity: 0, y: '100%' }}
+                  transition={{
+                    duration: 0.9,
+                    delay: 0.1,
+                    ease: 'easeOut',
+                  }}
+                  className="ml-10 space-y-2"
+                >
+                  <MultiformHeading color="#8b8b8b" heading="All Documents" />
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-4 font-medium text-lg text-gray-700">
+                      <p>National ID: {fileUploaded.nationalId ? 'Uploaded' : 'Not Uploaded'}</p>
+                      <p>Driver License: {fileUploaded.driverLicense ? 'Uploaded' : 'Not Uploaded'}</p>
+                      <p>Ownership Card: {fileUploaded.ownershipCard ? 'Uploaded' : 'Not Uploaded'}</p>
+                      {/* <div>
+                        <BiPencil onClick={() => openEditConfirm('files')} className="cursor-pointer" />
+                      </div> */}
                     </div>
                   </div>
-                  {/* <div>
-                    <BiPencil />
-                  </div> */}
-                </div>
-
+                </motion.div>
               )}
             </div>
+
 
             {/* vin number */}
             <div>
               {showVinData && (
-                <div ref={addedCarsRef} className="ml-10 space-y-2">
+                <motion.div ref={addedCarsRef} initial={{ opacity: 0, y: '100%' }}
+                  animate={{ opacity: 1, y: '60%' }}
+                  exit={{ opacity: 0, y: '100%' }}
+                  transition={{
+                    duration: 0.9,
+                    delay: 0.1,
+                    ease: 'easeOut',
+                  }} className="ml-10 h-[100px] space-y-2">
                   <MultiformHeading color="#8b8b8b" heading="Vin number is:" />
                   <div className="flex items-center gap-2">
                     <h3 className="text-lg font-medium text-gray-700">
                       {vinNumber || 'Not Entered'}
                     </h3>
-                    <BiPencil  onClick={() => openEditConfirm('vin')} className="mt-1" />
+                    <BiPencil onClick={() => openEditConfirm('vin')} className="mt-1" />
                   </div>
-                </div>
+                </motion.div>
               )}
             </div>
           </div>
 
           {/* this is main part */}
-          <div id='main-part' className="flex flex-col md:flex-row lg:flex-row xl:flex-row  w-full h-[91vh] sm:h-[81vh] md:h-[81vh] lg:h-[81vh] xl:h-[81vh] 2xl:h-[81vh] overflow-auto scrollbar-hide ">
+          <div id='main-part'
+            className="flex flex-col md:flex-row lg:flex-row xl:flex-row  w-full h-[91vh] 
+           sm:h-[81vh] md:h-[81vh] lg:h-[81vh] xl:h-[81vh] 2xl:h-[81vh] overflow-auto scrollbar-hide "
+          >
             <aside className="w-full xl:w-1/4 lg:w-1/4 md:w-2/5 hidden md:block mt-14">
               <SidebarSteps />
             </aside>
@@ -620,11 +696,7 @@ export default function MultipleFormPage() {
 
                 {showForm && (
                   <motion.div
-                    className="mt-6"
-                    initial={{ opacity: 0, y: 100 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 50 }}
-                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                    className="mt-6 "
                   >
                     <CarStepForm
                       onCancel={() => setShowForm(false)}
@@ -633,7 +705,6 @@ export default function MultipleFormPage() {
                   </motion.div>
                 )}
               </>
-
 
               {/* this is vin number */}
               <>
@@ -655,7 +726,6 @@ export default function MultipleFormPage() {
                 )}
 
               </>
-
 
               <div>
                 {/* Show finance options and Next button */}
@@ -702,7 +772,6 @@ export default function MultipleFormPage() {
                   </div>
                 )}
 
-
                 {showRegisterd && (
                   <div className="ml-0 sm:ml-10">
                     <MultiOption
@@ -722,7 +791,6 @@ export default function MultipleFormPage() {
                   </div>
                 )}
               </>
-
 
               <>
                 {/* Show Package Step ONLY when not showing personal details */}
@@ -865,7 +933,7 @@ export default function MultipleFormPage() {
                       onChange={setVinNumber} />
 
                     <NextBtn
-                      disabled={!vinNumber.trim()}  
+                      disabled={!vinNumber.trim()}
                       onClick={() => {
                         setShowVinNumber(false)
                         setshowAddOns(true)
