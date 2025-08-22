@@ -56,8 +56,8 @@ const PersonalDetails = ({ nationalId, numberPlate, selectedPackageName, onChang
                                     <input
                                         type="text"
                                         required
-                                        value={"31/08/2025"} // you can replace this with dynamic expiry date if needed
-                                        onChange={(e) => onChange('numberPlate', e.target.value)} // Adjust if needed
+                                        value={"31/08/2025"} 
+                                        onChange={(e) => onChange('numberPlate', e.target.value)}
                                         placeholder="Current policy expiry date"
                                         className="py-3 px-5 w-[330px] border bg-white border-[#d2d0d0] placeholder-gray-400 focus:outline-none focus:border-black rounded-sm"
                                     />

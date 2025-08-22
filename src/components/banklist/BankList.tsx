@@ -1,7 +1,7 @@
 import { Select } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { AiOutlineDown, AiOutlineUp } from 'react-icons/ai'; 
+import { AiOutlineDown, AiOutlineUp } from 'react-icons/ai';
 
 type Props = {
   onBankSelect: (selectedBank: string) => void;
@@ -27,7 +27,7 @@ const BankList = ({ onBankSelect }: Props) => {
   }, []);
 
   const handleDropdownVisibleChange = (open: boolean) => {
-    setIsOpen(open); 
+    setIsOpen(open);
   };
 
   return (
@@ -40,6 +40,8 @@ const BankList = ({ onBankSelect }: Props) => {
         suffixIcon={isOpen ? <AiOutlineUp className="text-gray-500 text-xl" /> : <AiOutlineDown className="text-gray-500 text-xl" />}
         style={{ outline: 'none', height: '42px', borderRadius: '4px' }}
         onDropdownVisibleChange={handleDropdownVisibleChange}
+        onOpenChange={setIsOpen}
+        open={isOpen}
       />
     </div>
   );

@@ -11,6 +11,7 @@ import { Navigation } from 'swiper/modules';
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 
 type PackageType = {
+    _id: string;             
   packageName: string;
   price: number;
   features: string[];
@@ -19,6 +20,7 @@ type PackageType = {
   minimumPrice: string;
   benefits: Record<string, { addon: string }>;
   addons: Record<string, { addon: string }>;
+  
 };
 
 type PackagesProps = {
@@ -125,7 +127,7 @@ const Packages = ({ onSelect }: PackagesProps) => {
 
                   <div className="flex justify-end gap-4 mb-4 w-full mt-5">
                     <Button
-                      className="btn w-full bg-[#d0d0d0] hover:bg-[#0068a2] text-black hover:text-white"
+                      className="btn w-full bg-[#d0d0d0] hover:bg-[#0068a2] text-black hover:text-white"  
                       onClick={() => onSelect(res)}
                     >
                       Choose

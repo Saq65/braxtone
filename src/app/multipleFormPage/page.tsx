@@ -9,9 +9,7 @@ import { MultiFormheader } from "@/data/multiformheading";
 import CarStepForm from "@/components/cars/CarStepForm";
 import * as Yup from 'yup';
 import {
-  finance, HowYoungData, packagesData,
-  RegisteredData,
-} from '@/data/multiOptionsData';
+  finance, HowYoungData, packagesData} from '@/data/multiOptionsData';
 import MultiOption from '@/components/ui/MultiOption';
 import NextButton from '@/components/ui/NextBtn';
 import { BiPencil } from 'react-icons/bi';
@@ -30,6 +28,8 @@ import Price from '@/components/price/Price';
 import AddOns from '@/components/AddOns/AddOns';
 import Vinnumber from '@/components/VinNumber/vinnumber';
 // import { useInView } from 'react-intersection-observer';
+import { Spin } from 'antd';
+import { useCallback } from 'react';
 
 export default function MultipleFormPage() {
 
@@ -44,9 +44,6 @@ export default function MultipleFormPage() {
   const [showUseCar, setShowUseCar] = useState(false)
   const [selectAge, setSelectAge] = useState<string | null>(null);
   const [ageConfermed, setAgeConformed] = useState(false)
-  const [selectRegistered, setselectRegistered] = useState<string | null>(null);
-  const [confirmselectRegistered, setconfirmselectRegistered] = useState(false);
-  const [showSelectRegistered, setShowSelectRegistered] = useState(false);
   const [addedVinNumber, setAddedVinNumber] = useState<string | null>(null);
   const [showHowYoung, setShowHowYoung] = useState(false);
   const [showRegisterd, setshowRegisterd] = useState(false);
@@ -75,8 +72,20 @@ export default function MultipleFormPage() {
   const [showFileStatus, setShowFileStatus] = useState(false);
   const [vinNumber, setVinNumber] = useState('');
   const [showVinData, setShowVinData] = useState(false);
-
   const otpRef = useRef<OtpValidationHandle>(null);
+  const [stepLoading, setStepLoading] = useState(false);
+
+  const withStepLoading = useCallback(async (fn: () => void | Promise<void>) => {
+    setStepLoading(true);
+
+    await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+
+    try {
+      await fn();
+    } finally {
+      setTimeout(() => setStepLoading(false), 300);
+    }
+  }, []);
 
   const handleFormSubmit = (data: { country: string, phone: string, name: string, email: string, otp: string }) => {
     setOtpFormData(data);
@@ -104,16 +113,23 @@ export default function MultipleFormPage() {
   const { image } = MultiFormheader[0];
 
   const addedCarsRef = useRef<HTMLDivElement | null>(null);
+  // helper shown earlier:
+  // const withStepLoading = useCallback(async (fn: () => void | Promise<void>) => { ... }, []);
 
-  const handleCarFormComplete = (car: { [key: string]: string }) => {
-    setAddedCars([car, ...addedCars]);
-    setShowFinance(true);
-    setShowForm(false);
-    setTimeout(() => {
+  const handleCarFormComplete = (car: { [key: string]: string }) =>
+    withStepLoading(async () => {
+      // use functional set to avoid stale state
+      setAddedCars(prev => [car, ...prev]);
+
+      // move to next step
+      setShowFinance(true);
+      setShowForm(false);
+
+      // (optional) keep the loader visible for a short, smooth transition
+      await new Promise<void>(r => setTimeout(r, 500));
+
       setCarConfirmed(true);
-
-    }, 500);
-  };
+    });
 
   const formik = useFormik({
     initialValues: {
@@ -187,10 +203,6 @@ export default function MultipleFormPage() {
     setSelectAge(value);
   };
 
-  const handleOptionSelectRegistered = (value: string) => {
-    setselectRegistered(value)
-  }
-
   const handleOptionSelectPackage = (value: string) => {
     if (value === "Comprehensive") {
       setselectPackage(value);
@@ -258,8 +270,6 @@ export default function MultipleFormPage() {
     activeHeader = MultiFormheader[12];
   } else if (showCPR) {
     activeHeader = MultiFormheader[11];
-  } else if (showSelectRegistered) {
-    activeHeader = MultiFormheader[10];
   } else if (showCPR) {
     activeHeader = MultiFormheader[9];
   } else if (showFinance) {
@@ -365,6 +375,8 @@ export default function MultipleFormPage() {
     window.scrollTo(0, 0);
   }, []);
 
+
+
   return (
     <div className="min-h-screen bg-[linear-gradient(to_bottom,_#FFF2E2_0%,_white_30%,_white_70%,_#FFF2E2_100%)] overflow-hidden scrollbar-hide">
       <div className='fixed w-full bg-transparent sm:bg-transparent xl:bg-transparent lg:bg-transparent'>
@@ -373,12 +385,12 @@ export default function MultipleFormPage() {
       <div className=''>
         <div className="w-full max-w-7xl mx-auto px-3 md:px-10 sm:px-10 lg:px-10 xl:px-10 ">
           {/* here all data showing after added */}
-          <div className='flex justify-center flex-col  sm:items-center md:items-center lg:items-center xl:items-center items-start cursor-pointer
-            mt-30 sm:mt-10 md:mt-10 lg:mt-28 xl:mt-14 lg:mb-2  sm:mb-0 xl:mb-0 mb-0 gap-10 ml-6 xl:ml-22 xl:justify-end' >
+          <div className='flex justify-center flex-col sm:items-center md:items-center lg:items-center xl:items-center items-start cursor-pointer
+            mt-30 sm:mt-10 md:mt-10 lg:mt-28 xl:mt-14 lg:mb-2  sm:mb-0 xl:mb-0 mb-0 gap-10 ml-6 xl:ml-22 xl:justify-end  relative z-33 ' >
             {addedCars.length > 0 && (
               <motion.div
                 ref={addedCarsRef}
-                className="ml-10 space-y-2 h-[100px]  flex justify-center items-start flex-col"
+                className="ml-10 space-y-2 h-[200px]  flex justify-center items-start flex-col"
                 initial={{ opacity: 0, y: '100%' }}
                 animate={{ opacity: 1, y: '60%' }}
                 exit={{ opacity: 0, y: '100%' }}
@@ -719,7 +731,9 @@ export default function MultipleFormPage() {
                     />
                     <NextButton
                       disabled={!formik.values.carValue}
-                      onClick={handleVinNumberComplete}
+                      onClick={() => withStepLoading(() => {
+                        handleVinNumberComplete();
+                      })}
                     />
 
                   </motion.div>
@@ -734,7 +748,9 @@ export default function MultipleFormPage() {
                     <MultiOption data={finance} onSelect={handleOptionSelectInFinanace} />
                     <NextBtn
                       disabled={!selectedFinanceOption}
-                      onClick={handleFinanceOnNext}
+                      onClick={() => withStepLoading(() => {
+                        handleFinanceOnNext();
+                      })}
                       label="Next →"
                     />
                   </div>
@@ -745,7 +761,9 @@ export default function MultipleFormPage() {
                     <BankList onBankSelect={handleBankSelect} />
                     <NextBtn
                       disabled={!selectedBank}
-                      onClick={handleBankClick}
+                      onClick={() => withStepLoading(() => {
+                        handleBankClick();
+                      })}
                       label="Next →"
                     />
 
@@ -762,34 +780,16 @@ export default function MultipleFormPage() {
                     />
                     <NextBtn
                       disabled={selectAge === null}
-                      onClick={() => {
+                      onClick={() => withStepLoading(() => {
                         setAgeConformed(true);
                         setShowHowYoung(false);
-                        setShowOtpValidation(true)
-                      }}
+                        setShowOtpValidation(true);
+                      })}
                       label="Next →"
                     />
                   </div>
                 )}
 
-                {showRegisterd && (
-                  <div className="ml-0 sm:ml-10">
-                    <MultiOption
-                      data={RegisteredData}
-                      onSelect={handleOptionSelectRegistered}
-                    />
-                    <NextBtn
-                      disabled={selectRegistered === null}
-                      onClick={() => {
-                        setconfirmselectRegistered(true)
-                        setshowRegisterd(false)
-                        setshowInsurenceYesNo(true)
-                        setShowSelectRegistered(false)
-                      }}
-                      label="Next →"
-                    />
-                  </div>
-                )}
               </>
 
               <>
@@ -832,7 +832,7 @@ export default function MultipleFormPage() {
                     <NextBtn
                       disabled={!personalData.nationalId?.trim() || !personalData.numberPlate?.trim()}
 
-                      onClick={() => {
+                      onClick={() => withStepLoading(() => {
                         setShowPersonalSummary(true);
                         setPersonalDetails(false);
                         setshowPackageType(false);
@@ -840,7 +840,7 @@ export default function MultipleFormPage() {
                         setshowPackages(false);
                         setShowCPR(true)
                         setPersonalDetails(false)
-                      }}
+                      })}
                       label="Next →"
                     />
                   </>
@@ -855,7 +855,7 @@ export default function MultipleFormPage() {
 
                   <NextBtn
                     disabled={fileUploaded === null || !fileUploaded.nationalId || !fileUploaded.driverLicense || !fileUploaded.ownershipCard}
-                    onClick={() => {
+                    onClick={() => withStepLoading(() => {
                       setPersonalDetails(false);
                       setshowPackageType(false);
                       setshowThirdParty(false);
@@ -863,7 +863,7 @@ export default function MultipleFormPage() {
                       setShowCPR(false);
                       setShowVinNumber(true);
                       setShowFileStatus(true);
-                    }}
+                    })}
                     label="Next →"
                   />
                 </>
@@ -897,13 +897,13 @@ export default function MultipleFormPage() {
                     />
                     <NextBtn
                       disabled={!priceBHD}
-                      onClick={() => {
+                      onClick={() => withStepLoading(()=>{
                         setShowPrice(false);
                         setshowPackageType(true);
                         setshowPackages(true)
                         setShowPriceSelected(true);
 
-                      }}
+                      })}
                       label="Next →"
                     />
                   </>
@@ -913,7 +913,9 @@ export default function MultipleFormPage() {
               {
                 showAddOns && (
                   <>
-                    <AddOns />
+                    <AddOns
+                      selectedPackageId={selectedPackage?._id ?? selectedPackage?.packageName}
+                    />
                     <NextBtn
                       disabled={!canGoNext}
                       onClick={() => {
@@ -973,6 +975,11 @@ export default function MultipleFormPage() {
               </button>
             </div>
           </div>
+        </div>
+      )}
+      {stepLoading && (
+        <div className="fixed inset-0 z-[1000] grid place-items-center bg-black/20 backdrop-blur-[2px]">
+          <Spin size="large" />
         </div>
       )}
 

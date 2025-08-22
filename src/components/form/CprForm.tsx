@@ -17,7 +17,6 @@ const CprForm = ({ onFileStatusChange }: Props) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Optional: you can validate file type here if needed
     setUploadedFiles((prev) => ({ ...prev, [type]: true }));
     onFileStatusChange(type, true);
   };

@@ -6,8 +6,18 @@ import { IoCardSharp, IoCheckmarkCircle } from 'react-icons/io5';
 import { Checkbox } from 'antd';
 import { IoMdCard } from 'react-icons/io';
 
+type PaymentProps = {
+    selectedPackage?: {
+        packageName: string;
+        minimumPrice: number;
+        addonsTotal: number;
+        vat: number;
+        grandTotal: number;
 
-const Payment = () => {
+    };
+};
+
+const Payment: React.FC<PaymentProps> = ({ selectedPackage }) => {
     const [showCreditDebit, setCreditDebit] = useState(false);
 
 
@@ -34,10 +44,10 @@ const Payment = () => {
                                 <span className='font-medium text-[16px]'>Credit/Debit Card</span>
                             </div>
                             <div>
-                                <Checkbox onChange={handleCheckboxChange}
-                                    value={'debitcard&creditcard'} style={{ fontSize: '33px' }} />
+                                <Checkbox checked={showCreditDebit}
+                                    onChange={(e) => setCreditDebit(e.target.checked)}
+                                    style={{ fontSize: 33 }} />
                             </div>
-
                         </div>
 
                         {showCreditDebit && (
@@ -159,23 +169,23 @@ const Payment = () => {
                             <div>
                                 <div className='rounded-[5px] border-[#b7eb8f] bg-[#f6ffed] flex items-center gap-2 mt-5 py-4 px-5 border-1'>
                                     <IoCheckmarkCircle color='#52c41a' size={20} />
-                                    Package Name
+                                    {selectedPackage ? selectedPackage.packageName : "No package selected"}
                                 </div>
                                 <div className='flex items-center justify-between mt-2 border-b-1 border-[#f2f2f2] py-3 px-2 text-[#646464]'>
                                     <span>Premium</span>
-                                    <span>BHD 110</span>
+                                    <span>BHD {selectedPackage?.minimumPrice?.toFixed(3) ?? "0.000"}</span>
                                 </div>
                                 <div className='flex items-center justify-between mt-2 border-b-1 border-[#f2f2f2] py-3 px-2 text-[#646464]'>
                                     <span>ADD-ons</span>
-                                    <span>BHD 10</span>
+                                    <span>BHD {selectedPackage?.addonsTotal?.toFixed(3) ?? "0.000"}</span>
                                 </div>
                                 <div className='flex items-center justify-between py-3 px-2 text-[#646464]'>
                                     <span>VAT (10%)</span>
-                                    <span>BHD 12</span>
+                                    <span>BHD {selectedPackage?.vat?.toFixed(3) ?? "0.000"}</span>
                                 </div>
                                 <div className='flex items-center justify-between mt-2 border-1 border-[#1252de] py-3 px-2 text-[#1252de] rounded-[5px] font-semibold'>
                                     <span>Total Payable</span>
-                                    <span>BHD 132</span>
+                                    <span>BHD {selectedPackage?.grandTotal?.toFixed(3) ?? "0.000"}</span>
                                 </div>
                             </div>
                         </div>

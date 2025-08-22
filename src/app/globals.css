@@ -21,8 +21,12 @@
 
 @layer utilities {
   @keyframes marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
   }
 
   .marquee {
@@ -32,7 +36,7 @@
 
   .marquee-inner {
     display: flex;
-    width: max-content;        
+    width: max-content;
     white-space: nowrap;
     will-change: transform;
   }
@@ -41,17 +45,23 @@
     animation: marquee var(--marquee-duration, 15s) linear infinite;
   }
 
-  /* Optional extras */
-  .marquee:hover .animate-marquee { animation-play-state: paused; } 
-  .animate-marquee-reverse { animation-direction: reverse; }      
+  .marquee:hover .animate-marquee {
+    animation-play-state: paused;
+  }
+  .animate-marquee-reverse {
+    animation-direction: reverse;
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    .animate-marquee { animation: none; transform: none; }
+    .animate-marquee {
+      animation: none;
+      transform: none;
+    }
   }
 }
 
 body {
-  font-family: 'GMGlobalArabic', sans-serif;  
+  font-family: "GMGlobalArabic", sans-serif;
 }
 * {
   -ms-overflow-style: none;

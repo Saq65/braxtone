@@ -349,7 +349,7 @@ export default function CarStepForm({
             </motion.div>
           </AnimatePresence>
 
-          <div className=" justify-between mt-4 hidden md:flex lg:flex xl:flex sm:flex">
+          <div className=" justify-between mt-0 sm:mt-4 lg:mt-4 xl:mt-4 flex md:flex lg:flex xl:flex sm:flex">
             <button
               type="button"
               onClick={handleBackClick}
@@ -396,9 +396,9 @@ export default function CarStepForm({
         title=""
         footer={null}
         okButtonProps={{ disabled: !contactValid }}
-        destroyOnClose
         onCancel={closeContactModal}
         className='w-[65%]'
+        destroyOnHidden 
       >
         <div className="p-6 mx-auto">
           <div className='flex items-start gap-0'>
@@ -487,7 +487,7 @@ export default function CarStepForm({
 function ProgressBar({ step, totalSteps }: { step: number; totalSteps: number }) {
   const pct = (step / totalSteps) * 100;
   return (
-    <div className="h-[9px] w-full bg-gray-200 rounded mt-4 overflow-hidden mt-[0%] sm:mt-[1px] md:mt-[1px] lg:mt-[1px] xl:mt-[17px]">
+    <div className="h-[9px] w-full bg-gray-200 rounded mt-4 overflow-hidden mt-[170%] sm:mt-[1px] md:mt-[1px] lg:mt-[1px] xl:mt-[17px]">
       <motion.div
         className="h-full bg-[#0068a2]"
         initial={false}
