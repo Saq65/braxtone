@@ -193,7 +193,7 @@ export default function MultipleFormPage() {
       setshowCarValue(false);
     } else {
       setShowFinance(false);
-        advanceTo("car_value");
+      advanceTo("car_value");
     }
   };
 
@@ -419,10 +419,8 @@ export default function MultipleFormPage() {
     setshowAddOns(false);
     setShowVinNumber(false);
 
-    // now enable the requested step
     switch (id) {
       case "car":
-        // initial "Car" step → probably leave everything hidden
         break;
       case "add_car_info":
         setShowForm(true);
@@ -471,18 +469,20 @@ export default function MultipleFormPage() {
 
   return (
     <div className="min-h-screen bg-[linear-gradient(to_bottom,_#FFF2E2_0%,_white_30%,_white_70%,_#FFF2E2_100%)] overflow-hidden scrollbar-hide">
-      <div className='fixed w-full bg-transparent sm:bg-transparent xl:bg-transparent lg:bg-transparent'>
+      <div className='fixed z-999 w-full bg-transparent sm:bg-transparent xl:bg-transparent lg:bg-transparent '>
         <MultiformHeader />
       </div>
       <div className=''>
         <div className="w-full max-w-7xl mx-auto px-3 md:px-10 sm:px-10 lg:px-10 xl:px-10 ">
           {/* here all data showing after added */}
-          <div className='flex justify-center flex-col sm:items-center md:items-center lg:items-center xl:items-center items-start cursor-pointer
-            mt-30 sm:mt-10 md:mt-10 lg:mt-28 xl:mt-14 lg:mb-2  sm:mb-0 xl:mb-0 mb-0 gap-10 ml-6 xl:ml-22 xl:justify-end  relative z-33 ' >
+          <div className='flex justify-center flex-col sm:items-center md:items-center lg:items-center
+           xl:items-center items-start cursor-pointer  
+            mt-30 sm:mt-10 md:mt-10 lg:mt-28 xl:mt-26 lg:mb-2  sm:mb-0 xl:mb-0 mb-0 gap-10 ml-6 xl:ml-22 xl:justify-end' style={{ zIndex: '10', position: 'relative' ,rowGap:'24px'}} >
+
             {addedCars.length > 0 && (
               <motion.div
                 ref={addedCarsRef}
-                className="ml-10 space-y-2 h-[200px]  flex justify-center items-start flex-col"
+                className="ml-10 space-y-2"
                 initial={{ opacity: 0, y: '100%' }}
                 animate={{ opacity: 1, y: '60%' }}
                 exit={{ opacity: 0, y: '100%' }}
@@ -503,13 +503,12 @@ export default function MultipleFormPage() {
                         duration: 0.9,
                         ease: 'easeOut',
                       }}
+                      className="flex items-center gap-4 font-medium text-lg font-medium text-gray-700"
                     >
-                      <div className='flex items-center gap-2'>
                         <h3 className="text-lg font-medium text-gray-900">
                           {Object.values(entry).filter(Boolean).join(" ")}
                         </h3>
                         <BiPencil onClick={() => openEditConfirm('car')} className='mt-1' />
-                      </div>
                     </motion.div>
                   </div>
                 ))}
@@ -519,7 +518,7 @@ export default function MultipleFormPage() {
             {selectedFinanceOption && financeConfirmed && (
               <motion.div
                 ref={addedCarsRef}
-                className="ml-10 space-y-2 h-[100px] flex justify-center items-start flex-col"
+                className="ml-10 space-y-2 "
                 initial={{ opacity: 0, y: '100%' }}
                 animate={{ opacity: 1, y: '60%' }}
                 exit={{ opacity: 0, y: '100%' }}
@@ -560,7 +559,7 @@ export default function MultipleFormPage() {
                   delay: 0.1,
                   ease: 'easeOut',
                 }}
-                ref={addedCarsRef} className="ml-10 space-y-2 h-[100px] flex justify-center items-start flex-col">
+                ref={addedCarsRef} className="ml-10 space-y-2  flex justify-start items-start flex-col">
                 <MultiformHeading color="#8b8b8b" heading="Selected Bank is" />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-medium text-gray-700">
@@ -575,7 +574,7 @@ export default function MultipleFormPage() {
             {showCarValueSummary && !showCarValue && (
               <motion.div
                 ref={addedCarsRef}
-                className="ml-10 space-y-2 h-[100px] flex justify-center items-start flex-col"
+                className="ml-10 space-y-2 flex justify-center items-start flex-col"
                 initial={{ opacity: 0, y: '100%' }}
                 animate={{ opacity: 1, y: '60%' }}
                 exit={{ opacity: 0, y: '100%' }}
@@ -604,7 +603,7 @@ export default function MultipleFormPage() {
                   delay: 0.1,
                   ease: 'easeOut',
                 }}
-                ref={addedCarsRef} className="ml-10 space-y-2 h-[100px] flex justify-center items-start flex-col">
+                ref={addedCarsRef} className="ml-10 space-y-2 flex justify-center items-start flex-col">
                 <MultiformHeading color="#8b8b8b" heading={MultiFormheader[7]?.heading} />
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-medium text-gray-700">{selectAge}</h3>
@@ -621,7 +620,7 @@ export default function MultipleFormPage() {
                   duration: 0.9,
                   delay: 0.1,
                   ease: 'easeOut',
-                }} ref={addedCarsRef} className="ml-10 space-y-2 h-[100px] flex justify-center items-start flex-col">
+                }} ref={addedCarsRef} className="ml-10 space-y-2 flex justify-center items-start flex-col">
                 <MultiformHeading color="#8b8b8b" heading="Selected Package" />
                 <div className="flex items-center gap-2">
                   <div className='flex gap-2 items-center font-medium'>
@@ -649,7 +648,7 @@ export default function MultipleFormPage() {
                     duration: 0.9,
                     delay: 0.1,
                     ease: 'easeOut',
-                  }} ref={addedCarsRef} className="ml-10 space-y-2 h-[100px] flex justify-center items-start flex-col">
+                  }} ref={addedCarsRef} className="ml-10 space-y-2 flex justify-center items-start flex-col">
                   <MultiformHeading color="#8b8b8b" heading="Selected Price" />
                   <div className="flex items-center gap-2">
                     <h3 className="text-lg font-medium text-gray-700">
@@ -693,7 +692,8 @@ export default function MultipleFormPage() {
                     ease: 'easeOut',
                   }} className="ml-10 space-y-2">
                   <MultiformHeading color="#8b8b8b" heading="Personal Details" />
-                  <div className="flex items-center gap-4 font-medium text-lg font-medium text-gray-700">
+                  <div
+                    className="flex items-center gap-4 font-medium text-lg font-medium text-gray-700">
                     <p>National ID: {personalData.nationalId}</p>
                     <p>Plate Number: {personalData.numberPlate}</p>
                     <div>
@@ -800,7 +800,7 @@ export default function MultipleFormPage() {
                     <AddCarCard
                       onClick={() => {
                         setShowForm(true);
-                        advanceTo("add_car_info");   
+                        advanceTo("add_car_info");
                       }}
                       onComplete={handleCarFormComplete}
                     />
@@ -811,10 +811,10 @@ export default function MultipleFormPage() {
                   <motion.div className="mt-6 ">
                     <CarStepForm
                       onCancel={() => setShowForm(false)}
-                      onComplete={() =>
+                      onComplete={(car) =>
                         withStepLoading(async () => {
-                          await handleCarFormComplete({});
-                          advanceTo("owned_mortgage");   // 👉 step: Owned/Mortgage
+                          await handleCarFormComplete(car);
+                          advanceTo("owned_mortgage");
                         })
                       }
                     />
@@ -856,7 +856,7 @@ export default function MultipleFormPage() {
                         withStepLoading(() => {
                           handleFinanceOnNext();
                           if (selectedFinanceOption !== "Mortgage") {
-                            advanceTo("car_value");   
+                            advanceTo("car_value");
                           }
                         })
                       }
@@ -870,7 +870,7 @@ export default function MultipleFormPage() {
                     <BankList
                       onBankSelect={(bank) => {
                         handleBankSelect(bank);
-                        advanceTo("car_value");  
+                        advanceTo("car_value");
                       }}
                     />
                     <NextBtn
@@ -1034,6 +1034,7 @@ export default function MultipleFormPage() {
                         setshowPackageType(true);
                         setshowPackages(true)
                         setShowPriceSelected(true);
+                        advanceTo("packages");
 
                       })}
                       label="Next →"
@@ -1051,6 +1052,7 @@ export default function MultipleFormPage() {
                     <NextBtn
                       disabled={!canGoNext}
                       onClick={() => {
+                        setCompletedIds(prev => new Set(prev).add(activeId));
                         setshowAddOns(false)
                         router.push('/payment')
                       }}
@@ -1070,10 +1072,10 @@ export default function MultipleFormPage() {
                       disabled={!vinNumber.trim()}
                       onClick={() => {
                         setShowVinNumber(false)
-                        setshowAddOns(true)
                         setshowAddOns(true);
                         setShowVinData(true);
                         setAddedVinNumber(vinNumber)
+                        advanceTo("additional_benefits");
                       }}
                     />
                   </>

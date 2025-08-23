@@ -79,11 +79,13 @@ export default function HomeLandscape() {
 
                                 <Link
                                     href="/servicePage"
-                                    className="inline-flex items-center bg-[#003DA5] text-white font-medium px-6 py-2 relative overflow-hidden mt-10 py-3 px-6 lg:py-4 lg:px-8 text-white rounded-[6px] text-sm sm:text-base lg:text-lg font-semibold hover:bg-[#005584] transition cursor-pointer text-center"
+                                    className="inline-flex items-center bg-[#003DA5] text-white font-medium px-6 py-2 relative
+                                     overflow-hidden mt-10 py-3 px-6 lg:py-4 lg:px-8 text-white rounded-[6px] text-sm sm:text-base
+                                      lg:text-xl font-medium hover:bg-[#005584] transition cursor-pointer text-center"
                                 >
                                     <span className="absolute left-0 top-0 bottom-0 w-6 bg-[#E5C8A0] clip-path-arrow"></span>
 
-                                    <span className="ml-4">Explore Our Pricing</span>
+                                    <span className="ml-4 font-sans">Explore Our Pricing</span>
                                 </Link>
                             </div>
                         </motion.div>

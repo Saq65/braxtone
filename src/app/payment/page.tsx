@@ -5,6 +5,7 @@ import { CiCreditCard1 } from 'react-icons/ci';
 import { IoCardSharp, IoCheckmarkCircle } from 'react-icons/io5';
 import { Checkbox } from 'antd';
 import { IoMdCard } from 'react-icons/io';
+import { useRouter } from 'next/navigation';
 
 type PaymentProps = {
     selectedPackage?: {
@@ -20,6 +21,7 @@ type PaymentProps = {
 const Payment: React.FC<PaymentProps> = ({ selectedPackage }) => {
     const [showCreditDebit, setCreditDebit] = useState(false);
 
+   const router = useRouter();
 
     const handleCheckboxChange = (e: any) => {
         setCreditDebit(e.target.checked);
@@ -110,7 +112,7 @@ const Payment: React.FC<PaymentProps> = ({ selectedPackage }) => {
                                             <span>I agree to the terms and conditions of this payment.</span>
                                         </div>
                                     </div>
-                                    <div className='bg-[#d0d0d0] rounded-[4px] mt-5 py-3 px-4 text-center font-medium cursor-pointer'>
+                                    <div onClick={()=>router.push('/PaymentSuccessful')} className='bg-[#d0d0d0] rounded-[4px] mt-5 py-3 px-4 text-center font-medium cursor-pointer'>
                                         <p>Pay now- BHD 132</p>
                                     </div>
                                 </div>
