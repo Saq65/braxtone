@@ -193,6 +193,7 @@ export default function MultipleFormPage() {
       setshowCarValue(false);
     } else {
       setShowFinance(false);
+        advanceTo("car_value");
     }
   };
 
@@ -375,94 +376,94 @@ export default function MultipleFormPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-const STEPS = [
-  { id: "car", title: "Car" },
-  { id: "add_car_info", title: "Add car info." },
-  { id: "owned_mortgage", title: "Owned/Mortgage" },
-  { id: "car_value", title: "Car's value" },
-  { id: "your_age", title: "Your age" },
-  { id: "contact", title: "Contact" },
-  { id: "packages", title: "Packages" },
-  { id: "owner_details", title: "Car Owner Details" },
-  { id: "document_upload", title: "Document Upload" },
-  { id: "additional_benefits", title: "Additional Benefits" },
-] as const;
-type StepId = (typeof STEPS)[number]["id"];
+  const STEPS = [
+    { id: "car", title: "Car" },
+    { id: "add_car_info", title: "Add car info." },
+    { id: "owned_mortgage", title: "Owned/Mortgage" },
+    { id: "car_value", title: "Car's value" },
+    { id: "your_age", title: "Your age" },
+    { id: "contact", title: "Contact" },
+    { id: "packages", title: "Packages" },
+    { id: "owner_details", title: "Car Owner Details" },
+    { id: "document_upload", title: "Document Upload" },
+    { id: "additional_benefits", title: "Additional Benefits" },
+  ] as const;
+  type StepId = (typeof STEPS)[number]["id"];
 
-const [activeId, setActiveId] = useState<StepId>("car");
-const [completedIds, setCompletedIds] = useState<Set<StepId>>(new Set());
+  const [activeId, setActiveId] = useState<StepId>("car");
+  const [completedIds, setCompletedIds] = useState<Set<StepId>>(new Set());
 
-// advance + mark completed
-const advanceTo = (next: StepId) => {
-  setCompletedIds(prev => new Set(prev).add(activeId));
-  setActiveId(next);
-};
+  // advance + mark completed
+  const advanceTo = (next: StepId) => {
+    setCompletedIds(prev => new Set(prev).add(activeId));
+    setActiveId(next);
+  };
 
-// allow jumping only to completed or current
-const canJumpTo = (id: StepId) =>
-  id === activeId || completedIds.has(id);
+  // allow jumping only to completed or current
+  const canJumpTo = (id: StepId) =>
+    id === activeId || completedIds.has(id);
+  const showOnly = (id: StepId) => {
+    // reset all steps first
+    setShowForm(false);
+    setShowFinance(false);
+    setshowCarValue(false);
+    setShowBankList(false);
+    setShowHowYoung(false);
+    setshowPackages(false);
+    setshowPackageType(false);
+    setshowThirdParty(false);
+    setPersonalDetails(false);
+    setShowCPR(false);
+    setShowOtpValidation(false);
+    setShowPrice(false);
+    setshowAddOns(false);
+    setShowVinNumber(false);
 
-// when user clicks in sidebar
-const goToStep = (id: StepId) => {
-  if (!canJumpTo(id)) return; // lock future steps
-  showOnly(id);
-  setActiveId(id);
-};
-const showOnly = (id: StepId) => {
-  // reset all steps first
-  setShowForm(false);
-  setShowFinance(false);
-  setshowCarValue(false);
-  setShowBankList(false);
-  setShowHowYoung(false);
-  setshowPackages(false);
- setshowPackageType(false); 
-   setshowThirdParty(false);
-  setPersonalDetails(false);
-  setShowCPR(false);
-  setShowOtpValidation(false);
-  setShowPrice(false);
-  setshowAddOns(false);
-  setShowVinNumber(false);
+    // now enable the requested step
+    switch (id) {
+      case "car":
+        // initial "Car" step → probably leave everything hidden
+        break;
+      case "add_car_info":
+        setShowForm(true);
+        break;
+      case "owned_mortgage":
+        setShowFinance(true);
+        break;
+      case "car_value":
+        setshowCarValue(true);
+        break;
+      case "your_age":
+        setShowHowYoung(true);
+        break;
+      case "contact":
+        setShowOtpValidation(true);
+        break;
+      case "packages":
+        setshowPackages(true);
+        break;
+      case "owner_details":
+        setPersonalDetails(true);
+        break;
+      case "document_upload":
+        setShowCPR(true);
+        break;
+      case "additional_benefits":
+        setshowAddOns(true);
+        break;
+    }
+  };
 
-  // now enable the requested step
-  switch (id) {
-    case "car":
-      // initial "Car" step → probably leave everything hidden
-      break;
-    case "add_car_info":
-      setShowForm(true);
-      break;
-    case "owned_mortgage":
-      setShowFinance(true);
-      break;
-    case "car_value":
-      setshowCarValue(true);
-      break;
-    case "your_age":
-      setShowHowYoung(true);
-      break;
-    case "contact":
-      setShowOtpValidation(true);
-      break;
-    case "packages":
-      setshowPackages(true);
-      break;
-    case "owner_details":
-      setPersonalDetails(true);
-      break;
-    case "document_upload":
-      setShowCPR(true);
-      break;
-    case "additional_benefits":
-      setshowAddOns(true);
-      break;
-  }
-};
+  // when user clicks in sidebar
+  const goToStep = (id: StepId) => {
+    if (!canJumpTo(id)) return; // lock future steps
+    showOnly(id);
+    setActiveId(id);
+  };
 
 
 
-// canonical step order
+  // canonical step order
 
 
 
@@ -763,14 +764,15 @@ const showOnly = (id: StepId) => {
             className="flex flex-col md:flex-row lg:flex-row xl:flex-row  w-full h-[91vh] 
            sm:h-[81vh] md:h-[81vh] lg:h-[81vh] xl:h-[81vh] 2xl:h-[81vh] overflow-auto scrollbar-hide "
           >
-            <aside className="w-full xl:w-1/4 lg:w-1/4 md:w-2/5 hidden md:block mt-14">
-              <aside className="w-full xl:w-1/4 lg:w-1/4 md:w-2/5 hidden md:block mt-14">
+            <aside className="w-full xl:w-1/4 lg:w-1/4 md:w-2/5 hidden md:block mt-10">
+              <aside className="w-full xl:w-[60%] lg:w-1/4 md:w-2/5 hidden md:block ">
                 <SidebarSteps
                   steps={STEPS}
                   activeId={activeId}
                   completedIds={completedIds}
                   onStepClick={goToStep}
                 />
+
               </aside>
             </aside>
 
@@ -795,27 +797,26 @@ const showOnly = (id: StepId) => {
               <>
                 {!showForm && addedCars.length === 0 && !carConfirmed && (
                   <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10 ml-0">
-
                     <AddCarCard
-                      onClick={() =>{
-                         setShowForm(true)
-                             advanceTo("add_car_info");
-                        }
-                        }
-                      
+                      onClick={() => {
+                        setShowForm(true);
+                        advanceTo("add_car_info");   
+                      }}
                       onComplete={handleCarFormComplete}
                     />
-
                   </div>
                 )}
 
                 {showForm && (
-                  <motion.div
-                    className="mt-6 "
-                  >
+                  <motion.div className="mt-6 ">
                     <CarStepForm
                       onCancel={() => setShowForm(false)}
-                      onComplete={handleCarFormComplete}
+                      onComplete={() =>
+                        withStepLoading(async () => {
+                          await handleCarFormComplete({});
+                          advanceTo("owned_mortgage");   // 👉 step: Owned/Mortgage
+                        })
+                      }
                     />
                   </motion.div>
                 )}
@@ -830,18 +831,18 @@ const showOnly = (id: StepId) => {
                       onChange={formik.handleChange}
                       placeholder="Enter your car value"
                       formik={formik}
-
                     />
                     <NextButton
                       disabled={!formik.values.carValue}
-                      onClick={() => withStepLoading(() => {
-                        handleVinNumberComplete();
-                      })}
+                      onClick={() =>
+                        withStepLoading(() => {
+                          handleVinNumberComplete();
+                          advanceTo("your_age");   // 👉 step: Your age
+                        })
+                      }
                     />
-
                   </motion.div>
                 )}
-
               </>
 
               <div>
@@ -851,9 +852,14 @@ const showOnly = (id: StepId) => {
                     <MultiOption data={finance} onSelect={handleOptionSelectInFinanace} />
                     <NextBtn
                       disabled={!selectedFinanceOption}
-                      onClick={() => withStepLoading(() => {
-                        handleFinanceOnNext();
-                      })}
+                      onClick={() =>
+                        withStepLoading(() => {
+                          handleFinanceOnNext();
+                          if (selectedFinanceOption !== "Mortgage") {
+                            advanceTo("car_value");   
+                          }
+                        })
+                      }
                       label="Next →"
                     />
                   </div>
@@ -861,20 +867,27 @@ const showOnly = (id: StepId) => {
 
                 {showBankList && (
                   <>
-                    <BankList onBankSelect={handleBankSelect} />
+                    <BankList
+                      onBankSelect={(bank) => {
+                        handleBankSelect(bank);
+                        advanceTo("car_value");  
+                      }}
+                    />
                     <NextBtn
                       disabled={!selectedBank}
-                      onClick={() => withStepLoading(() => {
-                        handleBankClick();
-                      })}
+                      onClick={() =>
+                        withStepLoading(() => {
+                          handleBankClick();
+                          advanceTo("car_value");
+                        })
+                      }
                       label="Next →"
                     />
-
                   </>
                 )}
               </div>
-              <>
 
+              <>
                 {showHowYoung && (
                   <div className="ml-0 sm:ml-10">
                     <MultiOption
@@ -883,42 +896,47 @@ const showOnly = (id: StepId) => {
                     />
                     <NextBtn
                       disabled={selectAge === null}
-                      onClick={() => withStepLoading(() => {
-                        setAgeConformed(true);
-                        setShowHowYoung(false);
-                        setShowOtpValidation(true);
-                      })}
+                      onClick={() =>
+                        withStepLoading(() => {
+                          setAgeConformed(true);
+                          setShowHowYoung(false);
+                          setShowOtpValidation(true);
+                          advanceTo("contact");   // 👉 step: Contact
+                        })
+                      }
                       label="Next →"
                     />
                   </div>
                 )}
-
               </>
 
               <>
                 {/* Show Package Step ONLY when not showing personal details */}
                 {showPackages && (
                   <div className="ml-0 sm:ml-10 xl:ml-10 lg:ml-10 md:ml-10">
-                    <MultiOption
-                      data={packagesData}
-                      onSelect={handleOptionSelectPackage}
-                    />
+                    <MultiOption data={packagesData} onSelect={handleOptionSelectPackage} />
 
                     {showPackageType && (
-                      <Packages onSelect={(pkg: PackageType) => {
-                        setSelectedPackage(pkg);
-                        setshowPackages(false);
-                        setPersonalDetails(true);
-                      }} />
+                      <Packages
+                        onSelect={(pkg: PackageType) => {
+                          setSelectedPackage(pkg);
+                          setshowPackages(false);
+                          setPersonalDetails(true);
+                          advanceTo("owner_details");   // 👉 step: Car Owner Details
+                        }}
+                      />
                     )}
 
-                    {showThirdParty && <ThirdPartyPackage onSelect={(pkg: PackageType) => {
-                      setSelectedPackage(pkg);
-                      setshowPackages(false);
-                      setPersonalDetails(true);
-                    }} />}
-
-
+                    {showThirdParty && (
+                      <ThirdPartyPackage
+                        onSelect={(pkg: PackageType) => {
+                          setSelectedPackage(pkg);
+                          setshowPackages(false);
+                          setPersonalDetails(true);
+                          advanceTo("owner_details");
+                        }}
+                      />
+                    )}
                   </div>
                 )}
 
@@ -933,22 +951,24 @@ const showOnly = (id: StepId) => {
                     />
 
                     <NextBtn
-                      disabled={!personalData.nationalId?.trim() || !personalData.numberPlate?.trim()}
-
-                      onClick={() => withStepLoading(() => {
-                        setShowPersonalSummary(true);
-                        setPersonalDetails(false);
-                        setshowPackageType(false);
-                        setshowThirdParty(false);
-                        setshowPackages(false);
-                        setShowCPR(true)
-                        setPersonalDetails(false)
-                      })}
+                      disabled={
+                        !personalData.nationalId?.trim() || !personalData.numberPlate?.trim()
+                      }
+                      onClick={() =>
+                        withStepLoading(() => {
+                          setShowPersonalSummary(true);
+                          setPersonalDetails(false);
+                          setshowPackageType(false);
+                          setshowThirdParty(false);
+                          setshowPackages(false);
+                          setShowCPR(true);
+                          advanceTo("document_upload");   // 👉 step: Document Upload
+                        })
+                      }
                       label="Next →"
                     />
                   </>
                 )}
-
               </>
 
               {/* show cpr form */}
@@ -957,20 +977,29 @@ const showOnly = (id: StepId) => {
                   <CprForm onFileStatusChange={handleFileStatusChange} />
 
                   <NextBtn
-                    disabled={fileUploaded === null || !fileUploaded.nationalId || !fileUploaded.driverLicense || !fileUploaded.ownershipCard}
-                    onClick={() => withStepLoading(() => {
-                      setPersonalDetails(false);
-                      setshowPackageType(false);
-                      setshowThirdParty(false);
-                      setshowPackages(false);
-                      setShowCPR(false);
-                      setShowVinNumber(true);
-                      setShowFileStatus(true);
-                    })}
+                    disabled={
+                      fileUploaded === null ||
+                      !fileUploaded.nationalId ||
+                      !fileUploaded.driverLicense ||
+                      !fileUploaded.ownershipCard
+                    }
+                    onClick={() =>
+                      withStepLoading(() => {
+                        setPersonalDetails(false);
+                        setshowPackageType(false);
+                        setshowThirdParty(false);
+                        setshowPackages(false);
+                        setShowCPR(false);
+                        setShowVinNumber(true);
+                        setShowFileStatus(true);
+                        advanceTo("additional_benefits");   // 👉 final step: Additional Benefits
+                      })
+                    }
                     label="Next →"
                   />
                 </>
               )}
+
 
               {/* OTP Validation */}
               {showOtpValidation && (

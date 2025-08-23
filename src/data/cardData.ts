@@ -12,14 +12,14 @@ export const cardData: CardData[] = [
     id: '1',
     Name: 'Report an Accident',
     icon: 'FaClipboard',
-    image: '/asesst/images/car1.png',
+    image: '/asesst/images/car4.png',
   },
   {
     id: '2',
     Name: 'Insure My Car',
     icon: 'FaHandHolding',
     subIcon: 'FaCar',
-    image: '/asesst/images/car2.png',
+    image: '/asesst/images/car1.png',
   },
   {
     id: '3',
@@ -31,7 +31,8 @@ export const cardData: CardData[] = [
     id: '4',
     Name: 'Road Assistance',
     icon: 'FaTruckPickup',
-    image: '/asesst/images/car4.png',
+    image: '/asesst/images/car2.png',
+
   },
 
 ];

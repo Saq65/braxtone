@@ -8,6 +8,10 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Noto_Naskh_Arabic } from 'next/font/google';
 import Link from "next/link";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, FreeMode } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/free-mode';
 
 const nunito = Nunito({
     subsets: ['latin'],
@@ -19,6 +23,8 @@ const arabicFont = Noto_Naskh_Arabic({
     weight: ['400', '700'],
     variable: '--font-arabic',
 });
+
+const logos = ['ex4', 'ex3', 'ex2', 'ex1', 'ex4', 'ex3', 'ex2', 'ex1'];
 export default function HomeLandscape() {
     const router = useRouter();
     return (
@@ -69,12 +75,7 @@ export default function HomeLandscape() {
                             </p>
 
                             <div className="w-full flex justify-center md:justify-start">
-                                {/* <div
-                                    onClick={() => router.push('/servicePage')}
-                                    className="w-auto mt-10 py-3 px-6 lg:py-4 lg:px-8 bg-[var(--secondary)] opacity-90 text-white rounded-md text-sm sm:text-base lg:text-lg font-semibold hover:bg-[#005584] transition cursor-pointer text-center"
-                                >
-                                    Explore Our Pricing
-                                </div> */}
+
 
                                 <Link
                                     href="/servicePage"
@@ -111,18 +112,40 @@ export default function HomeLandscape() {
 
                     <div className="mt-36 w-full flex flex-col xl:flex-row md:flex-row lg:flex-row sm:flex-row items-center justify-between gap-6">
                         <div className="w-full xl:w-[75%] lg:w-[72%] md:w-[70%] sm:w-full bg-[#dbedf8] shadow px-4 py-4 overflow-hidden relative">
-                            <div className="flex w-max gap-10 space-x-10 px-10 animate-marquee">
-                                {['ex4', 'ex3', 'ex2', 'ex1'].map((img, index) => (
-                                    <div key={index} className="flex justify-center items-center h-10 p-2 gap-[20px]">
-                                        <Image
-                                            src={`/asesst/images/${img}.png`}
-                                            alt={img}
-                                            width={70}
-                                            height={50}
-                                            className="w-full h-11 object-contain"
-                                        />
-                                    </div>
-                                ))}
+                            <div className="px-10">
+                                <Swiper
+                                    modules={[Autoplay, FreeMode]}
+                                    freeMode={true}
+                                    loop={true}
+                                    allowTouchMove={false}
+                                    slidesPerView="auto"
+                                    speed={5000}
+                                    autoplay={{ delay: 0, disableOnInteraction: false, pauseOnMouseEnter: true }}
+                                    spaceBetween={40}
+                                    // slidesPerView={2}
+                                    breakpoints={{
+                                        480: { slidesPerView: 3, spaceBetween: 40 },
+                                        768: { slidesPerView: 4, spaceBetween: 50 },
+                                        1024: { slidesPerView: 5, spaceBetween: 60 },
+                                        1280: { slidesPerView: 6, spaceBetween: 70 },
+                                    }}
+                                    className="w-full"
+                                >
+                                    {logos.map((img, i) => (
+                                        <SwiperSlide key={`${img}-${i}`} className="!w-auto">
+                                            <div className="flex justify-center items-center h-10 p-2">
+                                                <Image
+                                                    src={`/asesst/images/${img}.png`}
+                                                    alt={img}
+                                                    width={120}
+                                                    height={44}
+                                                    className="h-11 w-auto object-contain"
+                                                    priority={i < 3} // optional: prefetch first few
+                                                />
+                                            </div>
+                                        </SwiperSlide>
+                                    ))}
+                                </Swiper>
                             </div>
                         </div>
 

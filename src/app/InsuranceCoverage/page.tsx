@@ -28,9 +28,9 @@ const Page = () => {
                 item={item}
                 isSelected={selectedCard === item.id}
                 onSelect={() => {
-                  if (disabled) return;             // block clicks for others
+                  if (disabled) return;            
                   setSelectedCard(item.id);
-                  router.push('/multipleFormPage'); // navigate only for second card
+                  router.push('/multipleFormPage');
                 }}
               />
             );
