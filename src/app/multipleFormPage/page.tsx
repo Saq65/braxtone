@@ -9,7 +9,8 @@ import { MultiFormheader } from "@/data/multiformheading";
 import CarStepForm from "@/components/cars/CarStepForm";
 import * as Yup from 'yup';
 import {
-  finance, HowYoungData, packagesData} from '@/data/multiOptionsData';
+  finance, HowYoungData, packagesData
+} from '@/data/multiOptionsData';
 import MultiOption from '@/components/ui/MultiOption';
 import NextButton from '@/components/ui/NextBtn';
 import { BiPencil } from 'react-icons/bi';
@@ -374,6 +375,96 @@ export default function MultipleFormPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+const STEPS = [
+  { id: "car", title: "Car" },
+  { id: "add_car_info", title: "Add car info." },
+  { id: "owned_mortgage", title: "Owned/Mortgage" },
+  { id: "car_value", title: "Car's value" },
+  { id: "your_age", title: "Your age" },
+  { id: "contact", title: "Contact" },
+  { id: "packages", title: "Packages" },
+  { id: "owner_details", title: "Car Owner Details" },
+  { id: "document_upload", title: "Document Upload" },
+  { id: "additional_benefits", title: "Additional Benefits" },
+] as const;
+type StepId = (typeof STEPS)[number]["id"];
+
+const [activeId, setActiveId] = useState<StepId>("car");
+const [completedIds, setCompletedIds] = useState<Set<StepId>>(new Set());
+
+// advance + mark completed
+const advanceTo = (next: StepId) => {
+  setCompletedIds(prev => new Set(prev).add(activeId));
+  setActiveId(next);
+};
+
+// allow jumping only to completed or current
+const canJumpTo = (id: StepId) =>
+  id === activeId || completedIds.has(id);
+
+// when user clicks in sidebar
+const goToStep = (id: StepId) => {
+  if (!canJumpTo(id)) return; // lock future steps
+  showOnly(id);
+  setActiveId(id);
+};
+const showOnly = (id: StepId) => {
+  // reset all steps first
+  setShowForm(false);
+  setShowFinance(false);
+  setshowCarValue(false);
+  setShowBankList(false);
+  setShowHowYoung(false);
+  setshowPackages(false);
+ setshowPackageType(false); 
+   setshowThirdParty(false);
+  setPersonalDetails(false);
+  setShowCPR(false);
+  setShowOtpValidation(false);
+  setShowPrice(false);
+  setshowAddOns(false);
+  setShowVinNumber(false);
+
+  // now enable the requested step
+  switch (id) {
+    case "car":
+      // initial "Car" step → probably leave everything hidden
+      break;
+    case "add_car_info":
+      setShowForm(true);
+      break;
+    case "owned_mortgage":
+      setShowFinance(true);
+      break;
+    case "car_value":
+      setshowCarValue(true);
+      break;
+    case "your_age":
+      setShowHowYoung(true);
+      break;
+    case "contact":
+      setShowOtpValidation(true);
+      break;
+    case "packages":
+      setshowPackages(true);
+      break;
+    case "owner_details":
+      setPersonalDetails(true);
+      break;
+    case "document_upload":
+      setShowCPR(true);
+      break;
+    case "additional_benefits":
+      setshowAddOns(true);
+      break;
+  }
+};
+
+
+
+// canonical step order
+
+
 
 
 
@@ -673,7 +764,14 @@ export default function MultipleFormPage() {
            sm:h-[81vh] md:h-[81vh] lg:h-[81vh] xl:h-[81vh] 2xl:h-[81vh] overflow-auto scrollbar-hide "
           >
             <aside className="w-full xl:w-1/4 lg:w-1/4 md:w-2/5 hidden md:block mt-14">
-              <SidebarSteps />
+              <aside className="w-full xl:w-1/4 lg:w-1/4 md:w-2/5 hidden md:block mt-14">
+                <SidebarSteps
+                  steps={STEPS}
+                  activeId={activeId}
+                  completedIds={completedIds}
+                  onStepClick={goToStep}
+                />
+              </aside>
             </aside>
 
             <main className="w-full xl:w-3/4 space-y-6 overflow-x-hidden">
@@ -699,7 +797,12 @@ export default function MultipleFormPage() {
                   <div className="flex flex-col gap-4 w-full sm:w-3/4 md:w-2/3 lg:w-3/5 xl:w-1/2 sm:ml-10 md:ml-10 lg:ml-10 xl:ml-10 ml-0">
 
                     <AddCarCard
-                      onClick={() => setShowForm(true)}
+                      onClick={() =>{
+                         setShowForm(true)
+                             advanceTo("add_car_info");
+                        }
+                        }
+                      
                       onComplete={handleCarFormComplete}
                     />
 
@@ -897,7 +1000,7 @@ export default function MultipleFormPage() {
                     />
                     <NextBtn
                       disabled={!priceBHD}
-                      onClick={() => withStepLoading(()=>{
+                      onClick={() => withStepLoading(() => {
                         setShowPrice(false);
                         setshowPackageType(true);
                         setshowPackages(true)
