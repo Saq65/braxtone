@@ -129,7 +129,7 @@ export default function HomeLandscape() {
                                         480: { slidesPerView: 3, spaceBetween: 40 },
                                         768: { slidesPerView: 4, spaceBetween: 50 },
                                         1024: { slidesPerView: 5, spaceBetween: 60 },
-                                        1280: { slidesPerView: 6, spaceBetween: 70 },
+                                        1280: { slidesPerView: 6, spaceBetween: 120 },
                                     }}
                                     className="w-full"
                                 >
@@ -140,9 +140,9 @@ export default function HomeLandscape() {
                                                     src={`/asesst/images/${img}.png`}
                                                     alt={img}
                                                     width={120}
-                                                    height={44}
+                                                    height={40}
                                                     className="h-11 w-auto object-contain"
-                                                    priority={i < 3} // optional: prefetch first few
+                                                    priority={i < 3} 
                                                 />
                                             </div>
                                         </SwiperSlide>

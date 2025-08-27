@@ -1,4 +1,5 @@
 'use client';
+
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Select } from 'antd';
 import { useFormik } from 'formik';
@@ -19,12 +20,12 @@ const COUNTRIES: Country[] = [
   { name: 'Egypt', code: '+20' },
 ];
 
-const phoneRegex = /^[0-9]{7,15}$/;
+const phoneDigitsRegex = /^[0-9]{7,15}$/;
 const otpRegex = /^[0-9]{6}$/;
 
 type FormValues = {
-  country: string;        // dial code, e.g. "+971"
-  mobileNumber: string;   // digits only
+  country: string;
+  mobileNumber: string;
   name: string;
   email: string;
   otpRequested: boolean;
@@ -35,17 +36,17 @@ export type OtpValidationHandle = { submit: () => void };
 
 type Props = {
   onSubmitData: (data: { country: string; phone: string; name: string; email: string; otp: string }) => void;
-  sendOtpUrl?: string;
-  verifyOtpUrl?: string;
+  sendOtpUrl?: string;   // default: /api/quote
+  verifyOtpUrl?: string; // default: /api/quote
   sendOtpExtra?: Record<string, unknown>;
   verifyOtpExtra?: Record<string, unknown>;
 };
 
 const validationSchema = Yup.object({
   country: Yup.string().required('Select your country'),
-  mobileNumber: Yup.string().required('Phone is required').matches(phoneRegex, 'Enter a valid phone number (7–15 digits)'),
-  name: Yup.string().trim().required('Full name is required'),
-  email: Yup.string().trim().email('Invalid email').required('Email is required'),
+  mobileNumber: Yup.string().required('Phone is required').matches(phoneDigitsRegex, 'Enter 7–15 digits'),
+  name: Yup.string().trim().when('otpRequested', { is: true, then: s => s.required('Full name is required'), otherwise: s => s.notRequired() }),
+  email: Yup.string().trim().email('Invalid email').when('otpRequested', { is: true, then: s => s.required('Email is required'), otherwise: s => s.notRequired() }),
   otpDigits: Yup.array()
     .of(Yup.string().matches(/^\d?$/, 'Digits only'))
     .length(6)
@@ -61,7 +62,7 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(
     {
       onSubmitData,
       sendOtpUrl = '/api/quote',
-      verifyOtpUrl = '/api/otp/verify',
+      verifyOtpUrl = '/api/quote',
       sendOtpExtra,
       verifyOtpExtra,
     },
@@ -73,6 +74,7 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(
     const [verifying, setVerifying] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [cooldown, setCooldown] = useState(0);
+const [devOtp, setDevOtp] = useState<string | null>(null);
 
     useEffect(() => {
       if (!cooldown) return;
@@ -92,15 +94,30 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(
       validationSchema,
       onSubmit: async (values) => {
         setError(null);
-        const otp = values.otpDigits.join('');
-        const fullPhone = `${values.country}${values.mobileNumber}`;
+
+        const contact = `${values.country}${values.mobileNumber}`.trim();
+        const otp = values.otpDigits.join('').trim();
+
+        if (!/^\+\d{7,15}$/.test(contact)) {
+          setError('Phone must include country code, e.g. +97336432517');
+          return;
+        }
+        if (!otpRegex.test(otp)) {
+          setError('Enter the 6-digit OTP');
+          return;
+        }
 
         try {
           setVerifying(true);
+
+          // ✅ Do NOT send OTP to /api/quote. Only mark as verified.
           await axios.post(
             verifyOtpUrl,
-            { phone: fullPhone, otp, ...verifyOtpExtra },
-            { withCredentials: true }
+            {
+              contact,
+              OTPVerification: true,
+              ...(verifyOtpExtra || {}),
+            }
           );
 
           onSubmitData({
@@ -108,10 +125,14 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(
             phone: values.mobileNumber,
             name: values.name,
             email: values.email,
-            otp,
+            otp, // you can keep this for your local state/logs, but it’s not sent to the vendor here
           });
         } catch (e: any) {
-          const msg = e?.response?.data?.message || e?.response?.data?.error || e?.message || 'Failed to verify OTP';
+          const d = e?.response?.data;
+          const nested =
+            Array.isArray(d?.details?.details) ? d.details.details[0]?.message :
+              Array.isArray(d?.details) ? d.details[0]?.message : undefined;
+          const msg = nested || d?.message || d?.error || e?.message || 'Failed to verify OTP';
           setError(msg);
         } finally {
           setVerifying(false);
@@ -128,50 +149,56 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(
 
     const handleSendOtp = async () => {
       setError(null);
+
       await formik.validateForm();
       if (formik.errors.country || formik.errors.mobileNumber) return;
+      if (!phoneDigitsRegex.test(formik.values.mobileNumber)) return;
       if (cooldown > 0) return;
+
+      const contact = `${formik.values.country}${formik.values.mobileNumber}`.trim();
+      if (!/^\+\d{7,15}$/.test(contact)) {
+        setError('Phone must include country code, e.g. +97336432517');
+        return;
+      }
 
       try {
         setSending(true);
-        const fullPhone = `${formik.values.country}${formik.values.mobileNumber}`;
 
-        await axios.post(
+        // ✅ Create quote draft / trigger OTP by marking as not verified
+        const r = await axios.post(
           sendOtpUrl,
           {
-            phone: fullPhone,
-            name: formik.values.name,
-            email: formik.values.email,
-            country: formik.values.country,
-            channel: 'sms',
-            ...sendOtpExtra,
-          },
-          { withCredentials: true }
+            contact,
+            OTPVerification: false,
+            ...(sendOtpExtra || {}),
+          }
         );
-
-        formik.setFieldValue('otpRequested', true, false);
-        setCooldown(60);
-        setTimeout(() => inputsRef.current[0]?.focus(), 0);
-      } catch (e: any) {
-        if (e?.response) {
-          const { status, data } = e.response;
-          setError(`Send failed [${status}] — ${typeof data === 'string' ? data : data?.message || 'See console'}`);
-          console.group('OTP send error');
-          console.log('status:', status);
-          console.log('data:', data);
-          console.log('sent body:', {
-            phone: `${formik.values.country}${formik.values.mobileNumber}`,
-            name: formik.values.name,
-            email: formik.values.email,
-            country: formik.values.country,
-            channel: 'sms',
-            ...sendOtpExtra,
-          });
-          console.groupEnd();
-        } else {
-          setError(e?.message || 'Failed to send OTP');
-          console.error('OTP send error (no response):', e);
+        if (r?.data?.devOtp && /^\d{6}$/.test(r.data.devOtp)) {
+          setDevOtp(r.data.devOtp);
+          formik.setFieldValue('otpDigits', r.data.devOtp.split(''), false);
         }
+
+        const ok = r?.data?.success && (r?.data?.otpSent ?? true);
+        if (ok) {
+          if (r?.data?.message) console.info(r.data.message);
+          formik.setFieldValue('otpRequested', true, false);
+          formik.setFieldTouched('otpDigits', true, false);
+          setCooldown(60);
+          setTimeout(() => inputsRef.current[0]?.focus(), 0);
+        } else {
+          setError(r?.data?.message || 'Failed to send OTP');
+        }
+      } catch (e: any) {
+        const { status, data } = e?.response || {};
+        const nested =
+          Array.isArray(data?.details?.details) ? data.details.details[0]?.message :
+            Array.isArray(data?.details) ? data.details[0]?.message : undefined;
+        setError(nested || (typeof data === 'string' ? data : data?.message) || `Send failed [${status}]`);
+        console.group('OTP send error');
+        console.log('status:', status);
+        console.log('data:', data);
+        console.log('sent body:', { contact, ...(sendOtpExtra || {}) });
+        console.groupEnd();
       } finally {
         setSending(false);
       }
@@ -194,8 +221,21 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(
           return;
         }
         if (i > 0) inputsRef.current[i - 1]?.focus();
-      } else if (e.key === 'ArrowLeft' && i > 0) inputsRef.current[i - 1]?.focus();
-      else if (e.key === 'ArrowRight' && i < 5) inputsRef.current[i + 1]?.focus();
+      } else if (e.key === 'ArrowLeft' && i > 0) {
+        inputsRef.current[i - 1]?.focus();
+      } else if (e.key === 'ArrowRight' && i < 5) {
+        inputsRef.current[i + 1]?.focus();
+      }
+    };
+
+    const handleOtpPaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
+      const txt = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+      if (!txt) return;
+      const next = txt.split('').concat(Array(6).fill('')).slice(0, 6);
+      formik.setFieldValue('otpDigits', next, true);
+      const last = Math.min(txt.length, 6) - 1;
+      if (last >= 0) inputsRef.current[last]?.focus();
+      e.preventDefault();
     };
 
     const otpError =
@@ -210,7 +250,7 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(
             <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-3 py-2 rounded">{error}</div>
           ) : null}
 
-          <div className="ml-0 sm:ml-17 md:ml-17 lg:ml-17 xl:ml-17 overflow-hidden ">
+          <div className="ml-0 sm:ml-17 md:ml-17 lg:ml-17 xl:ml-17 overflow-hidden">
             <Select
               showSearch
               placeholder="Select your country"
@@ -227,8 +267,7 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(
             )}
           </div>
 
-          <div className="flex items-center justify-between py-3 px-2 gap-2 border border-gray-300 focus-within:outline-none focus-within:ring-1 focus-within:ring-[#002d97] 
-          sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17 shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] rounded-[6px] hover:shadow-md transition-shadow duration-200 w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
+          <div className="flex items-center justify-between py-3 px-2 gap-2 border border-gray-300 focus-within:ring-1 focus-within:ring-[#002d97] sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17 shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] rounded-[6px] hover:shadow-md transition-shadow duration-200 w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
             <div className="text-gray-600 whitespace-nowrap pr-1">{formik.values.country || '+XX'}</div>
             <input
               type="tel"
@@ -254,20 +293,22 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(
           )}
 
           {formik.values.otpRequested && (
-            <div className="flex items-center justify-between py-3 gap-2 sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17 rounded-[6px] w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
+            <div
+              onPaste={handleOtpPaste}
+              className="flex items-center justify-between py-3 gap-2 sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17 rounded-[6px] w-[100%] lg:w-[42.8%] xl:w-[42.8%]"
+            >
               {Array.from({ length: 6 }).map((_, i) => (
                 <span
                   key={i}
-                  className="border border-gray-300 focus-within:outline-none focus-within:ring-1 focus-within:ring-[#002d97] shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] hover:shadow-md transition-shadow duration-200"
+                  className="border border-gray-300 focus-within:ring-1 focus-within:ring-[#002d97] shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] hover:shadow-md transition-shadow duration-200"
                 >
                   <input
-                    ref={(el) => {
-                      inputsRef.current[i] = el;
-                    }}
+                    ref={(el) => { inputsRef.current[i] = el; }}
                     type="text"
                     maxLength={1}
                     className="w-12 h-12 outline-none text-center"
                     inputMode="numeric"
+                    autoComplete={i === 0 ? 'one-time-code' : undefined}
                     value={formik.values.otpDigits[i]}
                     onChange={(e) => handleOtpChange(e.target.value, i)}
                     onKeyDown={(e) => handleOtpKeyDown(e, i)}
@@ -279,8 +320,8 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(
           )}
           {otpError ? <p className="text-red-500 text-sm sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17">Enter the 6-digit OTP</p> : null}
 
-          <div className="flex items-center py-3 px-2 gap-2 border border-gray-300 focus-within:outline-none focus-within:ring-1 focus-within:ring-[#002d97]
-          sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17 shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] rounded-[6px] hover:shadow-md transition-shadow duration-200 w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
+          {/* Optional name/email UI (not sent to vendor in send/verify) */}
+          <div className="flex items-center py-3 px-2 gap-2 border border-gray-300 focus-within:ring-1 focus-within:ring-[#002d97] sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17 shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] rounded-[6px] hover:shadow-md transition-shadow duration-200 w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
             <input
               type="text"
               name="name"
@@ -292,10 +333,11 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(
               onBlur={formik.handleBlur}
             />
           </div>
-          {formik.touched.name && formik.errors.name && <p className="text-red-500 text-sm sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17">{formik.errors.name}</p>}
+          {formik.touched.name && formik.errors.name && (
+            <p className="text-red-500 text-sm sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17">{formik.errors.name}</p>
+          )}
 
-          <div className="flex items-center py-3 px-2 gap-2 border border-gray-300 focus-within:outline-none focus-within:ring-1 focus-within:ring-[#002d97] sm:ml-7 
-          md:ml-7 lg:ml-7 xl:ml-17 shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] rounded-[6px] hover:shadow-md transition-shadow duration-200 w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
+          <div className="flex items-center py-3 px-2 gap-2 border border-gray-300 focus-within:ring-1 focus-within:ring-[#002d97] sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17 shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] rounded-[6px] hover:shadow-md transition-shadow duration-200 w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
             <input
               type="email"
               name="email"
@@ -305,14 +347,27 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              required
+              required={formik.values.otpRequested}
             />
           </div>
-          {formik.touched.email && formik.errors.email && <p className="text-red-500 text-sm sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17">{formik.errors.email}</p>}
+          {formik.touched.email && formik.errors.email && (
+            <p className="text-red-500 text-sm sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17">{formik.errors.email}</p>
+          )}
 
+          {/* Hidden submit for parent ref */}
           <button type="submit" style={{ display: 'none' }} disabled={verifying} />
           {verifying ? <div className="text-sm text-gray-600 sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17">Verifying…</div> : null}
         </div>
+        {error ? (
+          <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-3 py-2 rounded">{error}</div>
+        ) : null}
+
+        {devOtp && ( // ✅ add here
+          <div className="bg-amber-50 border border-amber-200 text-amber-800 text-sm px-3 py-2 rounded">
+            DEV OTP: <b>{devOtp}</b> (test mode)
+          </div>
+        )}
+
       </form>
     );
   }

@@ -75,6 +75,7 @@ export default function MultipleFormPage() {
   const [showVinData, setShowVinData] = useState(false);
   const otpRef = useRef<OtpValidationHandle>(null);
   const [stepLoading, setStepLoading] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
 
   const withStepLoading = useCallback(async (fn: () => void | Promise<void>) => {
     setStepLoading(true);
@@ -100,6 +101,7 @@ export default function MultipleFormPage() {
     otp: string;
   }) => {
     setOtpFormData(data);
+    setOtpVerified(true);
   };
 
   const formattedCarValue =
@@ -114,8 +116,6 @@ export default function MultipleFormPage() {
   const { image } = MultiFormheader[0];
 
   const addedCarsRef = useRef<HTMLDivElement | null>(null);
-  // helper shown earlier:
-  // const withStepLoading = useCallback(async (fn: () => void | Promise<void>) => { ... }, []);
 
   const handleCarFormComplete = (car: { [key: string]: string }) =>
     withStepLoading(async () => {
@@ -461,12 +461,6 @@ export default function MultipleFormPage() {
 
 
 
-  // canonical step order
-
-
-
-
-
   return (
     <div className="min-h-screen bg-[linear-gradient(to_bottom,_#FFF2E2_0%,_white_30%,_white_70%,_#FFF2E2_100%)] overflow-hidden scrollbar-hide">
       <div className='fixed z-999 w-full bg-transparent sm:bg-transparent xl:bg-transparent lg:bg-transparent '>
@@ -477,7 +471,7 @@ export default function MultipleFormPage() {
           {/* here all data showing after added */}
           <div className='flex justify-center flex-col sm:items-center md:items-center lg:items-center
            xl:items-center items-start cursor-pointer  
-            mt-30 sm:mt-10 md:mt-10 lg:mt-28 xl:mt-26 lg:mb-2  sm:mb-0 xl:mb-0 mb-0 gap-10 ml-6 xl:ml-22 xl:justify-end' style={{ zIndex: '10', position: 'relative' ,rowGap:'24px'}} >
+            mt-30 sm:mt-10 md:mt-10 lg:mt-28 xl:mt-26 lg:mb-2  sm:mb-0 xl:mb-0 mb-0 gap-10 ml-6 xl:ml-22 xl:justify-end' style={{ zIndex: '10', position: 'relative', rowGap: '24px' }} >
 
             {addedCars.length > 0 && (
               <motion.div
@@ -505,10 +499,10 @@ export default function MultipleFormPage() {
                       }}
                       className="flex items-center gap-4 font-medium text-lg font-medium text-gray-700"
                     >
-                        <h3 className="text-lg font-medium text-gray-900">
-                          {Object.values(entry).filter(Boolean).join(" ")}
-                        </h3>
-                        <BiPencil onClick={() => openEditConfirm('car')} className='mt-1' />
+                      <h3 className="text-lg font-medium text-gray-900">
+                        {Object.values(entry).filter(Boolean).join(" ")}
+                      </h3>
+                      <BiPencil onClick={() => openEditConfirm('car')} className='mt-1' />
                     </motion.div>
                   </div>
                 ))}
@@ -765,7 +759,7 @@ export default function MultipleFormPage() {
            sm:h-[81vh] md:h-[81vh] lg:h-[81vh] xl:h-[81vh] 2xl:h-[81vh] overflow-auto scrollbar-hide "
           >
             <aside className="w-full xl:w-1/4 lg:w-1/4 md:w-2/5 hidden md:block mt-10">
-              <aside className="w-full xl:w-[60%] lg:w-1/4 md:w-2/5 hidden md:block ">
+              <aside className="w-full xl:w-[60%] lg:w-1/4 md:w-[80%] lg:w-[82%] hidden md:block ">
                 <SidebarSteps
                   steps={STEPS}
                   activeId={activeId}
@@ -788,9 +782,35 @@ export default function MultipleFormPage() {
                     className="rounded-full object-cover h-auto border-2 border-white shadow"
                   />
                 </div>
-                <div className='ml-0 sm:ml-4 md:ml-4 lg:ml-4 xl:ml-4 w-[100%]  sm:w-[42%] xl:w-[42%] md:w-[42%] lg:w-[42%]'>
-                  <MultiformHeading heading={activeHeader.heading} />
+                <div className='ml-0 sm:ml-4 md:ml-4 lg:ml-4 xl:ml-4 w-[100%] sm:w-[42%] xl:w-[42%] md:w-[42%] lg:w-[42%]'>
+                  <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                      hidden: { opacity: 1 },
+                      visible: {
+                        opacity: 1,
+                        transition: { staggerChildren: 0.03 }
+                      }
+                    }}
+                    className="inline-block"
+                    key={activeHeader?.heading || ''} 
+                  >
+                    {(activeHeader?.heading || '').split('').map((char, i) => (
+                      <motion.span
+                        key={i}
+                        variants={{
+                          hidden: { opacity: 0, x: -8 },
+                          visible: { opacity: 1, x: 0, transition: { duration: 0.6} }
+                        }}
+                        className="inline-block"
+                      >
+                        {char === ' ' ? '\u00A0' : char}
+                      </motion.span>
+                    ))}
+                  </motion.div>
                 </div>
+
               </div>
 
               {/* this is for car */}
@@ -992,14 +1012,13 @@ export default function MultipleFormPage() {
                         setShowCPR(false);
                         setShowVinNumber(true);
                         setShowFileStatus(true);
-                        advanceTo("additional_benefits");   // 👉 final step: Additional Benefits
+                        advanceTo("additional_benefits");
                       })
                     }
                     label="Next →"
                   />
                 </>
               )}
-
 
               {/* OTP Validation */}
               {showOtpValidation && (
@@ -1009,11 +1028,14 @@ export default function MultipleFormPage() {
                   <NextBtn
                     disabled={!showOtpValidation}
                     onClick={() => {
-                      otpRef.current?.submit()
+                      if (!otpVerified) {
+                        otpRef.current?.submit();
+                        return;
+                      }
                       setShowOtpValidation(false);
-                      handleFormSubmit
                       setShowPrice(true);
                     }}
+
                     label="Next →"
                   />
                 </>

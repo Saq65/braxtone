@@ -11,7 +11,7 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { Montserrat } from 'next/font/google'
 import { IoMdArrowDropup } from "react-icons/io";
 
-const montserrat = Montserrat({ subsets: ['latin'], weight: ['400','500','600'] })
+const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '500', '600'] })
 
 type Props = {
   rightSlot?: React.ReactNode;
@@ -68,7 +68,6 @@ const MultiformHeader: React.FC<Props> = ({ rightSlot }) => {
           </div>
         </div>
 
-        {/* mobile drawer unchanged */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -78,7 +77,50 @@ const MultiformHeader: React.FC<Props> = ({ rightSlot }) => {
               transition={{ duration: 0.5, ease: "easeInOut" }}
               className={`${montserrat.className} lg:hidden fixed top-[80px] left-0 w-full bg-white px-6 py-6 overflow-hidden flex flex-col justify-start items-center gap-6 text-black text-sm z-40`}
             >
-              {/* … existing mobile items … */}
+
+              <motion.span
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="relative group cursor-pointer font-semibold text-base text-black"
+              >
+                About Us
+                <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-green-500 transition-all duration-300 ease-in-out group-hover:w-full" />
+              </motion.span>
+
+              <motion.span
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="hover:underline font-semibold"
+              >
+                Customer Login
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="hover:underline font-semibold"
+              >
+                Agent Login
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="hover:underline font-semibold"
+              >
+                Let&apos;s Connect
+              </motion.span>
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="flex items-center gap-1 font-semibold hover:underline"
+              >
+                My Account
+                <IoMdArrowDropup />
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
