@@ -1,8 +1,8 @@
 module.exports = {
   content: [
-    "./src/**/*.{js,ts,jsx,tsx}", // All files in the src directory
-    "./src/app/**/*.{js,ts,jsx,tsx}", // Files in the src/app directory
-    "./src/components/**/*.{js,ts,jsx,tsx}", // Files in the src/components directory
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/app/**/*.{js,ts,jsx,tsx}",
+    "./src/components/**/*.{js,ts,jsx,tsx}", 
   ],
   theme: {
     extend: {
@@ -23,6 +23,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('tailwind-scrollbar-hide'), // If you're using this plugin
+    require('tailwind-scrollbar-hide'), 
   ],
 };

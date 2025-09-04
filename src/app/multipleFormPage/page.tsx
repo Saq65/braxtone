@@ -27,7 +27,7 @@ import OtpValidation, { OtpValidationHandle } from '@/components/auth/OtpValidat
 import BankList from '@/components/banklist/BankList';
 import Price from '@/components/price/Price';
 import AddOns from '@/components/AddOns/AddOns';
-import Vinnumber from '@/components/VinNumber/vinnumber';
+import Vinnumber from '@/components/VinNumber/VinNumber';
 // import { useInView } from 'react-intersection-observer';
 import { Spin } from 'antd';
 import { useCallback } from 'react';

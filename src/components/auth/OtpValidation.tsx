@@ -74,7 +74,7 @@ const OtpValidation = forwardRef<OtpValidationHandle, Props>(
     const [verifying, setVerifying] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [cooldown, setCooldown] = useState(0);
-const [devOtp, setDevOtp] = useState<string | null>(null);
+    const [devOtp, setDevOtp] = useState<string | null>(null);
 
     useEffect(() => {
       if (!cooldown) return;
@@ -125,7 +125,7 @@ const [devOtp, setDevOtp] = useState<string | null>(null);
             phone: values.mobileNumber,
             name: values.name,
             email: values.email,
-            otp, // you can keep this for your local state/logs, but it’s not sent to the vendor here
+            otp, 
           });
         } catch (e: any) {
           const d = e?.response?.data;
@@ -267,7 +267,8 @@ const [devOtp, setDevOtp] = useState<string | null>(null);
             )}
           </div>
 
-          <div className="flex items-center justify-between py-3 px-2 gap-2 border border-gray-300 focus-within:ring-1 focus-within:ring-[#002d97] sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17 shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] rounded-[6px] hover:shadow-md transition-shadow duration-200 w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
+          <div className="flex items-center justify-between py-3 px-2 gap-2 border border-gray-300 focus-within:ring-1 focus-within:ring-[#002d97] sm:ml-7 md:ml-7 
+          lg:ml-7 xl:ml-17 shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] rounded-[6px] hover:shadow-md transition-shadow duration-200 w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
             <div className="text-gray-600 whitespace-nowrap pr-1">{formik.values.country || '+XX'}</div>
             <input
               type="tel"
@@ -320,7 +321,6 @@ const [devOtp, setDevOtp] = useState<string | null>(null);
           )}
           {otpError ? <p className="text-red-500 text-sm sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17">Enter the 6-digit OTP</p> : null}
 
-          {/* Optional name/email UI (not sent to vendor in send/verify) */}
           <div className="flex items-center py-3 px-2 gap-2 border border-gray-300 focus-within:ring-1 focus-within:ring-[#002d97] sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17 shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] rounded-[6px] hover:shadow-md transition-shadow duration-200 w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
             <input
               type="text"
@@ -337,7 +337,9 @@ const [devOtp, setDevOtp] = useState<string | null>(null);
             <p className="text-red-500 text-sm sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17">{formik.errors.name}</p>
           )}
 
-          <div className="flex items-center py-3 px-2 gap-2 border border-gray-300 focus-within:ring-1 focus-within:ring-[#002d97] sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17 shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] rounded-[6px] hover:shadow-md transition-shadow duration-200 w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
+          <div className="flex items-center py-3 px-2 gap-2 border border-gray-300 focus-within:ring-1 focus-within:ring-[#002d97] 
+          sm:ml-7 md:ml-7 lg:ml-7 xl:ml-17 shadow-[0px_4px_6px_0px_rgba(0,103,161,0.16)] rounded-[6px] hover:shadow-md transition-shadow 
+          duration-200 w-[100%] lg:w-[42.8%] xl:w-[42.8%]">
             <input
               type="email"
               name="email"
@@ -362,7 +364,7 @@ const [devOtp, setDevOtp] = useState<string | null>(null);
           <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-3 py-2 rounded">{error}</div>
         ) : null}
 
-        {devOtp && ( // ✅ add here
+        {devOtp && ( 
           <div className="bg-amber-50 border border-amber-200 text-amber-800 text-sm px-3 py-2 rounded">
             DEV OTP: <b>{devOtp}</b> (test mode)
           </div>

@@ -8,7 +8,9 @@ type Props = {
 };
 
 const BankList = ({ onBankSelect }: Props) => {
-  const [banks, setBanks] = useState<string[]>([]);
+  // Example: If you have bank logo URLs, you can use an array of objects
+  // For now, we'll use a placeholder icon for each bank
+  const [banks, setBanks] = useState<{ name: string; logo?: string }[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -16,8 +18,9 @@ const BankList = ({ onBankSelect }: Props) => {
       try {
         const res = await axios.get('/api/banks');
         const data = res.data;
-        const bankList = Object.keys(data.banks || {});
-        setBanks(bankList);
+  // If your API provides logos, use them here. Otherwise, use a placeholder icon.
+  const bankList = Object.keys(data.banks || {}).map(bankName => ({ name: bankName }));
+  setBanks(bankList);
       } catch (error) {
         console.error('Error fetching banks:', error);
       }
@@ -36,11 +39,19 @@ const BankList = ({ onBankSelect }: Props) => {
         placeholder="Select a bank"
         className="w-[100%] focus:outline-none focus:ring-0 py-2"
         onChange={onBankSelect}
-        options={banks.map(bank => ({ label: bank, value: bank }))}
+        options={banks.map(bank => ({
+          label: (
+            <div className="flex items-center gap-2">
+              {/* Replace with <img src={bank.logo} ... /> if you have logos */}
+              <AiOutlineDown className="text-gray-400 text-lg" />
+              <span>{bank.name}</span>
+            </div>
+          ),
+          value: bank.name
+        }))}
         suffixIcon={isOpen ? <AiOutlineUp className="text-gray-500 text-xl" /> : <AiOutlineDown className="text-gray-500 text-xl" />}
         style={{ outline: 'none', height: '42px', borderRadius: '4px' }}
-        onDropdownVisibleChange={handleDropdownVisibleChange}
-        onOpenChange={setIsOpen}
+  onOpenChange={handleDropdownVisibleChange}
         open={isOpen}
       />
     </div>

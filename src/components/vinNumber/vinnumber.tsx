@@ -2,12 +2,15 @@
 
 import React from 'react';
 
-type Props = {
-  vinnumber: string;
-  onChange: (value: string) => void;
-};
 
-export default function Vinnumber({ vinnumber, onChange }: Props) {
+import type { VinNumberForm } from '../../types/forms';
+
+interface VinNumberProps {
+  vinnumber: VinNumberForm['vinnumber'];
+  onChange: (value: string) => void;
+}
+
+export default function VinNumber({ vinnumber, onChange }: VinNumberProps) {
   return (
     <div className="ml-0 sm:ml-7 md:ml-7 lg:ml-7 xl:ml-7 mt-14 mb-7">
       <input

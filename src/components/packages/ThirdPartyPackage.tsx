@@ -121,13 +121,12 @@ const ThirdPartyPackage = ({ onSelect }: PackagesProps) => {
                                         <div className='mt-5 flex flex-col gap-4 items-start ml-2 h-[50%]'>
                                             <div className='flex flex-col gap-5 items-start justify-start'>
                                                 {Object.entries(res.benefits).map(([key, benefit]) => (
-                                                    <div className='flex flex-row items-start gap-2'>
+                                                    <div key={key} className='flex flex-row items-start gap-2'>
                                                         <span className='border rounded rounded-full border-[#ababab] mt-1'><IoIosArrowForward color='#0068a2' /></span>
-                                                        <p className='text-justify text-gray-500 text-[13px] line-height:1.25' key={key}>
+                                                        <p className='text-justify text-gray-500 text-[13px] line-height:1.25'>
                                                             {benefit.addon}
                                                         </p>
                                                     </div>
-
                                                 ))}
                                             </div>
                                         </div>

@@ -26,7 +26,7 @@ const Price = ({ price, onPriceSet }: Props) => {
 };
 
 export default Price;
-
+ 
 
 
 
